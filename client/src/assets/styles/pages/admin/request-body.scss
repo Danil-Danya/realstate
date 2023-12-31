@@ -1,0 +1,107 @@
+.admin__request-body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    &-container {
+        max-width: 710px;
+        width: 100%;
+    }
+
+    &-nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+
+    &-name {
+        font-size: 18px !important;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 30px;
+    }
+
+    &-tel {
+        font-size: 18px !important;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 30px;
+
+        &-container {
+            font-size: 18px !important;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+    }
+
+    &-email {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 30px;
+    }
+
+    &-question {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 35px;
+        
+        &-text {
+            text-align: right !important;
+            max-width: 365px;
+            width: 100%;
+        }
+    }
+
+    &-data {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 20px;
+    }
+
+    &-from {
+        max-width: 320px;
+        display: flex;
+        gap: 20px;
+        justify-content: space-between;
+    }
+
+    &-type {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+    }
+
+    &-icon {
+        font-size: 25px;
+    }
+
+    &-link {
+        display: block;
+        
+        &::after {
+            content: '';
+            transition: 500ms;
+            display: block;
+            height: 1px;
+            background: #000;
+            width: 0;
+        }
+
+        &:hover::after {
+            width: 100%;
+        }
+    }
+}
+
+.admin__text {
+    font-size: 18px !important;
+    &-bold {
+        font-size: 18px !important;
+    }
+    &-big {
+        font-size: 20px !important;
+    }
+}

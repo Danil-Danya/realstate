@@ -1,0 +1,47 @@
+.sidebar {
+    max-width: 300px;
+    width: 100%;
+    background: #515151 !important;
+    position: relative;
+    display: block;
+    min-height: 100vh;
+    
+    &__container {
+        position: fixed;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 100vh;
+        width: 300px;
+        height: 100vh;
+        top: 0;
+        left: 0;
+
+        &-link {
+            width: 100%;
+            margin-top: 80px !important;
+        }
+    }
+    
+    &__logo {
+        margin-top: 30px;
+    }
+    
+    &__link {
+        width: 100% !important;
+        padding: 20px 0 !important;
+        display: inline-block;
+        display: flex;
+        justify-content: center;
+        text-align: center !important;
+        background: #515151 !important;
+        border: none !important;
+        color: #fff !important;
+        font-size: 20px;
+        transition: 500ms;
+        
+        &:hover {
+            background: #373737 !important;
+        }
+    }
+}

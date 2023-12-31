@@ -1,0 +1,38 @@
+.accordione {
+    margin-bottom: 200px;
+    &__item {
+        color: #373737; 
+        font-size: 36px;
+        font-style: normal;
+        font-weight: 350;
+        line-height: normal;
+        background: #F6F6F6 !important;
+        border-bottom: 1px solid #000 !important;
+        margin-bottom: 44px !important;
+        cursor: pointer;
+        position: static !important;
+
+        &:hover {
+            .accordione__item-text {
+                font-family: Gotham Bold !important;
+            }
+
+            .accordione__decore {
+                opacity: 1;
+            }
+        }
+    }
+
+    &__content {
+        position: relative;
+    }
+
+    &__decore {
+        opacity: 0;
+        transition: 500ms;
+        position: absolute;
+        top: 20px;
+        right: 50px;
+        z-index: 2;
+    }
+}

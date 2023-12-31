@@ -1,0 +1,43 @@
+.admin__signature-request {
+    &-name {
+        padding: 0 15px;
+        max-width: 300px;
+        width: 100%;
+        border-left: 1px solid rgba(0, 0, 0, 0.04);
+        border-right: 1px solid rgba(0, 0, 0, 0.04);
+    }
+
+    &-phone {
+        max-width: 300px;
+        width: 100%;
+        border-right: 1px solid rgba(0, 0, 0, 0.04);
+        padding: 0 15px;
+    }
+
+    &-email {
+        max-width: 375px;
+        width: 100%;
+        padding: 0 15px;
+        border-right: 1px solid rgba(0, 0, 0, 0.04);
+    }
+
+    &-form {
+        max-width: 120px;
+            width: 100%;
+            padding: 0 15px;
+    }
+
+    &-type {
+        max-width: 90px;
+        width: 100%;
+        padding: 0 15px;
+        border-right: 1px solid rgba(0, 0, 0, 0.04);
+    }
+
+    &-question {
+        max-width: 100px;
+            width: 100%;
+            padding: 0 15px;
+            border-right: 1px solid rgba(0, 0, 0, 0.04);
+    }
+}

@@ -1,0 +1,77 @@
+.admin__signature-appartaments {
+    color: rgba(55, 55, 55, 0.70) !important;
+    &-names {
+        max-width: 245px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        padding: 0 10px;
+        border-right: 2px solid rgba(0, 0, 0, 0.04);
+    }
+
+    &-location {
+        max-width: 225px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        padding: 0 10px;
+        border-right: 2px solid rgba(0, 0, 0, 0.04);
+    }
+
+    &-beds {
+        width: 68px;
+        display: flex;
+        align-items: center;
+        padding: 0 10px;
+        border-right: 2px solid rgba(0, 0, 0, 0.04);
+    }
+
+    &-baths {
+        width: 78px;
+        display: flex;
+        align-items: center;
+        padding: 0 5px;
+        border-right: 2px solid rgba(0, 0, 0, 0.04);
+    }
+
+    &-square {
+        width: 146px;
+        display: flex;
+        align-items: center;
+        padding: 0 10px;
+        border-right: 2px solid rgba(0, 0, 0, 0.04);
+    }
+
+    &-type {
+        display: flex;
+        align-items: center;
+        max-width: 115px;
+        width: 100%;
+        padding: 0 10px;
+        border-right: 2px solid rgba(0, 0, 0, 0.04);
+    }
+
+    &-rent {
+        display: flex;
+        align-items: center;
+        max-width: 150px;
+        width: 100%;
+        padding: 0 10px;
+        border-right: 2px solid rgba(0, 0, 0, 0.04);
+    }
+    
+    &-img {
+        width: 120px;
+        display: flex;
+        align-items: center;
+        margin: 0 5px !important;
+    }
+
+    &-buy {
+        display: flex;
+        align-items: center;
+        max-width: 150px;
+        width: 100%;
+        padding: 0 10px;
+    }
+}

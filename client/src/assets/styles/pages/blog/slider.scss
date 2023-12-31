@@ -1,0 +1,134 @@
+.blog__slider {
+    margin-top: 45px;
+    margin-bottom: 160px;
+
+    @include media ($xs) {
+        margin-bottom: 60px;
+    }
+
+    &-content {
+        position: relative;
+        max-height: 500px;
+        height: 500px;
+        border-radius: 30px;
+        cursor: pointer;
+
+        @include media ($xs) {
+            border-radius: 0;
+            height: 210px;
+            display: flex;
+            align-items: flex-end;
+        }
+    }
+    
+    &-img {
+        border-radius: 30px;
+        @include media ($xs) {
+            border-radius: 0;
+            width: 100%;
+            height: 210px;
+        }
+
+        &-bg {
+            width: 100%;
+            height: 100%;
+            background: #00000090;
+            position: absolute;
+            border-radius: 30px;
+            @include media ($xs) {
+                border-radius: 0;
+                width: 100%;
+                height: 210px;
+            }
+        }
+
+        &-container {
+            border-radius: 30px;
+            max-height: 500px;
+            height: 500px;
+            position: absolute;
+            z-index: -1;
+
+            @include media ($xs) {
+                border-radius: 0;
+                height: 210px;
+                width: 100%;
+            }
+        }
+    }
+
+    &-info {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &-views {
+        display: flex;
+        gap: 10px;
+    }
+
+    &-item {
+        @include media ($xs) {
+            display: flex;
+            align-items: flex-end;
+        }
+        &-content {
+            padding: 72px !important;
+
+            @include media ($xs) {
+                padding: 16px !important;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-end;
+            }
+        }
+    }
+
+    &-mark {
+        color: rgba(255, 255, 255, 0.70);
+        font-family: Gotham;
+        font-size: 22px;
+        font-style: normal;
+        font-weight: 350;
+        line-height: 145%;
+        margin-bottom: 40px !important;
+
+        @include media ($xs) {
+            color: rgba(55, 55, 55, 0.50);
+            margin-left: 15px !important;
+            font-family: Gotham Medium !important;
+            margin-bottom: 20px !important;
+        }
+    }
+
+    &-text {
+        color: rgba(255, 255, 255, 0.40);
+        font-family: Gotham;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 350;
+        line-height: normal;
+        margin: 15px 0 !important;
+
+        @include media ($xs) {
+            font-size: 14px;
+            margin-top: 15px !important;
+            margin-bottom: 0px !important;
+        }
+    }
+
+    &-title {
+        max-width: 730px;
+        width: 100%;
+        color: #FFF;
+        font-family: Gotham Bold !important;
+        font-size: 36px;
+        font-style: normal;
+        font-weight: 350;
+        line-height: 145%;
+
+        @include media ($xs) {
+            font-size: 16px;
+        }
+    }
+}

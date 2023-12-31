@@ -1,0 +1,68 @@
+.admin-navbar {
+    margin-bottom: 30px;
+    &__content {
+
+    }
+
+    &-inpout, input[type="text"] {
+        border: none !important;
+        max-width: 465px !important;
+        width: 100% !important;
+        border-radius: 0 !important;
+        border-bottom: 1px solid rgba(55, 55, 55, 0.20) !important;
+        background: #F6F6F6;
+        padding: 12px 16px !important;
+
+        &::placeholder {
+            color: #37373766;
+        }
+    }
+
+    &-bottom {
+        border-bottom: 1px solid #0000001A;
+        margin-top: 25px;
+        padding-bottom: 15px !important;
+    }
+
+    &-input{
+        &-container {
+            max-width: 465px !important;
+            width: 100% !important;
+            position: relative;
+        }
+
+        &-loop {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            color: #37373766;
+        }
+    }
+
+    &-top {
+        margin-top: 30px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &-link-back {
+        color: #000;    
+        font-family: Gotham Bold !important;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+    }
+
+    &-bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &-button {
+        color: #fff !important;
+        font-size: 20px !important;
+        padding: 10px 45px !important;
+    }
+}

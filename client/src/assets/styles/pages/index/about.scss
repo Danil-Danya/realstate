@@ -1,0 +1,33 @@
+.about {
+    margin-bottom: 200px;
+    &__content {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &__left {
+        color: #373737;
+        font-size: 22px;
+        font-style: normal;
+        font-weight: 325;
+        line-height: 150%;
+        max-width: 964px;
+        width: 100%;
+        /* 33px */
+    }
+
+    &__number {
+        font-size: 68px;
+        font-family: Gotham Medium;
+    }
+
+    &__center {
+        margin: 48px 0 72px 0  !important;
+    }
+
+    &__advantages {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+    }
+}

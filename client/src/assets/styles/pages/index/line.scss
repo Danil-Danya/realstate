@@ -1,0 +1,47 @@
+.line {
+    background: #fff;
+    transform: rotate(-0.923deg);
+    margin-bottom: 200px;
+
+    &__item {
+        max-width: 500px !important;
+        width: 100% !important;
+        display: flex;
+        align-items: center;
+    }
+
+    &__dot {
+        display: block;
+        width: 10px;
+        height: 10px;
+        background: #00000026;
+        border-radius: 100%;
+    }
+
+    &__content {
+        animation: scroll 12s infinite linear;
+        padding: 10px 0;
+    }
+
+    &__text {
+        width: 100%;
+        color: #000;
+        text-align: center;
+        font-family: Gotham Medium !important;
+        font-size: 30px;
+        font-style: normal;
+        font-weight: 350;
+        line-height: normal;
+    }
+    @keyframes scroll {
+        0% {
+            transform: translate(0);
+        }
+        50% {
+            transform: translate(-100%);
+        }
+        100% {
+            transform: translate(0);
+        }
+    }
+}

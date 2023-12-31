@@ -1,0 +1,87 @@
+.reviews {
+    &__swiper {
+        margin-bottom: 200px !important;
+        padding-top: 50px;
+        padding-bottom: 10px;
+    }
+
+    &__slide {
+        background: #fff;
+        border-radius: 20px;
+        box-shadow: 0px 3px 13px 0px rgba(0, 0, 0, 0.15);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 50px 0 20px 0;
+        position: relative;
+
+        &-container {
+            max-width: 520px !important;
+            width: 100%  !important;
+        }
+    }
+
+    &__grade {
+        display: flex;
+        justify-content: flex-end;
+        gap: 5px;
+        font-size: 22px;
+    }
+
+    &__text {
+        color: #373737;
+        font-size: 19px;
+        font-style: normal;
+        font-weight: 325;
+        line-height: 150%;
+        margin-top: 24px !important;
+        /* 28.5px */
+    }
+
+    &__initial {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 36px;
+    }
+
+    &__light {
+        display: inline-block;
+        color: rgba(55, 55, 55, 0.50);
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 325;
+        line-height: normal;
+        margin-right: 20px !important;
+    }
+
+    &__name {
+        color: #373737;
+        font-family: Gotham Bold !important;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 350;
+        line-height: normal;
+    }
+
+    &__date {
+        display: inline-block;
+        color: rgba(55, 55, 55, 0.50);
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 325;
+        line-height: normal;
+        margin-right: 20px !important;
+    }
+
+    &__avatar {
+        &-container {
+            position: absolute;
+            top: -40px;
+            z-index: 2;
+        }
+    }
+
+    &__text {
+        
+    }
+}

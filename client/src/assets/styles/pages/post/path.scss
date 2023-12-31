@@ -1,0 +1,15 @@
+.post__path {
+    display: flex;
+    justify-content: space-between;
+    //align-items: center;
+    //flex-wrap: wrap;
+    gap: 50px;
+
+    @include media ($xs) {
+        gap: 10px;
+    }
+
+    &-content {
+        width: 100%;
+    }
+}

@@ -1,0 +1,55 @@
+.apartament__details {
+    margin-top: 80px;
+
+    @include media ($xs) {
+        margin-top: 40px !important;
+    }
+
+    &-title {
+        color: rgba(0, 0, 0, 0.60) !important;
+        font-family: Gotham Medium !important;
+        font-size: 30px;
+        font-style: normal;
+        font-weight: 350;
+        line-height: normal;
+        margin-bottom: 45px !important;
+
+        @include media ($xs) {
+            font-size: 20px;
+            margin-top: 40px !important;
+            margin-bottom: 25px !important;
+        }
+    }
+
+    &-item {
+        display: flex;
+        gap: 35px;
+        margin-bottom: 25px;
+    }
+
+    &-name {
+        color: rgba(55, 55, 55, 0.80) !important;
+        font-family: Gotham;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 325;
+        line-height: normal;
+        width: 170px;
+
+        @include media ($xs) {
+            font-size: 16px;
+        }
+    }
+
+    &-answer {
+        color: #373737 !important;
+        font-family: Gotham Bold !important;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 350;
+        line-height: normal;
+        @include media ($xs) {
+            font-size: 16px;
+        }
+    }
+}

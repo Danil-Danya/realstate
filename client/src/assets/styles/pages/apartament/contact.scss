@@ -1,0 +1,71 @@
+.apartament__contact {
+    position: relative;
+    align-items: center;
+    height: 100%;
+
+    &-container {
+        position: sticky;
+        top: 130px;
+        left: 0;
+    }
+
+    &-input, textarea {
+        max-width: 400px;
+        width: 100%;
+        background: #F6F6F6;
+        margin-bottom: 30px;
+
+        &-branching {
+            max-width: 400px;
+            width: 100%;
+            background: #F6F6F6;
+            margin-bottom: 30px;
+            margin-bottom: 0 !important;
+        }
+    }
+
+    &-button {
+        width: 100%;
+        height: 80px;
+        margin-top: 32px;
+    }
+
+    &-check {
+        margin-bottom: 20px;
+    }
+}
+
+.apartament {
+    &__branching {
+        text-align: center;
+        color: #373737;
+        text-align: center;
+        font-family: Gotham;
+        font-size: 22px;
+        font-style: normal;
+        font-weight: 325;
+        line-height: normal;
+        margin: 10px 0 !important;
+    }
+    &__title {
+        &-provocator {
+            color: #000;
+            font-family: Gotham;
+            font-size: 28px;
+            font-style: normal;
+            font-weight: 325;
+            line-height: 150%;
+        }
+
+        &-contact {
+            color: #000;
+            font-family: Gotham Bold !important;
+            font-size: 28px;
+            font-style: normal;
+            font-weight: 325;
+            line-height: 150%;
+
+            margin-bottom: 25px !important;
+        }
+    }
+}

@@ -1,0 +1,102 @@
+.message {
+    margin-bottom: 200px;
+    &__content {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &__title {
+        color: #000;
+        font-family: Gotham Bold !important;
+        font-size: 64px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+    }
+
+    &__text {
+        color: #373737;
+        font-size: 19px;
+        font-style: normal;
+        font-weight: 325;
+        line-height: 150%;
+        margin: 24px 0 70px 0 !important; 
+    }
+
+    &__right {
+        max-width: 775px;
+        width: 100%;
+    }
+
+    &__area {
+        max-width: 530px !important;
+        width: 100% !important;
+        display: block !important;
+        height: 115px;
+
+        &::placeholder {
+            color: rgba(55, 55, 55, 0.20) !important;
+            font-size: 22px;
+        }
+
+        &-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 50px;
+        }
+    }
+
+    &__button {
+        padding: 40px 40px !important;
+        font-size: 20px !important;
+        border-radius: 20px !important;
+    }
+
+    &__input {
+        &-long {
+            max-width: 775px !important;
+            width: 100% !important;
+            display: block;
+            margin-bottom: 30px !important;
+
+            &::placeholder {
+                font-family: Gotham Bold;
+                color: #373737;
+                font-size: 22px;
+            }
+        }
+
+        &-title {
+            font-size: 22px;
+        }
+
+        &-mini {
+            max-width: 355px !important;
+            width: 100% !important;
+            position: relative !important;
+
+            &[type="number"] {
+                &::placeholder {
+                    color: #373737;
+                    font-family: Gotham Bold !important;
+                    font-size: 22px;
+                }
+            }
+
+            &[type="email"] {
+                &::placeholder {
+                    color: rgba(55, 55, 55, 0.20);
+                    font-size: 22px;
+                }
+            }
+        }
+
+        &-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+    }
+}

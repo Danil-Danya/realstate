@@ -1,0 +1,15 @@
+.blog__path {
+    max-width: 280px;
+    display: flex;
+    justify-content: space-between;
+    gap: 50px;
+
+    @include media ($xs) {
+        gap: 10px;
+        max-width: 190px;
+    }
+
+    &-content {
+        width: 100%;
+    }
+}

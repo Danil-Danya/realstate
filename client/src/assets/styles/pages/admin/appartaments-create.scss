@@ -1,0 +1,12 @@
+.admin__appartaments-create {
+    &-container {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    &-nav {
+        display: flex;
+        justify-content: space-between;
+    }
+}
