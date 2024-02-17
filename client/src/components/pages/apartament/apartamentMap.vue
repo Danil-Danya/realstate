@@ -1,18 +1,254 @@
 <template>
-    <div class="apartament__map">
+    <div class="apartament__map" id="map">
         <div class="container">
             <h2 class="apartament__map-title">Where you’ll be</h2>
-            <div class="apartament__map-container">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d95915.87915676589!2d69.25844479999999!3d41.3007872!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38ae8b40d847941d%3A0x5765a18b352df71e!2sTashkent%20City%20Park!5e0!3m2!1sru!2s!4v1703387137601!5m2!1sru!2s" 
-                 width="600" height="450" style="border:0;" loading="lazy" 
-                 referrerpolicy="no-referrer-when-downgrade" class="apartament__map-frame"
-                >
-                </iframe>
+            <div class="apartament__map-container" v-if="width > 580" style="width: 100%; height: 500px;">
             </div>
         </div>
+        <div class="apartament__map-container" v-if="width < 580" style="width: 100%; height: 500px;"></div>
     </div>
 </template>
 
 <style lang="scss" scoped>
     @import '@/assets/styles/pages/apartament/map.scss';
 </style>
+
+<script>
+import locatios from '@/configs/config.location.json'
+
+export default {
+    data: () => ({
+        locatios: locatios,
+        width: window.innerWidth
+    }),
+    props: {
+        dataMap: Object
+    },
+
+    methods: {
+        async initMap() {
+            const { Map } = await google.maps.importLibrary("maps");
+            const { AdvancedMarkerView } = await google.maps.importLibrary("marker");
+
+            let map = document.querySelector('.apartament__map-container');
+            let location = {};
+
+            for (let i = 0; i < this.locatios.locations.length; i++) {
+                if (this.locatios.locations[i].name === this.dataMap.addres) {
+                    location.lat = this.locatios.locations[i].lat ? this.locatios.locations[i].lat : 25.21448776458042;
+                    location.long = this.locatios.locations[i].long ? this.locatios.locations[i].long : 55.29115157192866;
+                    
+                    break;
+                }
+                else {
+                    location.lat = 25.21448776458042;
+                    location.long = 55.29115157192866;
+                }
+            }
+            
+            let myMap = await new Map(map, {
+                zoom: 13,
+                center: { lat: location.lat, lng: location.long },
+                disableDefaultUI: true,
+                //mapId: 'test map',
+                styles: [
+                    {
+                        "featureType": "water",
+                        "elementType": "geometry",
+                        "stylers": [
+                            {
+                                "color": "#e9e9e9"
+                            },
+                            {
+                                "lightness": 17
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "landscape",
+                        "elementType": "geometry",
+                        "stylers": [
+                            {
+                                "color": "#f5f5f5"
+                            },
+                            {
+                                "lightness": 20
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "road.highway",
+                        "elementType": "geometry.fill",
+                        "stylers": [
+                            {
+                                "color": "#ffffff"
+                            },
+                            {
+                                "lightness": 17
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "road.highway",
+                        "elementType": "geometry.stroke",
+                        "stylers": [
+                            {
+                                "color": "#ffffff"
+                            },
+                            {
+                                "lightness": 29
+                            },
+                            {
+                                "weight": 0.2
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "road.arterial",
+                        "elementType": "geometry",
+                        "stylers": [
+                            {
+                                "color": "#ffffff"
+                            },
+                            {
+                                "lightness": 18
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "road.local",
+                        "elementType": "geometry",
+                        "stylers": [
+                            {
+                                "color": "#ffffff"
+                            },
+                            {
+                                "lightness": 16
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "poi",
+                        "elementType": "geometry",
+                        "stylers": [
+                            {
+                                "color": "#f5f5f5"
+                            },
+                            {
+                                "lightness": 21
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "poi.park",
+                        "elementType": "geometry",
+                        "stylers": [
+                            {
+                                "color": "#dedede"
+                            },
+                            {
+                                "lightness": 21
+                            }
+                        ]
+                    },
+                    {
+                        "elementType": "labels.text.stroke",
+                        "stylers": [
+                            {
+                                "visibility": "on"
+                            },
+                            {
+                                "color": "#ffffff"
+                            },
+                            {
+                                "lightness": 16
+                            }
+                        ]
+                    },
+                    {
+                        "elementType": "labels.text.fill",
+                        "stylers": [
+                            {
+                                "saturation": 36
+                            },
+                            {
+                                "color": "#333333"
+                            },
+                            {
+                                "lightness": 40
+                            }
+                        ]
+                    },
+                    {
+                        "elementType": "labels.icon",
+                        "stylers": [
+                            {
+                                "visibility": "off"
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "transit",
+                        "elementType": "geometry",
+                        "stylers": [
+                            {
+                                "color": "#f2f2f2"
+                            },
+                            {
+                                "lightness": 19
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "administrative",
+                        "elementType": "geometry.fill",
+                        "stylers": [
+                            {
+                                "color": "#fefefe"
+                            },
+                            {
+                                "lightness": 20
+                            }
+                        ]
+                    },
+                    {
+                        "featureType": "administrative",
+                        "elementType": "geometry.stroke",
+                        "stylers": [
+                            {
+                                "color": "#fefefe"
+                            },
+                            {
+                                "lightness": 17
+                            },
+                            {
+                                "weight": 1.2
+                            }
+                        ]
+                    }
+                ]
+            })
+        
+            let marker = new google.maps.Marker ({
+                map: myMap,
+                position: {
+                    lat: Number(this.dataMap.lat),
+                    lng: Number(this.dataMap.long)
+                },
+                title: this.dataMap.title,
+                icon: require('@/assets/images/static/map/majak.svg')
+            })
+
+            console.log(marker.postion);
+        }
+    },
+
+    async mounted () {
+        this.$nextTick(async () => {
+            await this.initMap()
+        })
+        console.log(this.dataMap);
+    }
+}
+
+</script>

@@ -1,9 +1,9 @@
 <template>
     <div class="admin__request-body">
         <div class="admin__request-body-nav">
-            <a href="#" @click="goBack"><i class="fa-solid fa-angle-left"></i>Back</a>
+            <a href="#" @click="goBack"><i class="fa-solid fa-angle-left"></i> Back</a>
             <h2 class="admin__title">Request</h2>
-            <a href="#" class="admin__delete"><i class="fa-solid fa-trash-can"></i>Delete request</a>
+            <a href="#" class="admin__delete"><i class="fa-solid fa-trash-can"></i> Delete request</a>
         </div>
         <div class="admin__request-body-container">
             <div class="admin__content">
@@ -44,7 +44,7 @@
                     </div>
                     <div class="admin__request-body-from">
                         <p class="admin__text">From:</p>
-                        <router-link to="" class="admin__text admin__request-body-link">{{ page.from }}</router-link>
+                        <router-link to="" class="admin__text admin__request-body-link">{{ page.fromPage }}</router-link>
                     </div>
                 </div>
                 <div class="admin__create-buttons-container">
@@ -61,6 +61,8 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import axios from 'axios';
+import { nextTick } from 'vue';
 
 export default {
     data: () => ({
@@ -71,6 +73,21 @@ export default {
         ...mapActions(['fetchOneRequest']),
         goBack () {
             this.$router.go(-1);
+        },
+
+        async updateRequest() {
+            const url = `/${process.env.VUE_APP_API_PATH}/request-update`;
+
+            const data = {
+                id: this.getOneRequests.request.id,
+                isNew: false
+            }
+            console.log(data);
+            const updated = await axios.put(url, data);
+
+            if (this.getOneRequests.request.isNew) {
+                location.reload()
+            }
         },
     },
 
@@ -83,7 +100,9 @@ export default {
         }
 
         await this.fetchOneRequest(data);
+
         this.page = this.getOneRequests.request;
+        this.$nextTick(async () => await this.updateRequest());
     }
 }
 

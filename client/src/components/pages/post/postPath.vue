@@ -13,7 +13,7 @@
                 <div class="post__path path__links">
                     <ul>
                         <li v-for="(link, index) in links" :key="link">
-                            <router-link to="#" 
+                            <router-link :to="link.link" 
                                 class="post__path-link path__link"
                                 :class="index === links.length - 1 ? 'path__link-active' : ''"
                             >
@@ -39,18 +39,18 @@ export default {
         links: [
             {
                 name: 'Home',
-                link: '',
+                link: '/',
                 isActive: false
             },
             {
                 name: 'Blog',
-                link: '',
+                link: '/blog/',
                 isActive: false
 
             },
             {
                 name: 'Apartment at Royal Atlantis...',
-                link: '',
+                link: '#',
                 isActive: true
             },
         ]

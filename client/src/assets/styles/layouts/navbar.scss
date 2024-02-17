@@ -285,3 +285,14 @@
     top: 100%;
     //opacity: 0;
 }
+
+
+.filter-enter-active,
+.filter-leave-active {
+    transition: all 0.5s ease;
+}
+
+.filter-enter-from,
+.filter-leave-to {
+    opacity: 0;
+}

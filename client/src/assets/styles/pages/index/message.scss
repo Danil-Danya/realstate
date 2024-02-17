@@ -1,8 +1,14 @@
 .message {
     margin-bottom: 200px;
+
+    @include media ($xs) {
+        margin-bottom: 80px;
+    }
+
     &__content {
         display: flex;
-        justify-content: space-between;
+        justify-content: space-around;
+        flex-wrap: wrap;
     }
 
     &__title {
@@ -12,6 +18,15 @@
         font-style: normal;
         font-weight: 400;
         line-height: normal;
+
+        @include media ($xs) {
+            font-size: 26px;
+            margin-bottom: 40px !important;
+        }
+    }
+
+    &__img {
+        width: 100%;
     }
 
     &__text {
@@ -21,6 +36,11 @@
         font-weight: 325;
         line-height: 150%;
         margin: 24px 0 70px 0 !important; 
+
+        @include media ($xs) {
+            font-size: 16px;
+            margin-bottom: 0px !important;
+        }
     }
 
     &__right {
@@ -33,6 +53,11 @@
         width: 100% !important;
         display: block !important;
         height: 115px;
+        background: #F6F6F6 !important;
+
+        @include media ($sm) {
+            max-width: 100% !important;
+        }
 
         &::placeholder {
             color: rgba(55, 55, 55, 0.20) !important;
@@ -44,6 +69,7 @@
             justify-content: space-between;
             align-items: center;
             margin-top: 50px;
+            flex-wrap: wrap;
         }
     }
 
@@ -51,6 +77,12 @@
         padding: 40px 40px !important;
         font-size: 20px !important;
         border-radius: 20px !important;
+
+        @include media ($sm) {
+            margin-top: 30px;
+            padding: 20px 0 !important;
+            width: 100% !important;
+        }
     }
 
     &__input {
@@ -59,6 +91,7 @@
             width: 100% !important;
             display: block;
             margin-bottom: 30px !important;
+            background: #F6F6F6 !important;
 
             &::placeholder {
                 font-family: Gotham Bold;
@@ -75,6 +108,7 @@
             max-width: 355px !important;
             width: 100% !important;
             position: relative !important;
+            background: #F6F6F6 !important;
 
             &[type="number"] {
                 &::placeholder {

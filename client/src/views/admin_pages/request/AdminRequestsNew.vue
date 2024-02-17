@@ -10,7 +10,11 @@ import adminRequestNew from '@/components/pages/Admin/request/adminRequestNew.vu
 export default {
     components: {
         adminRequestNew
-    }
+    },
+    async beforeRouteUpdate(to, from, next) {
+        await this.fetchData();
+        next();
+    },
 }
 
 </script>

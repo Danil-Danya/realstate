@@ -4,8 +4,21 @@
         justify-content: space-between;
         margin-top: 45px;
 
-        @include media ($xs) {
-            
+        &-right {
+            position: relative;
+        }
+
+        &-icon {
+            &-like {
+                position: absolute;
+                font-size: 22px !important;
+                right: 0;
+                top: 0;
+                
+                @include media ($xs) {
+                    font-size: 18px !important;
+                }
+            }
         }
 
         &-left {

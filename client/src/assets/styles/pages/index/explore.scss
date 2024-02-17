@@ -10,16 +10,29 @@
     &__button {
         display: flex;
         justify-content: space-between;
+        //position: relative;
         gap: 40px;
 
         &-swiper {
-            width: 100%;
+            overflow-y: visible;
+            overflow-x: hidden;
+        }
+
+        &-text {
+            overflow: hidden;
+            height: 18px;
         }
 
         &-type {
             flex-wrap: nowrap !important;
             width: 150px !important;
             display: flex;
+
+            @include media ($xs) {
+                justify-content: center;
+                width: 100% !important;
+                margin-bottom: 25px;
+            }
         }
 
         &-list {
@@ -36,6 +49,7 @@
             border-radius: 10px !important;
             display: flex;
             justify-content: center;
+            overflow: hidden;
             border: 1px solid rgba(55, 55, 55, 0.20) !important;
             background: #fff !important;
             color: #373737 !important;
@@ -44,6 +58,12 @@
             font-weight: 325;
             line-height: normal;
             width: 100%;
+            gap: 10px;
+
+            @include media ($xs) {
+                font-size: 12px;
+                width: auto;
+            }
         }
     }
 
@@ -55,18 +75,24 @@
 
     &__content {
         display: flex;
-        justify-content: space-between;
+        justify-content: space-around;
         border-top: 1px solid #CCCCCC;
         margin-top: 30px;
+        gap: 10px;
 
         &-container {
             display: flex;
-            justify-content: space-between;
+            justify-content: space-around;
             flex-wrap: wrap;
             height: 700px;
             overflow: scroll;
             max-width: 910px;
             width: 100%;
+            gap: 20px;
+
+            @include media ($lg) {
+                justify-content: space-evenly;
+            }
 
             &::-webkit-scrollbar {
                 display: none;
@@ -78,6 +104,10 @@
         height: 700px;
         max-width: 680px;
         width: 100%;
+
+        @include media ($lg) {
+            display: none;
+        }
     }
 
     &__map {
@@ -85,6 +115,12 @@
         height: 700px;
         border-radius: 30px;
         box-shadow: 0px 13px 44px 0px rgba(0, 0, 0, 0.20);
+    }
+
+    &__menu {
+        position: relative;
+        top: -50px;
+        z-index: 9999999;
     }
 
     &__item {
@@ -115,12 +151,65 @@
         cursor: pointer;
     }
 
+    &__prev {
+        font-size: 22px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+    }
+
     &__filter {
         display: flex;
         justify-content: space-between;
         align-items: center;
         margin-top: 66px;
         margin-bottom: 36px;
+
+        &-line {
+            cursor: pointer;
+
+            @include media($xs) {
+                font-size: 14px;
+            }
+
+            &::after {
+                content: '';
+                display: block;
+                background: #000;
+                width: 0px;
+                height: 1px;
+                transition: all 500ms;
+            }
+
+            &:hover {
+                &::after {
+                    width: 100%;
+                }
+            }
+        }
+
+        &-menu {
+            position: absolute;
+            background: #fff;
+            z-index: 999;
+            width: 245px;
+            border-radius: 10px;
+            box-shadow: 0px 3px 13px 0px rgba(0, 0, 0, 0.15);
+            padding: 15px !important;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            display: none;
+            border: 0;
+
+            @include media($xs) {
+                width: 150px;
+            }
+            
+            &-active {
+                display: flex;
+            }
+        }
 
         &-text {
             color: #5C5C5C !important;
@@ -133,6 +222,12 @@
             display: flex;
             align-items: center;
             gap: 36px;
+        }
+    }
+
+    &__message {
+        &-title {
+            font-family: Gotham Bold !important;
         }
     }
 
@@ -160,6 +255,10 @@
         }
     }
 
+    // &__menu {
+    //     z-index: 9999 !important;
+    // }
+
     &__name {
         color: #373737;
         font-family: Gotham Bold !important;
@@ -168,7 +267,82 @@
         font-weight: 350;
         line-height: normal;
     }
+
+    &__dropdown {
+        position: relative;
+    }
     
+    &__mobile {
+        &-title {
+            color: #000;
+            font-family: Gotham Bold !important;
+            text-align: center;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+        }
+
+        &-length {
+            color: #373737;
+            text-align: center;
+            font-family: Gotham Medium;
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 350;
+            line-height: normal;
+            margin-top: 12px !important;
+            margin-bottom: 36px !important;
+            
+        }
+
+        &-container {
+            background: #fff;
+            padding: 40px 0;
+        }
+
+        &-link {
+            color: #000;
+            text-align: center;
+            font-family: Gotham Bold !important; 
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            display: inline-block;
+            border-bottom: 1px solid #000;
+
+            &-container {
+                display: flex;
+                justify-content: center;
+            }
+        }
+
+        &__info {
+            &-container {
+                display: flex;
+                justify-content: space-between;
+            }
+        }
+
+        &-location {
+            display: flex;
+            justify-content: space-between;
+            margin: 30px 0;
+        }
+
+        &-sort {
+            display: flex;
+            gap: 10px;
+        }
+
+        &-slider {
+            border-bottom: 1px solid rgba(204, 204, 204, 0.40);;
+            &-item {
+                width: auto;
+                padding: 20px 0;
+            }
+        }
+    }
 }
 
 

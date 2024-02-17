@@ -1,9 +1,9 @@
 <template>
     <div class="admin__appartaments-create">
         <div class="admin__appartaments-create-nav">
-            <a @click="redirectInBack" href="#"><i class="fa-solid fa-angle-left"></i>Back</a>
+            <a @click="redirectInBack" href="#"><i class="fa-solid fa-angle-left"></i> Back</a>
             <h2 class="admin__title">Add house</h2>
-            <a href="#" class="admin__delete" @click.prevent="showAlert"><i class="fa-solid fa-trash-can"></i>Delete house</a>
+            <a href="#" class="admin__delete" @click.prevent="showAlert"><i class="fa-solid fa-trash-can"></i> Delete house</a>
         </div>
         <div class="admin__appartaments-create-container">
             <div class="admin__content">
@@ -15,7 +15,9 @@
                     </div>
                     <div class="input__container admin__create-input-container">
                         <label class="input__label admin__label admin__create-label">Location</label>
-                        <input v-model="addres" type="text" class="form-control admin__create-input">
+                        <select v-model="addres" type="text" class="form-control admin__create-input">
+                            <option v-for="address in locs" :value="address.name">{{ address.name }}</option>
+                        </select>
                         <div class="admin__message"></div>
                     </div>
                     <div class="admin__mininput-container">
@@ -194,9 +196,11 @@
 
 <script>
 import axios from 'axios';
+import locations from '@/configs/config.location.json';
 
 export default {
     data: () => ({
+        locs: locations.locations,
         url: `/${process.env.VUE_APP_API_PATH}/appartament-create`,
         imgFiles: [],
         imgPaths: [],
@@ -226,7 +230,6 @@ export default {
         dateOfCreate: '',
         isDraft: false,
         status: 'Completed'
-
     }),
 
     methods: {
@@ -234,7 +237,6 @@ export default {
             const formData = new FormData();
 
             this.imgFiles.forEach((file, index) => {
-                console.log(file);
                 formData.append(`${index}`, file);
             });
 

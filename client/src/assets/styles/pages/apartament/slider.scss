@@ -1,0 +1,139 @@
+.apartament__slider {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(55, 55, 55, 0.90);
+    backdrop-filter: blur(3px);
+    z-index: 999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    &-content {
+        width: 1500px;
+        height: 700px;
+        position: relative;
+
+        @include media (1366px) {
+            width: 1000px;
+            height: 500px;
+        }
+
+        @include media ($md) {
+            width: 500px;
+            height: 300px;
+        }
+    }
+
+    &-tale {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    &-chrest {
+        position: absolute;
+        top: 50px;
+        right: 50px;
+        font-size: 34px;
+        color: #fff;
+        cursor: pointer;
+        z-index: 999;
+
+        @include media (1366px) {
+            font-size: 28px;
+        }
+    }
+
+    &-button {
+        color: #fff;
+        font-size: 30px;
+        cursor: pointer;
+        padding: 10px;
+
+        @include media (1366px) {
+            font-size: 26px;
+        }
+    }
+
+    &-navigation {
+        position: absolute;
+        max-width: 894px;
+        width: 100%;
+        height: 60px;
+        display: flex;
+        justify-content: space-between;
+        bottom: 20%;
+        left: 30%;
+        z-index: 999;
+        border-radius: 20px;
+        padding: 0 10px;
+        background: rgba(55, 55, 55, 0.60);
+
+        @include media (1366px) {
+            max-width: 500px;
+            left: 35%;
+        }
+        
+        @include media ($md) {
+            max-width: 300px;
+        }
+    }
+
+    &-fullscrean {
+        max-width: 100% !important;
+        width: 100% !important;
+        height: 100% !important;
+    }
+
+    &-buttons {
+        display: flex;
+        gap: 30px;
+    }
+    
+    &-img {
+        border-radius: 20px;
+        max-width: 1500px;
+        width: 100%;
+        height: 700px;
+        object-fit: cover;
+
+        &-tale {
+            max-width: 300px;
+            width: 300px;
+            height: 300px;
+            object-fit: cover;
+        }
+
+        &-fullscrean {
+            max-width: 100%;
+            width: 100%;
+            height: 100%;
+            border-radius: 0;
+        }
+
+        @include media (1366px) {
+            width: 1000px;
+            height: 500px;
+        }
+
+        @include media ($md) {
+            width: 500px;
+            height: 300px;
+        }
+    }
+}
+
+
+.apartament-slider-enter-active,
+.apartament-slider-leave-active {
+    transition: opacity 0.5s ease;
+}
+
+.apartament-slider-enter-from,
+.apartament-slider-leave-to {
+    opacity: 0;
+}

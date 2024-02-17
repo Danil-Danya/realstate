@@ -1,0 +1,28 @@
+.admin__user {
+    &-container {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    &-message {
+        color: red;
+    }
+
+    &-create {
+        width: 1380px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+
+        &-container {
+            width: 952px;
+        }
+
+        &-nav {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+        }
+    }
+}

@@ -1,16 +1,36 @@
 .apartament__features {
     margin-top: 80px;
 
+    &-head {
+        display: flex;
+        gap: 30px;
+    }
+
     @include media ($xs) {
         margin-top: 40px;
     }
 
     &-container {
+        width: 810px;
         display: flex;
-        max-width: 810px;
-        width: 100%;
         justify-content: space-between;
-        flex-wrap: wrap;
+        gap: 30px;
+
+        @include media ($xs) {
+            width: 450px;
+        }
+    }
+    
+    &-content {
+        overflow: scroll;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+
+        @include media ($xs) {
+            width: 320px;
+        }
     }
 
     &-ul {

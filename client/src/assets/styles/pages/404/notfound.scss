@@ -1,0 +1,60 @@
+.notfound {
+    &__content {
+        &-container {
+            display: flex;
+            justify-content: center;
+            max-width: 1100px;
+            margin: 120px 0!important;
+
+            @include media ($xs) {
+                margin: 50px 0 !important;
+            }
+        }
+    }
+
+    &__text {
+        color: #373737;
+        font-family: Gotham Book !important;
+        font-size: 19px;
+        font-style: normal;
+        font-weight: 325;
+        line-height: 150%;
+        margin: 36px 0 60px 0 !important;
+
+        @include media ($xs) {
+            font-size: 14px;
+        }
+    }
+
+    &__link {
+        color: #000;
+        font-family: Gotham Bold !important;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        
+        @include media ($xs) {
+            font-size: 14px;
+        }
+    }
+
+    &__title {
+        color: #373737;
+        font-family: Gotham Bold !important;
+        font-size: 64px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        max-width: 822px;
+
+        @include media ($xs) {
+            color: #373737;
+            font-family: Gotham Bold !important;
+            font-size: 26px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+        }
+    }
+}

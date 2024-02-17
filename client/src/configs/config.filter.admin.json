@@ -1,0 +1,48 @@
+{
+    "bedrooms": {
+        "name": "Bedrooms",
+        "list": [
+            "1 bedroom",
+            "2 bedrooms",
+            "3 bedrooms",
+            "4 bedrooms",
+            "5 bedrooms",
+            "6 bedrooms",
+            "7 bedrooms",
+            "8 bedrooms",
+            "9 bedrooms"
+        ]
+    },
+    "bathrooms": {
+        "name": "Bathrooms",
+        "list": [
+            "1 bathroom",
+            "2 bathrooms",
+            "3 bathrooms",
+            "4 bathrooms",
+            "5 bathrooms",
+            "6 bathrooms",
+            "7 bathrooms",
+            "8 bathrooms",
+            "9 bathrooms"
+        ]
+    },
+    "propertyType": {
+        "name": "Property type",
+        "list": [
+            "Apartament",
+            "Villa",
+            "Townhouse"
+        ]
+    },
+    "areas": {
+        "name": "Areas",
+        "list": [
+            "Under 500",
+            "500 to 1000",
+            "1000 to 2000",
+            "2000 to 5000",
+            "Over 5000"
+        ]
+    }
+}

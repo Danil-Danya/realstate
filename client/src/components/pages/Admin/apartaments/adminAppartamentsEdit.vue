@@ -1,10 +1,9 @@
 <template>
     <div class="admin__appartaments-create">
         <div class="admin__appartaments-create-nav">
-            <a @click="redirectInBack" href="#"><i class="fa-solid fa-angle-left"></i>Back</a>
+            <a @click="redirectInBack" href="#"><i class="fa-solid fa-angle-left"></i> Back</a>
             <h2 class="admin__title">Edit house</h2>
-            <a href="#" class="admin__delete" @click.prevent="showAlert"><i class="fa-solid fa-trash-can"></i>Delete
-                house</a>
+            <a href="#" class="admin__delete" @click.prevent="showAlert"><i class="fa-solid fa-trash-can"></i> Delete house</a>
         </div>
         <div class="admin__appartaments-create-container">
             <div class="admin__content">
@@ -54,7 +53,7 @@
                         </div>
                     </div>
                     <div class="admin__upload-images">
-                        <img :src="`/${path}`" alt="Img" ref="img" @click="deleteImg(index)" v-for="(path, index) in imgPaths"
+                        <img :src="`/${path}`" v-if="paths != ''" alt="Img" ref="img" @click="deleteImg(index)" v-for="(path, index) in imgPaths"
                             :key="path" class="admin__create-img">
                         <img :src="path" alt="Img" ref="img" @click="deleteImg(index)" v-for="(path, index) in imgFilePaths"
                             :key="path" class="admin__create-img">
@@ -252,18 +251,29 @@ export default {
 
             this.dateOfCreate = this.getDate();
 
+            if (this.combSelect === 'Rent') {
+                this.priceForBuy = '';
+            }
+
+            if (this.combSelect === 'Buy') {
+                this.priceForRent = '';
+            }
+
             const formDataFields = [
                 'beds', 'baths', 'square', 'price', 'name', 'addres', 'propertyType', 'long', 'lat', 'id',
                 'combSelect', 'description', 'unitReferense', 'propertyName', 'emirate', 'status', 'priceForRent',
                 'priceForBuy', 'purpose', 'indoor', 'outdoor', 'lot', 'isSlide', 'firstSlide', 'isActive', 'dateOfCreate'
             ];
+
             formDataFields.forEach((field, index) => {
                 formData.append(field, this[field]);
             });
 
             const imgPaths = `${this.imgPaths}`;
-            console.log(imgPaths);
             formData.append('imgPaths', imgPaths);
+
+            console.log('imgPaths'+imgPaths);
+            console.log();
 
             if (!this.validator()) {
                 return;
@@ -291,8 +301,7 @@ export default {
             const vueModelKeys = [
                 "name", "addres", "lat", "long", 
                 "propertyType","beds", "baths", "square",
-                'combSelect', 'priceForRent', 'priceForBuy',
-                "description", "unitReferense", "propertyName"
+                'combSelect',"description", "unitReferense", "propertyName"
             ];
 
             const validateField = (index, condition) => {
@@ -388,6 +397,7 @@ export default {
             id: +this.$route.params.id,
             name: this.$route.params.name
         }
+        
         await this.fetchOneAppartament(data);
         this.page = this.getOneAppartament;
 
@@ -419,6 +429,9 @@ export default {
         this.status = this.page.status;
         this.imgPaths = this.page.imgPaths.split(',');
         this.id = this.page.id;
+
+
+        console.log(this.imgPaths);
     }
 }
 

@@ -7,7 +7,7 @@ const postUpload = (images, id, title) => {
 
     if (images && id && title) {
         for (let key in images) {
-            const fileName = `${title.replace(/[,\s]+/g, "_")}_${id}.png`;
+            const fileName = `${title.replace(/[,%\s]+/g, "_")}_${id}_${key}.png`;
             const filePath = path.resolve(__dirname, '..', '..', 'static', 'upload', 'posts', fileName);
 
             const directoryPath = path.dirname(filePath);
@@ -20,6 +20,7 @@ const postUpload = (images, id, title) => {
 
             images[key].mv(filePath);
             imgPaths.push(fileName);
+            console.log(imgPaths);
         }
     }
 

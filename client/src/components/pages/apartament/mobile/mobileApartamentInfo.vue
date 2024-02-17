@@ -15,9 +15,6 @@
                         </span>
                         <p class="apartament__location-text">Hera tower, Dubai sports city</p>
                     </div>
-                    <div class="apartament__map">
-                        <p class="apartament__map-text">Show in map</p>
-                    </div>
                 </div>
             </div>
         </div>

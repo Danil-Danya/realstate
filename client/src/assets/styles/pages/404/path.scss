@@ -1,0 +1,40 @@
+.notfound__path {
+    max-width: 370px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 50px;
+
+    &-container {
+        display: flex;
+        align-items: center;
+    }
+
+    @include media ($xs) {
+        gap: 10px;
+        max-width: 190px;
+    }
+
+    &-text {
+        display: flex;
+        align-items: center;
+    }
+
+    &-content {
+        width: 100%;
+    }
+}
+
+.path {
+    &__back {
+        @include media ($xs) {
+            margin-top: 100px;
+            max-width: 220px;
+        }
+
+        &-container {
+            display: flex;
+            align-items: center;
+        }
+    }
+}

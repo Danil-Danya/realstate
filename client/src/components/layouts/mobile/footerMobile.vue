@@ -20,7 +20,7 @@
                     <div class="footer__bar">
                         <ul>
                             <li v-for="link in links" :key="link">
-                                <router-link to="" class="footer__link">{{ link.name }}</router-link>
+                                <router-link :to="link.link" class="footer__link">{{ link.name }}</router-link>
                             </li>
                         </ul>
                         <ul class="footer__bar-icon">
@@ -34,10 +34,11 @@
                     <div class="footer__form">
                         <h2 class="footer__form-title">Do you have any question?</h2>
                         <form action="" class="footer__form-container">
-                            <button type="button" class="btn btn-dark footer__button"  @click="toggleForm">Contact us</button>
+                            <button type="button" class="apartament__mobile-contact-button btn btn-dark mobile__contact-button" @click="toggleForm">Contact us</button>
                         </form>
                         <div class="footer__policy">
                             <h2 class="footer__policy-title">Privacy policy</h2>
+                            <p class="footer__policy-text">|</p>
                             <p class="footer__policy-text">Copyright © 2022. All Right Reserved.</p>
                         </div>
                     </div>
@@ -81,23 +82,23 @@ export default {
         icons: [
             {
                 icon: 'fa-brands fa-facebook',
-                link: ''
+                link: 'https://www.facebook.com/LuxuryOneRE '
             },
             {
                 icon: 'fa-brands fa-youtube',
-                link: ''
+                link: 'https://www.youtube.com/channel/UCVBrNkDRJ8TRGVkQSQUOaLA'
             },
             {
                 icon: 'fa-brands fa-instagram',
-                link: ''
+                link: 'https://www.instagram.com/luxuryonere/'
             },
             {
                 icon: 'fa-brands fa-linkedin-in',
-                link: ''
+                link: 'https://www.linkedin.com/company/luxury-one-re/'
             },
             {
                 icon: 'fa-brands fa-tiktok',
-                link: ''
+                link: 'https://www.tiktok.com/@luxuryonerealestate'
             },
             {
                 icon: 'fa-brands fa-whatsapp',

@@ -1,15 +1,13 @@
 const path = require('path');
 const fs = require('fs');
 
-const appartamentUpload = (images, unicalKey) => {
+const appartamentUpload = (images, unicalKey, fileId) => {
     let imgPaths = [];
     let imagesMemory;
 
-    console.log(unicalKey, images);
-
     if (images && unicalKey) {
         for (let key in images) {
-            const fileName = `${unicalKey}_${key}.png`;
+            const fileName = `${unicalKey}_${key}_${fileId}.png`;
             const filePath = path.resolve(__dirname, '..', '..', 'static', 'upload', 'apartaments', fileName);
 
             const directoryPath = path.dirname(filePath);
@@ -25,7 +23,7 @@ const appartamentUpload = (images, unicalKey) => {
         }
     }
 
-    return { imgPaths, imagesMemory };
+    return { imgPaths: imgPaths.length > 1 ? imgPaths : imgPaths[0], imagesMemory };
 }
 
 module.exports = appartamentUpload;

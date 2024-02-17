@@ -2,29 +2,51 @@
     background: #fff;
     transform: rotate(-0.923deg);
     margin-bottom: 200px;
-
+    overflow: hidden;
+    
     &__item {
         max-width: 500px !important;
         width: 100% !important;
         display: flex;
         align-items: center;
+        animation: scroll 3s linear infinite;
+        @include media ($xs) {
+            max-width: auto !important;
+            width: auto !important;
+        }
     }
-
+    
     &__dot {
         display: block;
         width: 10px;
         height: 10px;
         background: #00000026;
         border-radius: 100%;
+        margin-left: 30px;
     }
-
+    
     &__content {
-        animation: scroll 12s infinite linear;
+        //width: 100% !important;
         padding: 10px 0;
+        padding-right: 20px;
+        
+
+        @include media ($xs) {
+            width: calc(206px * 4) !important;
+        }
     }
 
+    &__container {
+        display: flex;
+        justify-content: space-between;
+        @include media ($xs) {
+            width: calc(210px * 8) !important;
+            gap: 10px;
+        }
+    }
+    
     &__text {
-        width: 100%;
+        //width: 100%;
         color: #000;
         text-align: center;
         font-family: Gotham Medium !important;
@@ -32,16 +54,19 @@
         font-style: normal;
         font-weight: 350;
         line-height: normal;
+
+        @include media ($xs) {
+            font-size: 16px;
+            padding-left: 10px !important;
+        }
     }
     @keyframes scroll {
-        0% {
-            transform: translate(0);
+        from {
+            transform: translate3d(-100%, 0, 0);
         }
-        50% {
-            transform: translate(-100%);
-        }
-        100% {
-            transform: translate(0);
+        
+        to {
+            transform: translateZ(0);
         }
     }
 }

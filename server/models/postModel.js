@@ -15,13 +15,8 @@ const Post = sequelize.define('Post', {
         allowNull: false
     },
 
-    text: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-
-    imgPaths: {
-        type: DataTypes.STRING,
+    content: {
+        type: DataTypes.STRING,     
         allowNull: false
     },
 

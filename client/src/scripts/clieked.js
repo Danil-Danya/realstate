@@ -17,6 +17,7 @@ export default class Select {
         }
         else if (btn.classList.contains(this.selectClass) && btn === this.button[this.index]) {
             const closeButton = btn.querySelector('.btn-chrest');
+            
             if (closeButton) {
                 closeButton.parentNode.removeChild(closeButton);
             }

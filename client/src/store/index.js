@@ -3,6 +3,8 @@ import admimLinks from './adminLinks/admimLinks';
 import appartamets from './appartaments/appartamets';
 import requests from './requests/requests';
 import post from './posts/post';
+import users from './users/users';
+import reviews from './reviews/reviews';
 
 export default createStore({
   modules: {
@@ -13,5 +15,7 @@ export default createStore({
     appartaments: appartamets(),
     requests,
     post,
+    users,
+    reviews
   }
 })

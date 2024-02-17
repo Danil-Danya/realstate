@@ -9,21 +9,22 @@ const deleteFiles = async (filePaths) => {
             const joinPath = path.join(__dirname, '..', '..', 'static', 'upload', 'apartaments', filePath);
             const fullPath = path.resolve(__dirname, '..', '..', 'static', 'upload', 'apartaments', filePath);
 
-            await fs.access(joinPath, fs.constants.F_OK);
-            await fs.unlink(fullPath);
-
+            if (await fs.access(joinPath, fs.constants.F_OK)) {
+                await fs.unlink(fullPath);
+                return true;
+            }
         } 
         catch (err) {
             if (err.code === 'ENOENT') {
                 console.error(`Error deleting file: ${filePath} - file does not exist`);
                 return false;
-            } else {
+            } 
+            else {
                 console.error(`Error deleting file: ${filePath}`, err);
                 return false;
             }
         }
     }
-    return true;
 };
 
 module.exports = deleteFiles;

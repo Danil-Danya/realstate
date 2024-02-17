@@ -1,10 +1,38 @@
 .apartament__images {
     margin-top: 30px;
+    
     &-content {
         display: flex;
         justify-content: space-between;
         gap: 30px;
     }
+
+    &-left {
+        position: relative;
+        border-radius: 8px !important;
+        overflow: hidden;
+        
+        & > img {
+            transition: 500ms;
+        }
+
+        .apartament__img-hover {
+            height: 750px;
+            border-radius: 8px !important;
+        }
+
+        &:hover {
+            .apartament__img-hover {
+                opacity: 1;
+                height: 750px;
+            }
+
+            & > img {
+                transform: scale(1.01);
+            }
+        }
+    }
+
     &-preview {
         max-width: 1248px;
         width: 100%;
@@ -17,8 +45,17 @@
     &-item {
         position: relative;
         margin-bottom: 30px !important;
-        &:hover .apartament__img-hover {
-            opacity: 1;
+        overflow: hidden;
+        &:hover {
+            .apartament__img {
+                transform: scale(1.1);
+                transition: 500ms;
+            }
+            .apartament__img-hover{
+                opacity: 1;
+                z-index: 2;
+            }
+
         }
     }
 }
@@ -27,6 +64,43 @@
     width: 396px;
     height: 230px;
     border-radius: 8px;
+
+    &-length {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: #0000006b;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+        cursor: pointer;
+        font-size: 22px;
+        border-radius: 8px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &-mask {
+        background: #a29f9b;
+        width: 396px;
+        height: 230px;
+        border-radius: 8px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: #6e6e6e;
+    }
+
+    &-icon {
+        font-size: 80px;
+        line-height: 80px;
+    }
+
     &-hover {
         opacity: 0;
         transition: 500ms;
@@ -42,5 +116,6 @@
         color: #fff;
         cursor: pointer;
         font-size: 22px;
+        border-radius: 8px;
     }
 }

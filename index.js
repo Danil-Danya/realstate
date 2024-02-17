@@ -23,5 +23,7 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
 });
 
+app.get('/favicon.ico', (req, res) => res.status(204));
+
 
 app.listen(PORT, (res, req) => console.log(`Сервер запущен на http://localhost:${PORT}`));

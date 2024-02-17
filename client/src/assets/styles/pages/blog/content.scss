@@ -1,8 +1,9 @@
 .blog__content {
     &-catalog {
         display: flex;
-        justify-content: space-evenly;
+        justify-content: space-between;
         flex-wrap: wrap;
+        margin-top: 80px !important;
     }
     
     &-content {
@@ -31,6 +32,7 @@
     &-img {
         max-width: 430px !important;
         width: 100% !important;
+        height: 250px;
     }
 }
 

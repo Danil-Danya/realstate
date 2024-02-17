@@ -1,23 +1,23 @@
 export default {
     state: {
         appartamentLinks: [
-            { name: 'All', link: `/${process.env.VUE_APP_ADMIN_ROUTER}/admin/appartament-all/0` },
-            { name: 'Active', link: `/${process.env.VUE_APP_ADMIN_ROUTER}/admin/appartament-active/0` },
-            { name: 'Inactive', link: `/${process.env.VUE_APP_ADMIN_ROUTER}/admin/appartament-disactive/0` },
-            { name: 'Draft', link: `/${process.env.VUE_APP_ADMIN_ROUTER}/admin/appartament-draft/0` },
+            { name: 'All', link: `/${process.env.VUE_APP_ADMIN_ROUTER}/admin/appartament-all/1` },
+            { name: 'Active', link: `/${process.env.VUE_APP_ADMIN_ROUTER}/admin/appartament-active/1` },
+            { name: 'Inactive', link: `/${process.env.VUE_APP_ADMIN_ROUTER}/admin/appartament-disactive/1` },
+            { name: 'Draft', link: `/${process.env.VUE_APP_ADMIN_ROUTER}/admin/appartament-draft/1` },
         ],
         postLinks: [
-            { name: 'All', link: `/${process.env.VUE_APP_ADMIN_ROUTER}/admin/post-all` },
-            { name: 'Active', link: `/${process.env.VUE_APP_ADMIN_ROUTER}/admin/post-active` },
-            { name: 'Inactive', link: `/${process.env.VUE_APP_ADMIN_ROUTER}/admin/post-disactive` },
-            { name: 'Draft', link: `/${process.env.VUE_APP_ADMIN_ROUTER}/admin/post-draft` },
+            { name: 'All', link: `/${process.env.VUE_APP_ADMIN_ROUTER}/admin/post-all/1` },
+            { name: 'Active', link: `/${process.env.VUE_APP_ADMIN_ROUTER}/admin/post-active/1` },
+            { name: 'Inactive', link: `/${process.env.VUE_APP_ADMIN_ROUTER}/admin/post-disactive/1` },
+            { name: 'Draft', link: `/${process.env.VUE_APP_ADMIN_ROUTER}/admin/post-draft/1` },
         ],
         requetsLinks: [
-            { name: 'All', link: `/${process.env.VUE_APP_ADMIN_ROUTER}/admin/email-all` },
-            { name: 'New', link: `/${process.env.VUE_APP_ADMIN_ROUTER}/admin/email-new` },
+            { name: 'All', link: `/${process.env.VUE_APP_ADMIN_ROUTER}/admin/email-all/1` },
+            { name: 'New', link: `/${process.env.VUE_APP_ADMIN_ROUTER}/admin/email-new/1` },
         ],
         userLinks: [
-            { name: 'All', link: `/${process.env.VUE_APP_ADMIN_ROUTER}/admin/all-users` },
+            { name: 'All users', link: `/${process.env.VUE_APP_ADMIN_ROUTER}/admin/users-all` },
         ],
         noAccessLinks: [
             { name: 'Home', link: `/` },

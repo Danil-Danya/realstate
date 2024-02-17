@@ -24,9 +24,12 @@ export default {
     props: {
         idToDelete: String,
         nameToDelete: String,
-        imgPathsToDelete: String
+        content: String
     },
 
+    // mounted() {
+        
+    // },
 
     methods: {
         closeModal() {
@@ -35,13 +38,14 @@ export default {
         async deletePost() {
             try {
                 const url = `/${process.env.VUE_APP_API_PATH}/post-delete`;
-                console.log(this.idToDelete, this.nameToDelete, this.imgPathsToDelete);
+                //console.log(this.idToDelete, this.nameToDelete, this.imgPathsToDelete);
+                console.log(this.content);
 
                 const response = await axios.delete(url, {
                     data: {
                         id: this.idToDelete,
                         title: this.nameToDelete,
-                        imgPaths: this.imgPathsToDelete
+                        content: this.content
                     },
                 });
                 

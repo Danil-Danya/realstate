@@ -1,7 +1,7 @@
 <template>
     <div class="site">
-        <navbar/>
-        <navbarMobile/>
+        <navbar v-if="windowWidth > 1000"/>
+        <navbarMobile v-else/>
         <main class="main" style="min-height: 100vh;">
             <router-view />
         </main> 
@@ -34,7 +34,8 @@ import mobileForm from '@/components/reused/mobile/mobileForm.vue';
 
 export default {
     data: () => ({
-        visible: false
+        visible: false,
+        windowWidth: window.innerWidth
     }),
     components: {
         navbar,

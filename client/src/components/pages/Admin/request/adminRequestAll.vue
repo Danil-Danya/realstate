@@ -10,7 +10,8 @@
         <div class="admin__container">
             <h2 class="admin__counter">{{ getRequests.length }} properties</h2>
             <request-signature/>
-            <div class="admin__item" v-for="(item, index) in getRequests" :key="item"
+             <h2 class="admin__request-title" v-if="getRequests.length === 0">Messages haven't appeared yet, but don't worry and come back later</h2>
+            <div class="admin__item" v-for="(item, index) in request" :key="item"
                 :style="index % 2 === 1 ? { background: 'rgba(55, 55, 55, 0.02)' } : {}">
                 <div class="admin__index">
                     <h2 class="admin__text-bold">{{ index + 1 }}</h2>
@@ -48,6 +49,37 @@
                 </div>
             </div>
         </div>
+        <div class="admin__pages" v-if="Math.ceil(getRequests.length / 15) > 1">
+            <router-link :to="`/${routerLink}/admin/email-all/${goToPrevPage()}`">
+                <i class="fa-solid fa-angle-left"></i>
+            </router-link>
+            <div class="pages-links">
+                <router-link :to="`/${routerLink}/admin/email-all/1`" v-if="$route.params.index > 3" class="pages-item">
+                    1
+                </router-link>
+                <div v-if="$route.params.index > 3">...</div>
+                <router-link :to="`/${routerLink}/admin/email-all/${$route.params.index - 2}`" v-if="$route.params.index > 2" class="pages-item">
+                    {{ $route.params.index - 2 }}
+                </router-link>
+                <router-link :to="`/${routerLink}/admin/email-all/${$route.params.index - 1}`" v-if="$route.params.index > 1" class="pages-item">
+                    {{ $route.params.index - 1 }}
+                </router-link>
+                <div class="pages-select">{{ $route.params.index }}</div>
+                <router-link :to="`/${routerLink}/admin/email-all/${+$route.params.index + 1}`" v-if="$route.params.index < Math.ceil(getRequests.length / 15) - 1" class="pages-item">
+                        {{ +$route.params.index + 1 }}
+                </router-link>
+                <router-link :to="`/${routerLink}/admin/email-all/${+$route.params.index + 2}`" v-if="$route.params.index < (Math.ceil(getRequests.length / 15) - 2)" class="pages-item">
+                        {{ +$route.params.index + 2 }}
+                </router-link>
+                <div v-if="$route.params.index < Math.ceil(getRequests.length / 15) - 2">...</div>
+                <router-link :to="`/${routerLink}/admin/email-all/${Math.ceil(getRequests.length / 15)}`" v-if="$route.params.index < Math.ceil(getRequests.length / 15)" class="pages-item">
+                    {{ Math.ceil(getRequests.length / 15) }}
+                </router-link>
+            </div>
+            <router-link :to="`/${routerLink}/admin/email-all/${goToNextPage()}`">
+                <i class="fa-solid fa-angle-right"></i>
+            </router-link>
+        </div>
     </div>
 </template>
 
@@ -65,7 +97,10 @@ export default {
         routerLink: process.env.VUE_APP_ADMIN_ROUTER,
         modal: false,
         selectedRequestId: null,
-        selectedRequestName: null
+        selectedRequestName: null,
+        requestStart: 0,
+        requestEnd: 0,
+        request: [],
     }),
 
     computed: mapGetters(['getRequests']),
@@ -83,7 +118,50 @@ export default {
             this.modal = false;
             this.selectedRequestId = null;
             this.selectedRequestName = null;
-        }
+        },
+
+         getLinksIndex() {
+            const startIndex = +this.$route.params.index + 1 || 0;
+            const pageSize = 15;
+            const links = [];
+            //const different = Math.round(this.getAppartaments.length / pageSize) - +this.$route.params.index;
+
+            for (let i = startIndex; i < startIndex + Math.round(this.getRequests.length / pageSize); i++) {
+                if (i < Math.round(this.getRequests.length / pageSize) && links.length < 7) {
+                    links.push(i);
+                }
+            }
+
+            return links;
+        },
+
+        getLinksIndex() {
+            const startIndex = +this.$route.params.index + 1 || 0;
+            const pageSize = 15;
+            const links = [];
+            //const different = Math.round(this.getAppartaments.length / pageSize) - +this.$route.params.index;
+
+            for (let i = startIndex; i < startIndex + Math.round(this.getRequests.length / pageSize); i++) {
+                if (i < Math.round(this.getRequests.length / pageSize) && links.length < 7) {
+                    links.push(i);
+                }
+            }
+
+            return links;
+        },
+
+        goToNextPage() {
+            if (Math.round(this.getRequests.length / 15) !== +this.$route.params.index) {
+                return +this.$route.params.index + 1;
+            }
+        },
+
+        goToPrevPage() {
+            if (+this.$route.params.index !== 1) {
+                return +this.$route.params.index - 1;
+            }
+            else return this.$route.params.index
+        },
     },
 
     components: {
@@ -91,8 +169,61 @@ export default {
         requestSignature
     },
 
+    watch: {
+        '$route.params.index': {
+            immediate: true,
+            handler(newIndex) {
+                this.request = [];
+
+                if (this.request.length <= 15) {
+                    this.requestStart = (newIndex - 1) * 15;
+                    this.requestEnd = newIndex * 15;
+                    this.request = this.getRequests.slice(this.requestStart, this.requestEnd);
+                }
+            },
+        },
+        'getRequests': {
+            immediate: true,
+            handler(newRequest) {
+                this.request = [];
+
+                if (this.request.length <= 15) {
+                    this.requestStart = (this.getRequests - 1) * 15;
+                    this.requestEnd = this.getRequests * 15;
+                    this.request = this.getRequests.slice(this.requestStart, this.requestEnd);
+                }
+
+                this.requestStart = (+this.$route.params.index - 1) * 15;
+                this.requestEnd = +this.$route.params.index * 15;
+                this.request = [];
+
+                this.getRequests.forEach((item, index) => {
+                    if (this.request.length < 15) {
+                        if (index + 1 > this.requestStart && index <= this.requestEnd) {
+                            this.request.push(item);
+                        }
+                    }
+                })
+
+                console.log(this.request);
+            },
+        },
+    },
+
     async mounted() {
         await this.fetchRequest();
+
+        this.requestStart = (+this.$route.params.index - 1) * 15;
+        this.requestEnd = +this.$route.params.index * 15;
+        this.request = [];
+
+        this.getRequests.forEach((item, index) => {
+            if (this.request.length < 15) {
+                if (index + 1 > this.requestStart && index <= this.requestEnd) {
+                    this.request.push(item);
+                }
+            }
+        })
     }
 }
 

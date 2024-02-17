@@ -4,12 +4,14 @@
             <div class="blog__content">
                 <div class="blog__slider swiper">
                     <div class="blog__wrapper swiper-wrapper">
-                        <div class="blog__item swiper-slide" v-for="blog in 10" :key="blog">
-                            <img src="@/assets/images/static/blogcard/blog.jpg" alt="Blog card" class="blog__img">
-                            <p class="blog__text">Apartment at Royal Atlantis sets new record at Dh 12,387 per square foot on Palm Jumeirah</p>
+                        <div class="blog__item swiper-slide" v-for="(blog, index) in posts" :key="blog">
+                            <router-link :to="`/post/${blog.title}`">
+                                <img :src="`/${img[index]}`" alt="Blog card" class="blog__img">
+                            </router-link>
+                            <p class="blog__text">{{ blog.title.length < 50 ? blog.title : blog.title.slice(0, 50) + '...' }}</p>
                             <div class="blog__initial">
-                                <p class="blog__views"><i class="fa-solid fa-eye"></i> 1 456</p>
-                                <p class="blog__date">August 30, 2023 18:34</p>
+                                <p class="blog__views"><i class="fa-solid fa-eye"></i> {{ blog.views }}</p>
+                                <p class="blog__date">{{ blog.date }}, {{ blog.time }}</p>
                             </div>
                         </div>
                     </div>
@@ -27,27 +29,56 @@
 <script>
 import Swiper from 'swiper';
 import 'swiper/css';
+import axios from 'axios';
 
 export default {
     data: () => ({
-        windowWidth: window.innerWidth
+        windowWidth: window.innerWidth,
+        url: '/server-api/',
+        img: []
     }),
+
+    props: {
+        posts: Array
+    },
     
-    mounted () {
-        let countSlidesFromWinfowWidth = 3.4;
+    watch: {
+        'posts': {
+            deep:true,
+            handler() {
+                 this.posts.forEach(item => {
+                    const content = JSON.parse(item.content);
 
-        if (this.windowWidth < 1250) {
-            countSlidesFromWinfowWidth = 3;
+                    content.some(obj => {
+                        if (obj.type === 'IMAGE') {
+                            this.img.push(obj.path);
+                            return true;
+                        }
+                        return false;
+                    });
+                });
+            }
         }
-        if (this.windowWidth < 800) {
-            countSlidesFromWinfowWidth = 2;
-        }
+    },
 
-        const swiper = new Swiper('.blog__slider', {
-            slidesPerView: countSlidesFromWinfowWidth,
-            spaceBetween: 50,
-            loop: true
+    async mounted () {
+        
+        this.$nextTick(() => {
+            let countSlidesFromWinfowWidth = 3.4;
+    
+            if (this.windowWidth < 1250) {
+                countSlidesFromWinfowWidth = 3;
+            }
+            if (this.windowWidth < 800) {
+                countSlidesFromWinfowWidth = 2;
+            }
+            const swiper = new Swiper('.blog__slider', {
+                slidesPerView: countSlidesFromWinfowWidth,
+                spaceBetween: 50,
+                loop: true
+            })
         })
+
     }
 }
 

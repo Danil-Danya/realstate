@@ -10,7 +10,6 @@ export default () => ({
     actions: {
         async fetchAppartaments(context, filters) {
             const url = `/${process.env.VUE_APP_API_PATH}/appartament-get-all`;
-
             try {
                 const response = await axios.get(url, {
                     headers: {

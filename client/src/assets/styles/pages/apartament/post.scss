@@ -55,13 +55,13 @@
     &__price {
         margin-top: 70px;
         display: flex;
-        justify-content: space-between;
+        gap: 15px;
         align-items: center;
-        max-width: 500px;
         width: 100%;
 
         @include media ($xs) {
                 margin: 20px 0;
+                flex-wrap: wrap;
         }
 
         &-term {

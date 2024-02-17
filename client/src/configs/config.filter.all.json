@@ -1,0 +1,81 @@
+{
+    "bedrooms": {
+        "name": "Bedrooms",
+        "list": [
+            "1 bedroom",
+            "2 bedrooms",
+            "3 bedrooms",
+            "4 bedrooms",
+            "5 bedrooms",
+            "6 bedrooms",
+            "7 bedrooms",
+            "8 bedrooms",
+            "9 bedrooms"
+        ]
+    },
+    "bathrooms": {
+        "name": "Bathrooms",
+        "list": [
+            "1 bathroom",
+            "2 bathrooms",
+            "3 bathrooms",
+            "4 bathrooms",
+            "5 bathrooms",
+            "6 bathrooms",
+            "7 bathrooms",
+            "8 bathrooms",
+            "9 bathrooms"
+        ]
+    },
+    "propertyType": {
+        "name": "Property type",
+        "list": [
+            "Apartament",
+            "Villa",
+            "Townhouse"
+        ]
+    },
+    "areas": {
+        "name": "Areas",
+        "list": [
+            "Under 500 (ft)",
+            "500 to 1000 (ft)",
+            "1000 to 2000 (ft)",
+            "2000 to 5000 (ft)",
+            "Over 5000 (ft)"
+        ]
+    },
+    "price": {
+        "name": "Price",
+        "list": [
+            "Under 50000 (AED)",
+            "50000 to 100000 (AED)",
+            "100000 to 150000 (AED)",
+            "150000 to 200000 (AED)",
+            "200000 to 250000 (AED)",
+            "250000 to 300000 (AED)",
+            "300000 to 350000 (AED)",
+            "350000 to 400000 (AED)",
+            "400000 to 450000 (AED)",
+            "450000 to 500000 (AED)",
+            "Over 500000 (AED)"
+        ]
+    },
+    "locations": {
+        "name": "Locations",
+        "list": [
+            "Arabian Ranches",
+            "Downtown Dubai",
+            "Mina rashid",
+            "Dubai Marina",
+            "Palm Jumeirah",
+            "Business Bay",
+            "Jebel Ali",
+            "Dubai Media City",
+            "Sheikh Zayed Road",
+            "Deira",
+            "Al Barsha",
+            "Dubai City"
+        ]
+    }
+}

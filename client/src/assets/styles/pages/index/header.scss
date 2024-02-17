@@ -10,13 +10,41 @@
         top: 0;
         left: 0;
         max-width: 1644px;
+        width: 100%;
+        height: 925px;
         z-index: -1;
+        border-radius: 30px;
+        object-fit: cover;
+
 
         @include media ($lg) {
             position: relative;
             z-index: 1;
-            top: none;
-            left: none;
+            max-width: calc(100% - 30px);
+            height: 700px;
+        }
+
+        @include media ($md) {
+            position: relative;
+            z-index: 1;
+            max-width: calc(100% - 30px);
+            height: 440px;
+        }
+
+        @include media ($sm) {
+            border-radius: 12;
+            position: relative;
+            z-index: 1;
+            max-width: calc(100% - 30px);
+            height: 340px;
+        }
+
+        @include media ($xs) {
+            border-radius: 12px;
+            position: relative;
+            z-index: 1;
+            max-width: 100%;
+            height: 250px;
         }
     }
     
@@ -26,11 +54,31 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        border-radius: 30px;
+        cursor: grab;
+
+        @include media ($lg) {
+            flex-wrap: wrap;
+            height: auto;
+            border-radius: 0px;
+        }
     }
 
-    &__bullet {
-        width: 50px;
-        height: 50px;
+    &__bg {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        background: linear-gradient(135deg, #ffffffbe -35.75%, rgba(255, 255, 255, 0.00) 51%), rgba(211, 211, 211, 0) 50% / cover no-repeat;
+        z-index: -1;
+
+        @include media ($lg) {
+            background: none;
+        }
+    }
+
+    &__link {
+        width: 70px;
+        height: 70px;
         position: relative;
         cursor: pointer;
         display: flex;
@@ -38,13 +86,34 @@
         align-items: center;
         opacity: 1;
 
-        &-bg {
+        &-length {
             position: absolute;
-            z-index: 2;
-            font-size: 25px;
-            background: #00000041;
+            background: #0000004d;
             width: 100%;
             height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            font-size: 28px;
+            font-family: Gotham Medium !important;
+            border-radius: 14px !important;
+        }
+
+        &-container {
+            position: absolute;
+            top: 50px;
+            right: 50px;
+            & > ul {
+                display: flex;
+                flex-direction: column;
+                gap: 30px;
+            }
+        }
+
+        &-bg {
+            font-size: 25px;
+            background: #00000041;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -54,10 +123,10 @@
         
         &-img {
             border-radius: 14px !important;
-            outline: 10px solid #ffffffc8;
-            width: 50px;
-            height: 50px;
-            transform: scaleY(-1);
+            outline: 10px solid #ffffff92;
+            width: 70px;
+            height: 70px;
+            object-fit: cover;
         }
     }
 
@@ -67,6 +136,12 @@
     }
 
     &__swiper {
+        border-radius: 30px;
+        
+        @include media ($lg) {
+            border-radius: 0;
+        }
+
         &-contanier {
             border-radius: 30px;
             position: absolute;
@@ -91,29 +166,55 @@
         max-width: 1500px;
         height: 70%;
         width: 100%;
+        @include media ($lg) {
+            height: auto;
+        }
     }
 
     &__title {
         font-family: Gotham Bold !important;
         font-size: 84px;
+
+        @include media ($lg) {
+            font-size: 40px;
+        }
+
+        @include media ($md) {
+            font-size: 36px;
+        }
     }
 
     &__info {
         font-size: 20px;
+
+        @include media ($sm) {
+            font-size: 16px;
+            margin-bottom: 16px !important;
+        }
+        @include media ($lg) {
+            margin-bottom: 30px !important;
+        }
     }
 
     &__link {
-        font-size: 22px;
-        font-family: Gotham Bold !important;
-        display: inline-block;
-        margin-top: 40px;
+        &-text {
+            font-size: 22px;
+            font-family: Gotham Bold !important;
+            display: inline-block;
+            margin-top: 40px;
+        }
+
+    }
+
+    &__button {
+        &-container {
+            display: flex;
+            gap: 10px;
+            margin-top: 80px;
+        }
     }
 
     &-prev {
-        position: absolute;
-        z-index: 2;
-        bottom: 270px;
-        left: 70px;
         font-size: 30px;
         border: 1px solid #000;
         width: 44px;
@@ -126,8 +227,6 @@
     }
 
     &-next {
-        position: absolute;
-        z-index: 2;
         bottom: 270px;
         left: 130px;
         font-size: 30px;

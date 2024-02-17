@@ -7,7 +7,7 @@
                     </router-link>
                     <form class="d-flex navbar__form" role="search">
                         <ul class="navbar__form-ul d-flex">
-                            <li v-for="item in filter" :key="item">
+                            <li v-for="item in filter" @click="toggleFilter" :key="item">
                                 <a href="#" class="navbar__filter">{{ item }}</a>
                                 <span class="navbar__filter-element"></span>
                             </li>
@@ -19,7 +19,7 @@
                     <div class="navbar__icon-list">
                         <ul>
                             <li v-for="icon, index in icons" :key="icon">
-                                <a href="#" ref="link" @click="toggleBar(index)" class="navbar__icon">
+                                <a href="#" ref="link" @click.stop="toggleBar(index)" class="navbar__icon">
                                     <div ref="div" class="disactive">
                                         <i :class="icon" ref="icons"></i>
                                     </div>
@@ -34,7 +34,7 @@
                             <h3 class="navbar__modal-title">Menu</h3>
                         </div>
                         <div class="navbar__modal-icon">
-                            <span class="navbar__icon">
+                            <span class="navbar__icon" @click="createLikedLink">
                                 <i class="fa-regular fa-heart"></i>
                             </span>
                             <span class="navbar__icon">
@@ -43,10 +43,13 @@
                         </div>
                         <ul>
                             <li v-for="link in links" :key="link">
-                                <a href="" class="navbar__modal-link">{{ link.name }}</a>
+                                <router-link :to="`${link.link}`" class="navbar__modal-link">{{ link.name }}</router-link>
                             </li>
                         </ul>
                     </div>
+                </transition>
+                <transition name="filter">
+                    <navbarFilters v-if="showFilter" @closeFilter="closeFilter"/>
                 </transition>
             </div>
         </nav>
@@ -57,10 +60,12 @@
 </style>
 
 <script>
+import navbarFilters from '@/components/reused/navbarFilters.vue';
 export default {
     data: () => ({
         documentWidth: window.innerWidth,
         modal: false,
+        showFilter: false,
         filter: [
             'Rent/Buy',
             'Property type',
@@ -75,25 +80,57 @@ export default {
                 name: 'Home'
             },
             {
-                link: '/catalog',
+                link: '/catalog/1',
                 name: 'Catalog'
             },
             {
-                link: '/blog',
+                link: '/blog/1',
                 name: 'Blog'
             },
             {
-                link: '',
+                link: '/#about',
                 name: 'About us'
             },
             {
-                link: '',
+                link: '/#contact',
                 name: 'Contact us'
             },
         ]
     }),
 
+    components: {
+        navbarFilters
+    },
+
     methods: {
+        toggleFilter() {
+            this.showFilter = !this.showFilter;
+        },
+
+        closeFilter() {
+            this.showFilter = !this.showFilter;
+        },
+
+        createLikedLink() {
+            let likedLink = document.querySelector('.navbar__like');
+            let likedUrl = '';
+
+            let tovars = localStorage.getItem('likedTovars');
+            !tovars ? tovars = [] : tovars = JSON.parse(tovars);
+
+            tovars.forEach((tovar, index) => {
+                if (index === tovars.length - 1) {
+                    likedUrl += tovar;
+                }
+                else {
+                    likedUrl += tovar + ',';
+                }
+            });
+            likedUrl = encodeURIComponent(likedUrl ? likedUrl : 'none')
+
+            this.$router.push('/catalog/1/?liked=' + likedUrl);
+        },
+
         toggleBar(index) {
             this.modal = !this.modal;
 
@@ -111,24 +148,26 @@ export default {
                 this.$refs.link[index].innerHTML += divContent;
             }
         },
-        // closeOnBodyBar() {
-        //     if (this.modal) {
-        //         const bar = this.$refs.link;
-        //         const activeDiv = document.querySelectorAll('.active');
-        //         const disactiveDiv = document.querySelectorAll('.disactive');
+        closeOnBodyBar() {
+            if (this.modal) {
+                const bar = this.$refs.link;
+                const activeDiv = document.querySelectorAll('.active');
+                const disactiveDiv = document.querySelectorAll('.disactive');
+                console.log(bar);
 
-        //         this.modal = false;
+                this.modal = false;
 
-        //         bar[bar.length - 1].removeChild(activeDiv[0]);
-        //         bar[bar.length - 1].innerHTML += `<div class="disactive" ref="div">
-        //                                               <i class="fa-solid fa-bars-staggered"></i>
-        //                                           </div>`;
-        //     }
-        // }
+                bar[0].removeChild(activeDiv[0]);
+                bar[0].innerHTML += `<div class="disactive" ref="div">
+                                                      <i class="fa-solid fa-bars-staggered"></i>
+                                                  </div>`;
+            }
+        }
     },
-    // mounted() {
-    //     document.body.addEventListener('click', =>  this.closeOnBodyBar, { once: true });
-    // },
+    
+    mounted() {
+        document.querySelector('body').addEventListener('click', () =>  this.closeOnBodyBar());
+    },
 }
 
 

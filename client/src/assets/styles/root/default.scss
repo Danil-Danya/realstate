@@ -73,6 +73,10 @@ ul {
     padding: 0 !important;
 }
 
+img {
+    object-fit: cover;
+}
+
 .whatsapp {
     color: #01C24A;
     font-size: 22px;
@@ -106,7 +110,7 @@ ul {
 
 /// ////////////////////////
 
-input[type="text"], input[type="number"],
+input[type="text"], input[type="number"], input[type="tel"],
 input[type="email"], input[type="password"], textarea {
     padding: 26px 30px;
     max-width: 420px;
@@ -114,6 +118,112 @@ input[type="email"], input[type="password"], textarea {
     border: 1px solid #D9D9D9;
     outline: none;
     //background: #F6F6F6 !important;
+}
+
+input[type=range] {
+    height: 10px;
+    -webkit-appearance: none;
+    margin: 10px 0;
+    width: 100%;
+}
+
+input[type=range]:focus {
+    outline: none;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 10px;
+    cursor: pointer;
+    animate: 0.2s;
+    box-shadow: 0px 0px 0px #353535;
+    background: #676767;
+    
+    &:nth-of-type(2) {
+        border-top-right-radius: 30px;
+        border-bottom-right-radius: 30px;
+    }
+    &:nth-of-type(1) {
+        border-top-left-radius: 30px;
+        border-bottom-left-radius: 30px;
+    }
+}
+
+input[type=range]::-webkit-slider-thumb {
+    filter: drop-shadow(0px 1px 3px rgba(0, 0, 0, 0.10));
+    border: 0px solid #000000;
+    height: 25px;
+    width: 25px;
+    border-radius: 100%;
+    background: #ffffff;
+    cursor: pointer;
+    -webkit-appearance: none;
+    margin-top: -8px;
+}
+
+input[type=range]:focus::-webkit-slider-runnable-track {
+    background: #676767;
+}
+
+input[type=range]::-moz-range-track {
+    width: 100%;
+    height: 5px;
+    cursor: pointer;
+    animate: 0.2s;
+    filter: drop-shadow(0px 1px 3px rgba(0, 0, 0, 0.10));
+    background: #676767;
+    border-radius: 0px;
+}
+
+input[type=range]::-moz-range-thumb {
+    filter: drop-shadow(0px 1px 3px rgba(0, 0, 0, 0.10));
+    border: 0px solid #000000;
+    height: 25px;
+    width: 25px;
+    border-radius: 50px;
+    background: #ffffff;
+    cursor: pointer;
+}
+
+input[type=range]::-ms-track {
+    width: 100%;
+    height: 5px;
+    cursor: pointer;
+    animate: 0.2s;
+    background: transparent;
+    border-color: transparent;
+    color: transparent;
+}
+
+input[type=range]::-ms-fill-lower {
+    background: #676767;
+    border-radius: 50px;
+    filter: drop-shadow(0px 1px 3px rgba(0, 0, 0, 0.10));
+}
+
+input[type=range]::-ms-fill-upper {
+    background: #676767;
+    border-radius: 50px;
+    filter: drop-shadow(0px 1px 3px rgba(0, 0, 0, 0.10));
+}
+
+input[type=range]::-ms-thumb {
+    margin-top: 1px;
+    filter: drop-shadow(0px 1px 3px rgba(0, 0, 0, 0.10));
+    border: 0px solid #000000;
+    height: 25px;
+    width: 25px;
+    border-radius: 50px;
+    background: #ffffff;
+    cursor: pointer;
+}
+
+input[type=range]:focus::-ms-fill-lower {
+    background: #676767;
+}
+
+input[type=range]:focus::-ms-fill-upper {
+    background: #676767;
 }
 
 .input__container {
@@ -157,6 +267,30 @@ input[type="email"], input[type="password"], textarea {
     margin-bottom: 80px !important;
 }
 
+.price {
+    &-tag {
+        background-color: #fff;
+        border-radius: 8px;
+        color: #373737;
+        font-family: Gotham Bold !important;
+        font-size: 14px;
+        padding: 10px 15px;
+        position: relative;
+        &::after {
+                content: "";
+                position: absolute;
+                left: 50%;
+                top: 100%;
+                transform: translate(-50%, 0);
+                width: 0;
+                height: 0;
+                border-left: 8px solid transparent;
+                border-right: 8px solid transparent;
+                border-top: 8px solid #fff;
+            }
+    }
+}
+
 .error {
     &-title {
         color: #373737;   
@@ -177,6 +311,67 @@ input[type="email"], input[type="password"], textarea {
     }
 }
 
+.gm-style-iw-d {
+    padding-right: 10px;
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+.pages {
+
+    @include media ($xs) {
+        transform: scale(0.9);
+    }
+
+    &-links {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+    }
+
+    &-item {
+        display: block;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        border-radius: 6px;
+        align-items: center;
+        border: 1px solid #000;
+
+        @include media ($xs) {
+            width: 25px;
+            height: 25px;
+            border: none !important;
+        }
+
+        &:hover {
+            border: 1px solid #000;
+            background: #2c1703af;
+            color: #fff !important;
+        }
+    }
+
+    &-select {
+        cursor: pointer;
+        display: flex;
+        width: 50px;
+        height: 50px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border-radius: 6px;
+        background: #373737;
+        color: #FFF !important;
+        text-align: center;
+        font-family: Gotham Bold !important;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 350;
+        line-height: normal;
+    }
+}
 
 .tovar {
     &__item {
@@ -185,7 +380,7 @@ input[type="email"], input[type="password"], textarea {
         width: 290px;
 
         &-img {
-            width: 290px;
+            width: 100%;
             height: 310px;
             border-radius: 8px;
             object-fit: cover;
@@ -205,9 +400,9 @@ input[type="email"], input[type="password"], textarea {
 
     &__rate {
         position: absolute;
-        top: 260px;
         color: #FFFFFF;
         font-size: 14px;
+        top: 260px;
         right: 20px;
     }
 
@@ -267,6 +462,12 @@ input[type="email"], input[type="password"], textarea {
         gap: 10px;
     }
 
+    &__link {
+        width: 290px;
+        display: block;
+        position: relative;
+    }
+
     &__price {
         display: flex;
         gap: 10px;
@@ -292,15 +493,18 @@ input[type="email"], input[type="password"], textarea {
 
     &__item {
         cursor: pointer;
-        border-radius: 40px;
+        border-radius: 20px;
         background: rgba(55, 55, 55, 0.05);
         padding: 10px 20px !important;
         display: flex;
         justify-content: center;
+        align-items: center;
         font-size: 18px !important;
         gap: 10px;
         color: #373737ad !important;
+        line-height: 18px;
         transition: 500ms all;
+        height: 50px;
 
         &:hover {
             color: #fff !important;
@@ -339,6 +543,54 @@ input[type="email"], input[type="password"], textarea {
 .admin {
     &__container {
         margin-top: 50px;
+    }
+
+    &__add {
+        color: #000;
+        font-family: Gotham Bold !important;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        display: inline-block;
+        
+        // &::after {
+        //     content: '';
+        //     width: 0;
+        //     height: 1px;
+        //     background: #000;
+        //     display: inline-block;
+        //     transition: 500ms;
+        // }
+        
+        &:hover {
+            cursor: pointer;
+            // &::after {
+            //     width: 100%;
+            // }
+        }
+    }
+
+    &__drop {
+       position: relative;
+    }
+
+    &__drag {
+        &-text {
+            position: absolute;
+            left: -50px;
+            bottom: 35%;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        &-image {
+            position: absolute;
+            left: -50px;
+            bottom: 35%;
+            padding: 10px;
+            cursor: pointer;
+    }
     }
 
     &__icon {
@@ -475,6 +727,13 @@ input[type="email"], input[type="password"], textarea {
             font-style: normal;
             font-weight: 350;
             line-height: normal;
+        }
+
+        &-add {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 80px !important;
         }
 
         &-buttons {
@@ -727,7 +986,7 @@ input[type="email"], input[type="password"], textarea {
 
 .path {
     &__back {
-        margin-top: 172px;
+        margin-top: 140px !important;
         display: flex;
         justify-content: space-between;
         //align-items: flex-start;
@@ -739,10 +998,11 @@ input[type="email"], input[type="password"], textarea {
 
         &-link {
             display: flex;
-            //align-items: center;
+            align-items: center;
             gap: 10px;
 
         }
+
         
         &-text {
             font-size: 20px;
@@ -764,6 +1024,7 @@ input[type="email"], input[type="password"], textarea {
     &__links {
         & > ul {
             display: flex;
+            align-items: center;
         }
     }
     
@@ -837,6 +1098,129 @@ input[type="email"], input[type="password"], textarea {
 
         @include media ($xs) {
             font-size: 18px;
+        }
+    }
+}
+
+.apartament__mobile {
+    &-pagination {
+        position: absolute;
+        z-index: 99;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+
+        &-bullet {
+            display: block;
+            color: rgba(255, 255, 255, 0.60);
+            background: rgba(255, 255, 255, 0.60);
+            width: 5px !important;
+            height: 5px !important;
+            transition: 500ms;
+            border-radius: 100%;
+
+            &-active {
+                display: block;
+                color: #fff;
+                background: #fff;
+                width: 10px !important;
+                height: 10px !important;
+                transition: 500ms;
+                border-radius: 100%;
+            }
+        }
+    }
+
+    &-link {
+        color: #000;
+        font-family: Gotham Medium !important;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        display: inline-block;
+        border-bottom: 1px solid #000;
+        margin-bottom: 25px;
+    }
+
+    &-card {
+        &-container {
+            position: relative;
+            margin-bottom: 50px;
+        }
+
+        &-info {
+            position: absolute;
+            z-index: 99;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 15px;
+        }
+    }
+
+    &-tag {
+        border-radius: 13px;
+        border: 0.8px solid #373737;
+        background: rgba(255, 255, 255, 0.246);
+        display: flex;
+        justify-content: center;
+        padding: 0 10px;
+        height: 25px;
+        backdrop-filter: blur(1px);
+    }
+
+    &-type {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+        
+        &-text {
+            font-size: 14px;
+        }
+    }
+
+    &-item {
+        width: 100%;
+    }
+
+
+    &-icons {
+        display: flex;
+        gap: 20px;
+        font-size: 24px;
+        color: #fff;
+    }
+
+    &-img {
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+        border-radius: 10px;
+    }
+}
+
+.password {
+    &-icon {
+        font-size: 20px;
+        color: rgba(55, 55, 55, 0.40);
+        padding: 10px;
+        cursor: pointer;
+        position: absolute;
+        top: 15px;
+        right: 15px;
+    }
+}
+
+
+.mobile {
+    &__contact {
+        &-input {
+            &::placeholder {
+                color: red;
+            }
         }
     }
 }

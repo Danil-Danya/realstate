@@ -12,6 +12,7 @@ import blogPath from '@/components/pages/blog/blogPath.vue';
 import blogSlider from '@/components/pages/blog/blogSlider.vue';
 import mobileBlogSlider from '@/components/pages/blog/mobile/mobileBlogSlider.vue';
 import blogContent from '@/components/pages/blog/blogContent.vue';
+import postFilter from '@/components/reused/postFilter.vue';
 
 export default {
     data: () => ({
@@ -21,7 +22,8 @@ export default {
         blogPath,
         blogSlider,
         mobileBlogSlider,
-        blogContent
+        blogContent,
+        postFilter
     },
     mounted () {
         document.title = 'Luxury One - blog'

@@ -1,8 +1,23 @@
 .about {
     margin-bottom: 200px;
+
+    @include media ($xs) {
+        margin-bottom: 80px;
+    }
+
     &__content {
         display: flex;
-        justify-content: space-between;
+        justify-content: space-around;
+        flex-wrap: wrap;
+    }
+
+    &__title {
+        @include media ($xs) {
+            font-size: 20px;
+            margin-top: 80px !important;
+            margin-bottom: 50px !important;
+            font-family: Gotham Medium !important;
+        }
     }
 
     &__left {
@@ -13,12 +28,42 @@
         line-height: 150%;
         max-width: 964px;
         width: 100%;
+
+        @include media ($xs) {
+            font-size: 16px;
+            justify-content: center;
+            width: 285px;
+        }
         /* 33px */
+
+    }
+
+    &__logo {
+        @include media ($xs) {
+            width: 235px;
+            height: 60px;
+
+            &-container {
+                display: flex;
+                justify-content: center;
+            }
+        }
+    }
+    
+    &__right {
+        @include media ($full) {
+            display: none;
+        }
     }
 
     &__number {
         font-size: 68px;
-        font-family: Gotham Medium;
+        font-family: Gotham Medium !important;
+
+        @include media ($xs) {
+            font-size: 48px;
+            //font-family: Gotham Bold !important;
+        }
     }
 
     &__center {
@@ -29,5 +74,15 @@
         display: flex;
         width: 100%;
         justify-content: space-between;
+        flex-wrap: wrap;
+
+        &-item {
+            @include media ($full) {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                margin-bottom: 20px;
+            }
+        }
     }
 }

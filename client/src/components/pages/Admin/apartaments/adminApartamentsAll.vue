@@ -12,7 +12,7 @@
         <appartamentSignature/>
         <div class="admin__item"
         :style="index % 2 === 1 ? { background: 'rgba(55, 55, 55, 0.02)' } : {}"
-        v-for="(item, index) in getAppartaments" :key="item">
+        v-for="(item, index) in apartaments" :key="item">
             <div class="admin__index">
                 <h2 class="admin__text-bold">{{ index + 1 }}</h2>
             </div>
@@ -51,28 +51,37 @@
                 <router-link to="" class="admin__icon" @click="showModal(item.id, item.name, item.imgPaths)"><i class="fa-regular fa-trash-can"></i></router-link>
             </div>
         </div>
-        <div class="admin__pages-container">
-            <div class="admin__pages">
-                <router-link :to="prevPageLink">
-                    <i class="fa-solid fa-angle-left"></i>
+        <div class="admin__pages" v-if="Math.ceil(getAppartaments.length / 15) > 1">
+            <router-link :to="`/${routerLink}/admin/appartament-disactive/${goToPrevPage()}`">
+                <i class="fa-solid fa-angle-left"></i>
+            </router-link>
+            <div class="pages-links">
+                <router-link :to="`/${routerLink}/admin/appartament-disactive/1`" v-if="$route.params.index > 3" class="pages-item">
+                    1
                 </router-link>
-                <div class="admin__pages-links">
-                    <div class="admin__pages-select">{{ currentPage }}</div>
-                    <router-link
-                        v-for="pageNumber in filteredVisiblePages"
-                        :key="pageNumber"
-                        class="admin__pages-link"
-                        :to="`${pageLink}/${pageNumber - 1}`"
-                    >
-                    {{ pageNumber }}
-                    </router-link>
-                    <p v-if="shouldDisplayDots">...</p>
-                </div>
-                <router-link :to="nextPageLink">
-                    <i class="fa-solid fa-angle-right"></i>
+                <div v-if="$route.params.index > 3">...</div>
+                <router-link :to="`/${routerLink}/admin/appartament-disactive/${$route.params.index - 2}`" v-if="$route.params.index > 2" class="pages-item">
+                    {{ $route.params.index - 2 }}
+                </router-link>
+                <router-link :to="`/${routerLink}/admin/appartament-disactive/${$route.params.index - 1}`" v-if="$route.params.index > 1" class="pages-item">
+                    {{ $route.params.index - 1 }}
+                </router-link>
+                <div class="pages-select">{{ $route.params.index }}</div>
+                <router-link :to="`/${routerLink}/admin/appartament-disactive/${+$route.params.index + 1}`" v-if="$route.params.index < Math.ceil(getAppartaments.length / 15) - 1" class="pages-item">
+                        {{ +$route.params.index + 1 }}
+                </router-link>
+                <router-link :to="`/${routerLink}/admin/appartament-disactive/${+$route.params.index + 2}`" v-if="$route.params.index < (Math.ceil(getAppartaments.length / 15) - 2)" class="pages-item">
+                        {{ +$route.params.index + 2 }}
+                </router-link>
+                <div v-if="$route.params.index < Math.ceil(getAppartaments.length / 15) - 2">...</div>
+                <router-link :to="`/${routerLink}/admin/appartament-disactive${Math.ceil(getAppartaments.length / 15)}`" v-if="$route.params.index < Math.ceil(getAppartaments.length / 15)" class="pages-item">
+                    {{ Math.ceil(getAppartaments.length / 15) }}
                 </router-link>
             </div>
-      </div>
+            <router-link :to="`/${routerLink}/admin/appartament-disactive${goToNextPage()}`">
+                <i class="fa-solid fa-angle-right"></i>
+            </router-link>
+        </div>
     </div>
 </template>
 
@@ -91,7 +100,10 @@ export default {
         selectedAppartamentName: null,
         selectedAppartamentImgPaths: null,
         priceForRentUSD: [],
-        priceForBuyUSD: []
+        priceForBuyUSD: [],
+        apartamentsStart: 0,
+        apartamentsEnd: 0,
+        apartaments: [],
     }),
 
     components: {
@@ -101,6 +113,35 @@ export default {
 
     methods: {
         ...mapActions('appartaments', ['fetchAppartaments']),
+
+        getLinksIndex() {
+            const startIndex = +this.$route.params.index + 1 || 0;
+            const pageSize = 15;
+            const links = [];
+            //const different = Math.round(this.getAppartaments.length / pageSize) - +this.$route.params.index;
+
+            for (let i = startIndex; i < startIndex + Math.round(this.getAppartaments.length / pageSize); i++) {
+                if (i < Math.round(this.getAppartaments.length / pageSize) && links.length < 7) {
+                    links.push(i);
+                }
+            }
+
+            return links;
+        },
+
+        goToNextPage() {
+            if (Math.ceil(this.getAppartaments.length / 15) !== +this.$route.params.index) {
+                return +this.$route.params.index + 1;
+            }
+            else return this.$route.params.index
+        },
+
+        goToPrevPage() {
+            if (+this.$route.params.index !== 1) {
+                return +this.$route.params.index - 1;
+            }
+            else return this.$route.params.index
+        },
 
         async convertValute(price, type) {
             const convertor = new Convertor({
@@ -113,18 +154,6 @@ export default {
             const convert = await convertor.convertValute();
 
             type === rent ? this.priceForRent.push(convert) : this.priceForBuy.push(convert);
-        },
-
-        getIndex () {
-            return this.$route.params.index;
-        },
-
-        getMaxItem () {
-            return +this.getIndex() + 1 * 15;
-        },
-
-        getMinItem () {
-            return this.getIndex() * 15;
         },
 
         showModal(id, name, imgPaths) {
@@ -155,49 +184,60 @@ export default {
         // }
     },
 
+    watch: {
+        '$route.params.index': {
+            immediate: true,
+            handler(newIndex) {
+                this.apartaments = [];
+
+                if (this.apartaments.length <= 15) {
+                    this.apartamentsStart = (newIndex - 1) * 15;
+                    this.apartamentsEnd = newIndex * 15;
+                    this.apartaments = this.getAppartaments.slice(this.apartamentsStart, this.apartamentsEnd);
+                }
+            },
+        },
+        'getAppartaments': {
+            deep: true,
+            handler(newAppartaments) {
+                this.apartaments = [];
+                
+                if (this.apartaments.length <= 15) {
+                    this.apartamentsStart = (this.$route.params.index - 1) * 15;
+                    this.apartamentsEnd = this.$route.params.index * 15;
+                    this.apartaments = newAppartaments.slice(this.apartamentsStart, this.apartamentsEnd);
+                }
+                console.log(this.apartaments);
+            },
+        },
+    },
+
     computed:{
         ...mapGetters('appartaments',['getAppartaments']),
-         pageLink() {
-            return `/${this.routerLink}/admin/appartament-all`;
-        },
-
-        currentPage() {
-            return +this.getIndex() + 1;
-        },
-
-        totalPages() {
-            return Math.ceil(this.getAppartaments.length / 15);
-        },
-
-        filteredVisiblePages() {
-            return this.visiblePages.filter(page => page !== this.currentPage);
-        },
-
-        prevPageLink() {
-            return this.currentPage > 1 ? `${this.pageLink}/${this.currentPage - 2}` : this.pageLink;
-        },
-
-        nextPageLink() {
-            return this.currentPage < this.totalPages ? `${this.pageLink}/${this.currentPage}` : `${this.pageLink}/${this.totalPages - 1}`;
-        },
-
-        visiblePages() {
-            const startPage = Math.max(1, this.currentPage - 2);
-            const endPage = Math.min(this.totalPages, startPage + 4);
-            const pages = [];
-            for (let i = startPage; i <= endPage; i++) {
-                pages.push(i);
-            }
-            return pages;
-        },
-        shouldDisplayDots() {
-            return this.currentPage < this.totalPages - 2;
-        },
     },
 
     async mounted() {
         await this.fetchAppartaments();
-        //console.log(this.filterItemsInPages());
+        console.log(this.apartaments);
+
+        this.apartamentsStart = (+this.$route.params.index - 1) * 15;
+        this.apartamentsEnd = +this.$route.params.index * 15;
+        this.apartaments = [];
+
+        this.getAppartaments.forEach((item, index) => {
+            if (this.apartaments.length < 15) {
+                if (index + 1 > this.apartamentsStart && index <= this.apartamentsEnd) {
+                    this.apartaments.push(item);
+                }
+            }
+            
+            if (this.getAppartaments.length < 15) {
+                this.apartaments.push(item);
+            }
+        })
+
+
+        document.title = 'Admin panel - all apartaments';
     }
 }
 

@@ -2,7 +2,7 @@
     <div class="apartament__mobile-slider">
         <div class="container">
             <div class="apartament__mobile-links">
-                <router-link to="/map" class="apartament__mobile-link">Show in map</router-link>
+                <a href="#map" class="apartament__mobile-link">Show in map</a>
             </div>
         </div>
         <div class="apartament__mobile-slider-container">
@@ -16,11 +16,11 @@
                     </div>
                 </div>
                 <div class="apartament__mobile-icons">
-                    <span class="apartament__mobile-icon">
-                        <i class="fa-solid fa-share-nodes"></i>
-                    </span>
-                    <span class="apartament__mobile-icon">
+                    <span class="apartament__mobile-icon" @click="setLikedTovar(dataContent, index)" >
                         <i class="fa-regular fa-heart"></i>
+                    </span>
+                    <span class="apartament__mobile-icon" @click="setLikedTovar(dataContent, index)" v-if="dataContent.liked">
+                        <i class="fa-solid fa-heart"></i>
                     </span>
                 </div>
             </div>
@@ -28,7 +28,7 @@
                 <div class="apartament__mobile-wrapper swiper-wrapper">
                     <div class="apartament__mobile-item swiper-slide" v-if="dataImages.imgPaths" v-for="slide in dataImages.imgPaths.split(',')" :key="slide">
                         <div class="apartament__mobile-images-container">
-                            <img :src="`http://localhost:5000/${slide}`" alt="" class="apartament__mobile-img">
+                            <img :src="`/${slide}`" alt="" class="apartament__mobile-img">
                         </div>
                     </div>
                 </div>
@@ -59,7 +59,33 @@ export default {
         ]
     }),
 
+    methods: {
+        setLikedTovar(item) {
+            let tovars = localStorage.getItem('likedTovars');
+
+            !tovars ? tovars = [] : tovars = JSON.parse(tovars);
+
+            const index = tovars.indexOf(item.name);
+
+            if (index !== -1) {
+                tovars.splice(index, 1);
+                this.dataContent.liked = false;
+            } else {
+                tovars.push(item.name);
+                this.dataContent.liked = true;
+            }
+
+            localStorage.setItem('likedTovars', JSON.stringify(tovars));
+
+            if (this.$route.query.liked) {
+                this.$router.replace(this.createLikedLink());
+            }
+        },
+    },
+
     mounted () {
+        console.log('this.dataContent',this.dataContent);
+
         const swiper = new Swiper('.apartamemt__mobile-slider-content',{
             slidesPerView: 1,
             modules: [Pagination],

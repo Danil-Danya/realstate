@@ -7,14 +7,15 @@
                         <h1 class="blog__title-posts">Recent media posts</h1>
                     </div>
                     <div class="blog__content-catalog">
-                        <div class="blog__item blog__content-item" v-for="blog in 12" :key="blog">
-                            <img src="@/assets/images/static/blogcard/blog.jpg" alt="Blog card"
-                                class="blog__img blog__content-img">
-                            <p class="blog__text">Apartment at Royal Atlantis sets new record at Dh 12,387 per square foot
-                                on Palm Jumeirah</p>
+                        <div class="blog__item blog__content-item" v-for="(blog, index) in posts.splice(3)" :key="blog">
+                            <router-link :to="`/post/${title}`">
+                                <img :src="`/${img[index]}`" alt="Blog card"
+                                    class="blog__img blog__content-img">
+                            </router-link>
+                            <p class="blog__text">{{ blog.title.length < 50 ? blog.title : blog.title.slice(0, 50) + '...' }}</p>
                             <div class="blog__initial">
-                                <p class="blog__views"><i class="fa-solid fa-eye"></i> 1 456</p>
-                                <p class="blog__date">August 30, 2023 18:34</p>
+                                <p class="blog__views"><i class="fa-solid fa-eye"></i> {{ blog.views }}</p>
+                                <p class="blog__date">{{ blog.date }}, {{ blog.time }}</p>
                             </div>
                         </div>
                     </div>
@@ -33,8 +34,46 @@
 
 export default {
     data: () => ({
-        windowWidth: window.innerWidth
+        windowWidth: window.innerWidth,
+        img: []
     }),
+
+    props: {
+        posts: Array
+    },
+
+    watch: {
+        'posts': {
+            deep: true,
+            handler() {
+                this.posts.forEach(item => {
+                    const content = JSON.parse(item.content);
+
+                    content.some(obj => {
+                        if (obj.type === 'IMAGE') {
+                            this.img.push(obj.path);
+                            return true;
+                        }
+                        return false;
+                    });
+                });
+            }
+        }
+    },
+
+    mounted () {
+        // this.posts.forEach(item => {
+        //     const content = JSON.parse(item.content);
+
+        //     content.some(obj => {
+        //         if (obj.type === 'IMAGE') {
+        //             this.img.push(obj.path);
+        //             return true;
+        //         }
+        //         return false;
+        //     });
+        // });
+    }
 }
 
 </script>

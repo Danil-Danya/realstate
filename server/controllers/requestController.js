@@ -2,6 +2,7 @@ const Requests = require('../models/requestModel');
 const sequelize = require('../../dbconfig.js');
 const sendEmail = require('../middlewares/email/sendEmail.js');
 const filterRequests = require('../middlewares/email/filterEmail.js');
+const { where } = require('sequelize');
 
 class Request {
     async createRequest (req, res) {
@@ -33,6 +34,19 @@ class Request {
         catch (error) {
             console.log(error);
             res.status(400).json({ message: `failed to receive messages (error: ${error})` })
+        }
+    }
+
+    async updateRequest (req, res) {
+        try {
+            const { isNew, id } = req.body;
+
+            const updatedRequests = await Requests.update({ isNew }, { where: { id: id } });
+            return res.status(200).json(updatedRequests);
+        }
+        catch (error) {
+            console.log(error);
+            res.status(503).json({message: `filed to create message (error: ${error})`});
         }
     }
 

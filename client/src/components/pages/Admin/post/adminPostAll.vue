@@ -1,22 +1,23 @@
 <template>
     <div class="admin__container">
+        <post-filter/>
         <transition name="post">
             <deletePost v-if="modal" 
                 :idToDelete="selectedPostId" 
                 :nameToDelete="selectedPostName" 
-                :imgPathsToDelete="selectedPostImgPaths"
+                :content="content"
                 @closeModal="closeModal" 
             />
         </transition>
         <h2 class="admin__counter">{{ getPosts.length }} properties</h2>
         <postSignature />
-        <div class="admin__item" v-for="(item, index) in getPosts" :key="item"
+        <div class="admin__item" v-for="(item, index) in post" :key="item"
             :style="index % 2 === 1 ? { background: 'rgba(55, 55, 55, 0.02)' } : {}">
             <div class="admin__index">
                 <h2 class="admin__text-bold">{{ index + 1 }}</h2>
             </div>
             <div class="admin__img">
-                <img :src="`/${item.imgPaths}`" alt="Img" class="admin__img">
+                <img :src="`/${firstImages[index]}`" alt="Img" class="admin__img">
             </div>
             <div class="admin__post-title">
                 <h2 class="admin__text-bold">
@@ -37,8 +38,39 @@
             </div>
             <div class="admin__icon-container">
                 <router-link :to="`/${routerLink}/admin/post-edit/${item.title}/${item.id}`" class="admin__icon"><i class="fa-regular fa-pen-to-square"></i></router-link>
-                <router-link to="" @click="showModal(item.id, item.title, item.imgPaths)" class="admin__icon"><i class="fa-regular fa-trash-can"></i></router-link>
+                <router-link to="" @click="showModal(item.id, item.title, item.content)" class="admin__icon"><i class="fa-regular fa-trash-can"></i></router-link>
             </div>
+        </div>
+        <div class="admin__pages" v-if="Math.ceil(getPosts.length / 15) > 1">
+            <router-link :to="`/${routerLink}/admin/post-all/${goToPrevPage()}`">
+                <i class="fa-solid fa-angle-left"></i>
+            </router-link>
+            <div class="pages-links">
+                <router-link :to="`/${routerLink}/admin/post-all/1`" v-if="$route.params.index > 3" class="pages-item">
+                    1
+                </router-link>
+                <div v-if="$route.params.index > 3">...</div>
+                <router-link :to="`/${routerLink}/admin/post-all/${$route.params.index - 2}`" v-if="$route.params.index > 2" class="pages-item">
+                    {{ $route.params.index - 2 }}
+                </router-link>
+                <router-link :to="`/${routerLink}/admin/post-all/${$route.params.index - 1}`" v-if="$route.params.index > 1" class="pages-item">
+                    {{ $route.params.index - 1 }}
+                </router-link>
+                <div class="pages-select">{{ $route.params.index }}</div>
+                <router-link :to="`/${routerLink}/admin/post-all/${+$route.params.index + 1}`" v-if="$route.params.index < Math.ceil(getPosts.length / 15) - 1" class="pages-item">
+                        {{ +$route.params.index + 1 }}
+                </router-link>
+                <router-link :to="`/${routerLink}/admin/post-all/${+$route.params.index + 2}`" v-if="$route.params.index < (Math.ceil(getPosts.length / 15) - 2)" class="pages-item">
+                        {{ +$route.params.index + 2 }}
+                </router-link>
+                <div v-if="$route.params.index < Math.ceil(getPosts.length / 15) - 2">...</div>
+                <router-link :to="`/${routerLink}/admin/post-all/${Math.ceil(getPosts.length / 15)}`" v-if="$route.params.index < Math.ceil(getPosts.length / 15)" class="pages-item">
+                    {{ Math.ceil(getPosts.length / 15) }}
+                </router-link>
+            </div>
+            <router-link :to="`/${routerLink}/admin/post-all/${goToNextPage()}`">
+                <i class="fa-solid fa-angle-right"></i>
+            </router-link>
         </div>
     </div>
 </template>
@@ -50,8 +82,10 @@
 
 <script>
 import postSignature from '@/components/reused/postSignature.vue';
+import postFilter from '@/components/reused/postFilter.vue';
 import deletePost from '@/components/reused/deletePost.vue';
 import { mapActions, mapGetters } from 'vuex';
+import AdminPostFilter from '../../../reused/postFilter.vue';
 
 export default {
     data: () => ({
@@ -59,23 +93,57 @@ export default {
         modal: false,
         selectedPostId: null,
         selectedPostName: null,
-        selectedPostImgPaths: null
+        content: [],
+        firstImages: [],
+        postStart: 0,
+        postEnd: 0,
+        post: [],
     }),
 
     components: {
         postSignature,
-        deletePost
+        deletePost,
+        postFilter
     },
 
     computed: {
         ...mapGetters(['getPosts']),
     },
 
+
     methods: {
         ...mapActions(['fetchPost']),
 
+        getLinksIndex() {
+            const startIndex = +this.$route.params.index + 1 || 0;
+            const pageSize = 15;
+            const links = [];
+            //const different = Math.round(this.getAppartaments.length / pageSize) - +this.$route.params.index;
+
+            for (let i = startIndex; i < startIndex + Math.round(this.getPosts.length / pageSize); i++) {
+                if (i < Math.round(this.getPosts.length / pageSize) && links.length < 7) {
+                    links.push(i);
+                }
+            }
+
+            return links;
+        },
+
+        goToNextPage() {
+            if (Math.round(this.getPosts.length / 15) !== +this.$route.params.index) {
+                return +this.$route.params.index + 1;
+            }
+        },
+
+        goToPrevPage() {
+            if (+this.$route.params.index !== 1) {
+                return +this.$route.params.index - 1;
+            }
+            else return this.$route.params.index
+        },
+
         updateDate (index) {
-            const responseDate = this.getPosts[index].date;
+            const responseDate = this.post[index].date;
             const dateArr = responseDate.split('-');
 
             const months = ['Jan', 'Feb', 'March', 'Apr', 'May', 'June', 'Jule', 'Aug', 'Sempt', 'Oct', 'Nov', 'Dec'];
@@ -85,11 +153,27 @@ export default {
             return updatedDate;
         },
 
-        showModal(id, name, imgPaths) {
+        updateFirstImages() {
+            this.firstImages = []; 
+
+            this.post.forEach(item => {
+                const content = JSON.parse(item.content);
+
+                content.some(obj => {
+                    if (obj.type === 'IMAGE') {
+                        this.firstImages.push(obj.path);
+                        return true;
+                    }
+                    return false;
+                });
+            });
+        },
+
+        showModal(id, name, content) {
             this.modal = true;
             this.selectedPostId = id;
             this.selectedPostName = name;
-            this.selectedPostImgPaths = imgPaths;
+            this.content = content;
         },
 
         closeModal() {
@@ -100,9 +184,83 @@ export default {
         },
     },
 
+    watch: {
+        '$route.params.index': {
+            immediate: true,
+            handler(newIndex) {
+                this.post = [];
+
+                if (this.post.length <= 15) {
+                    this.postStart = (newIndex - 1) * 15;
+                    this.postEnd = newIndex * 15;
+                    this.post = this.getPosts.slice(this.postStart, this.postEnd);
+                }
+            },
+        },
+        'getPosts': {
+            deep: true,
+            handler(newPosts) {
+                this.post = [];
+
+                if (this.post.length <= 15) {
+                    this.postStart = (this.$route.params.index - 1) * 15;
+                    this.postEnd = this.$route.params.index * 15;
+                    this.post = newPosts.slice(this.postStart, this.postEnd);
+                }
+            },
+        },
+        'post': {
+            immediate: true,
+            deep: true,
+            handler() {
+                this.firstImages = [];
+                this.post.forEach(item => {
+                    const content = JSON.parse(item.content);
+
+                    content.some(obj => {
+                        if (obj.type === 'IMAGE') {
+                            this.firstImages.push(obj.path);
+                            return true;
+                        }
+                        return false;
+                    });
+                });
+            },
+        },
+    },
+
     async mounted () {
         await this.fetchPost();
-        console.log(this.getPosts);
+
+        this.postStart = (+this.$route.params.index - 1) * 15;
+        this.postEnd = +this.$route.params.index * 15;
+        this.post = [];
+        this.firstImages = [];
+
+        this.getPosts.forEach((item, index) => {
+            if (this.post.length < 15) {
+                if (index + 1 > this.postStart && index <= this.postEnd) {
+                    this.post.push(item);
+                }
+            }
+        })
+        
+        this.post.forEach(item => {
+            const content = JSON.parse(item.content);
+
+            content.some(obj => {
+                if (obj.type === 'IMAGE') {
+                    this.firstImages.push(obj.path);
+                    return true;
+                }
+                return false;
+            });
+        });
+
+
+        console.log('all posts ', this.getPosts);
+        console.log('post ', this.post);
+        console.log(this.firstImages);
     }
 }
 

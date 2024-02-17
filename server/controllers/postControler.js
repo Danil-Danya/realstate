@@ -13,18 +13,23 @@ class Post {
             const postId = uid.uid();
             const title = postRequest.title;
 
+            const content = JSON.parse(postRequest.content);
             const imagesData = postUpload(imagesRequest, postId, title);
     
             postRequest.imgPaths = `${imagesData.imgPaths}`;
-    
-            for (let key in postRequest) {
-                if (postRequest[key] === undefined) {
-                    return res.status(400).json({ message: `You send an empty key: ${key}` });
+            console.log(postRequest.imgPaths);
+
+            let index = 0;
+            content.forEach((item, i) => {
+                if (item.type === 'IMAGE') {
+                    content[i].path = imagesData.imgPaths[index];
+                    index++;
                 }
-            }
-    
+            });
+
+            postRequest.content = `${JSON.stringify(content)}`;
             const createPost = await Posts.create(postRequest);
-            return res.status(200).json(createPost);
+            return createPost;
         }
         catch (error) {
             console.log(error);
@@ -32,16 +37,43 @@ class Post {
         }
     }
 
+    async updateViews(req, res) {
+        try {
+            const { id } = req.body;
+            const post = await Posts.findOne({ where: { id } });
+
+            if (post) {
+                post.views++;
+
+                const updatedPost = await post.save();
+                return res.status(200).json(updatedPost);
+            } else {
+                return res.status(404).json({ error: 'Post not found' });
+            }
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({ error: 'Internal server error' });
+        }
+    }
+
+
     async deletePost (req, res) {
         try {
-            const { id, title, imgPaths } = req.body;
-            console.log(id, title,imgPaths);
+            const { id, title, content } = req.body;
             if (!id || !title) return res.status(503).json("You send an ampty id or title");
+            
+            const parseContent = JSON.parse(content);
+
+            const imgPaths = parseContent.map((item) => {
+                if (item.type === 'IMAGE') return item.paths;
+            })
+
+            console.log(imgPaths);
 
             const deleted = postDelete(imgPaths);
 
             if (deleted) {
-                const post =await Posts.destroy({ where: { id } });
+                const post = await Posts.destroy({ where: { id } });
                 return res.status(200).json(post);
             }
             else {
@@ -57,43 +89,49 @@ class Post {
     async editPost (req, res) {
         try {
             const postRequest = req.body;
-            const { id, imgPaths } = req.body;
+            const { id, imgPaths } = postRequest;
             const imagesRequest = req.files;
-            const getItem = await Posts.findOne({ where: {id} });
-            const deleteImages = [];
+            const getItem = await Posts.findOne({ where: { id } });
+
+            console.log(postRequest);
+
             const imgArray = imgPaths.split(',');
-            
-            let deleted = true;
 
-            for (let i = 0; i < getItem.dataValues.imgPaths.length; i++) {
-                for (let j = 0; j < imgArray.length; j++) {
-                    if (getItem.dataValues.imgPaths[i] != imgArray[j]) {
-                        deleteImages.push(getItem.dataValues.imgPaths[i]);
+            // Определение, какие изображения нужно удалить
+            // const deleteImages = getItem.dataValues.imgPaths.filter(imgPath => !imgArray.includes(imgPath));
+
+            // Удаление изображений, если есть что удалять
+            // if (deleteImages.length > 0) {
+            //     await postDelete(deleteImages);
+            // }
+
+            const postId = uid.uid();
+            const title = postRequest.title;
+            const imagesData = postUpload(imagesRequest, postId, title);
+
+            postRequest.imgPaths = imagesData.imgPaths.length > 0 ? imagesData.imgPaths.join(',') : imgPaths;
+
+            if (postRequest.content) {
+                const content = JSON.parse(postRequest.content);
+                let index = 0;
+                content.forEach((item, i) => {
+                    if (item.type === 'IMAGE') {
+                        content[i].path = imagesData.imgPaths[index];
+                        index++;
                     }
+                });
+                postRequest.content = JSON.stringify(content);
+            }
+
+            for (const key in postRequest) {
+                if (postRequest[key] === undefined) {
+                    return res.status(400).json({ message: `You send an empty key: ${key}` });
                 }
             }
 
-            deleted = !deleteImages ? postDelete(deleteImages) : true;
-            console.log(deleteImages, getItem.dataValues.imgPaths, imgArray);
+            const updatePost = await Posts.update(postRequest, { where: { id } });
+            return res.status(200).json(updatePost);
 
-            deleted = deleteImages.length > 0 ? postDelete(deleteImages) : true;
-
-            if (deleted) {
-                const postId = uid.uid();
-                const title = postRequest.title;
-                const imagesData = postUpload(imagesRequest, postId, title);
-
-                postRequest.imgPaths = imagesData.imgPaths.length > 0 ? `${imagesData.imgPaths}` : imgPaths;
-    
-                for (let key in postRequest) {
-                    if (postRequest[key] === undefined) {
-                        return res.status(400).json({ message: `You send an empty key: ${key}` });
-                    }
-                }
-    
-                const updatePost = await Posts.update(postRequest, { where: { id } });
-                return res.status(200).json(updatePost);
-            }
         }
         catch (error) {
             console.log(error);
@@ -105,7 +143,7 @@ class Post {
         try {
             const filters = req.query;
             const allPosts = await postFilter(filters);
-
+            //console.log(filters);
             return res.status(200).json(allPosts);
         }
         catch (error) {

@@ -14,7 +14,7 @@ export default function removeToken () {
 
     if (betweenDay > limitSaveTokenDay ||
         ((betweenMonth > limitSaveTokenMonth) &&
-            (betweenDay > limitSaveTokenDay))) {
-        localStorage.removeItem('token');
+        (betweenDay > limitSaveTokenDay))) {
+            localStorage.removeItem('token');
     }
 }

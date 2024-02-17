@@ -3,8 +3,8 @@
         <postPath/>
         <postContent :dataContent="dataContent"/>
         <postTags :dataTags="dataTags"/>
-        <postSlider/>
-        <postBlogVue/>
+        <postSlider :posts="posts"/>
+        <postBlogVue :posts="posts"/>
     </div>
 </template>
 
@@ -16,6 +16,7 @@ import postSlider from '../components/pages/post/postSlider.vue';
 import postBlogVue from '../components/pages/post/mobile/postBlog.vue';
 
 import { mapGetters, mapActions } from 'vuex';
+import axios from 'axios';
 
 export default {
     components: {
@@ -23,16 +24,23 @@ export default {
         postContent,
         postTags,
         postSlider,
-        postBlogVue
+        postBlogVue, 
     },
-
+    
     data: () => ({
         dataContent: {},
-        dataTags: {}
+        dataTags: {},
+        posts: []
     }),
 
-    methods: mapActions(['fetchOnePost']),
-    computed: mapGetters(['getOnePost']),
+    methods: {
+        ...mapActions(['fetchOnePost']),
+        ...mapActions(['fetchPost']),
+    },
+    computed: {
+        ...mapGetters(['getPosts']),
+        ...mapGetters(['getOnePost']),
+    },
 
     async mounted() {
         const data = {
@@ -40,18 +48,29 @@ export default {
         }
 
         await this.fetchOnePost(data);
+        await this.fetchPost();
 
-        this.dataContent.imgPaths = this.getOnePost.imgPaths;
         this.dataContent.date = this.getOnePost.date;
         this.dataContent.time = this.getOnePost.time;
         this.dataContent.views = this.getOnePost.views;
         this.dataContent.title = this.getOnePost.title;
-        this.dataContent.text = this.getOnePost.text
+        this.dataContent.content = JSON.parse(this.getOnePost.content);
 
         this.dataTags.tags = this.getOnePost.tags.split(',');
-
-        console.log(this.getOnePost);
+        
+        this.posts = this.getPosts
         document.title = this.$route.params.title;
+        
+
+        const url = '/server-api/post-views';
+        const dataViews = {
+            id: this.getOnePost.id
+        }
+
+        if (localStorage.getItem('viewed') != this.getOnePost.id) {
+            axios.put(url, dataViews);
+            localStorage.setItem('viewed', this.getOnePost.id);
+        }
     }
 }
 

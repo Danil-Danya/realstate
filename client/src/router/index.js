@@ -10,6 +10,14 @@ const routes = [
     }
   },
   {
+    path: '/:pathName(.*)*',
+    name: 'NotFound',
+    component: () => import('../views/NotFound.vue'),
+    meta: {
+      layout: 'index'
+    }
+  },
+  {
     path: '/apartament/:name',
     name: 'apartament',
     component: () => import('../views/Apartament.vue'),
@@ -26,6 +34,14 @@ const routes = [
     }
   },
   {
+    path: '/map',
+    name: 'map',
+    component: () => import('../views/Map.vue'),
+    meta: {
+      layout: 'index'
+    }
+  },
+  {
     path: '/post/:title',
     name: 'post',
     component: () => import('../views/Post.vue'),
@@ -34,7 +50,7 @@ const routes = [
     }
   },
   {
-    path: '/blog',
+    path: '/blog/:index',
     name: 'blog',
     title: 'Blog',
     component: () => import('../views/Blog.vue'),
@@ -142,7 +158,7 @@ const routes = [
     }
   },
   {
-    path: `/${process.env.VUE_APP_ADMIN_ROUTER}/admin/post-all`,
+    path: `/${process.env.VUE_APP_ADMIN_ROUTER}/admin/post-all/:index`,
     name: 'Post-All',
     component: () => import('../views/admin_pages/posts/AdminPostAll.vue'),
     meta: {
@@ -153,7 +169,7 @@ const routes = [
     }
   },
   {
-    path: `/${process.env.VUE_APP_ADMIN_ROUTER}/admin/post-active`,
+    path: `/${process.env.VUE_APP_ADMIN_ROUTER}/admin/post-active/:index`,
     name: 'Post-Active',
     component: () => import('../views/admin_pages/posts/AdminPostActive.vue'),
     meta: {
@@ -163,7 +179,7 @@ const routes = [
     }
   },
   {
-    path: `/${process.env.VUE_APP_ADMIN_ROUTER}/admin/post-draft`,
+    path: `/${process.env.VUE_APP_ADMIN_ROUTER}/admin/post-draft/:index`,
     name: 'Post-draft',
     component: () => import('../views/admin_pages/posts/AdminPostDraft.vue'),
     meta: {
@@ -173,7 +189,7 @@ const routes = [
     }
   },
   {
-    path: `/${process.env.VUE_APP_ADMIN_ROUTER}/admin/post-disactive`,
+    path: `/${process.env.VUE_APP_ADMIN_ROUTER}/admin/post-disactive/:index`,
     name: 'Post-disactive',
     component: () => import('../views/admin_pages/posts/AdminPostDisActive.vue'),
     meta: {
@@ -183,7 +199,7 @@ const routes = [
     }
   },
   {
-    path: `/${process.env.VUE_APP_ADMIN_ROUTER}/admin/email-all`,
+    path: `/${process.env.VUE_APP_ADMIN_ROUTER}/admin/email-all/:index`,
     name: 'Email-all',
     component: () => import('../views/admin_pages/request/AdminRequestsAll.vue'),
     meta: {
@@ -193,7 +209,7 @@ const routes = [
     }
   },
   {
-    path: `/${process.env.VUE_APP_ADMIN_ROUTER}/admin/email-new`,
+    path: `/${process.env.VUE_APP_ADMIN_ROUTER}/admin/email-new/:index`,
     name: 'Email-new',
     component: () => import('../views/admin_pages/request/AdminRequestsNew.vue'),
     meta: {
@@ -210,6 +226,26 @@ const routes = [
       layout: 'admin',
       auth: false,
       adminType: 'EMAIL',
+    }
+  },
+  {
+    path: `/${process.env.VUE_APP_ADMIN_ROUTER}/admin/users-all`,
+    name: ' Users-all',
+    component: () => import('../views/admin_pages/users/AdminUsersAll.vue'),
+    meta: {
+      layout: 'admin',
+      auth: false,
+      adminType: 'USER',
+    }
+  },
+  {
+    path: `/${process.env.VUE_APP_ADMIN_ROUTER}/admin/users-create`,
+    name: 'Users-create',
+    component: () => import('../views/admin_pages/users/AdminUsersCreate.vue'),
+    meta: {
+      layout: 'admin',
+      auth: false,
+      adminType: 'USER',
     }
   },
   {

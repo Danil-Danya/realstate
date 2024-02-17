@@ -15,7 +15,7 @@
                 <div class="apartament__rooms-text">square (ft)</div>
             </div>
         </div>
-        <div class="apartament__price"  v-if="dataContent.priceForRent">
+        <div class="apartament__price">
             <div class="apartament__price-left">
                 <p class="apartament__price-text">Price in</p>
                 <div class="dropdown">
@@ -23,46 +23,24 @@
                      type="button" id="dropdownMenuButton1" 
                      data-bs-toggle="dropdown" aria-expanded="false"
                     >
-                        {{ valuteForRent }}
+                        {{ valuteSelector }}
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><p class="dropdown-item" @click="selectValuteForRent('aed')" ref="aed">AED</p></li>
-                        <li><p class="dropdown-item" @click="selectValuteForRent('usd')" ref="usd">USD</p></li>
-                        <li><p class="dropdown-item" @click="selectValuteForRent('rub')" ref="rub">RUB</p></li>
+                        <li><p class="dropdown-item valute" @click="changeValute(0)" ref="aed">AED</p></li>
+                        <li><p class="dropdown-item valute" @click="changeValute(1)" ref="usd">USD</p></li>
+                        <li><p class="dropdown-item valute" @click="changeValute(2)" ref="rub">RUB</p></li>
                     </ul>
                 </div>
             </div>
             <div class="apartament__price-right">
-                <h2 class="apartament__title-price">
-                    <p class="apartament__price-number">{{ dataContent.priceForRent }}</p>
-                    <p class="apartament__price-valute">(AED)</p>
+                <h2 class="apartament__title-price" v-if="dataContent.priceForRent !== undefined && dataContent.priceForRent > 0">
+                    <p class="apartament__price-number">{{ Math.round(dataContent.priceForRent * valuteCount, 2) }}</p>
+                    <p class="apartament__price-term">month.</p>
                 </h2>
-                <p class="apartament__price-term">month</p>
-            </div>
-        </div>
-        <div class="apartament__price" v-if="dataContent.priceForBuy">
-            <div class="apartament__price-left">
-                <p class="apartament__price-text">Price in</p>
-                <div class="dropdown">
-                    <button class="btn apartament__select dropdown-toggle"
-                     type="button" id="dropdownMenuButton1" 
-                     data-bs-toggle="dropdown" aria-expanded="false"
-                    >
-                        {{ valuteForBuy }}
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><p class="dropdown-item" @click="selectValuteForBuy('aed')"  ref="aed">AED</p></li>
-                        <li><p class="dropdown-item" @click="selectValuteForBuy('usd')" ref="usd">USD</p></li>
-                        <li><p class="dropdown-item" @click="selectValuteForBuy('rub')" ref="rub">RUB</p></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="apartament__price-right">
-                <h2 class="apartament__title-price">
-                    <p class="apartament__price-number">{{ dataContent.priceForBuy }}</p>
-                    <p class="apartament__price-valute">({{ valuteForBuy }})</p>
+                <h2 class="apartament__title-price" v-if="dataContent.priceForBuy !== undefined && dataContent.priceForBuy > 0">
+                    <p class="apartament__price-number">{{ Math.round(dataContent.priceForBuy * valuteCount, 2) }}</p>
+                    <p class="apartament__price-term">for buy.</p>
                 </h2>
-                <p class="apartament__price-term">for buy</p>
             </div>
         </div>
         <div class="apartament__line"></div>
@@ -77,11 +55,14 @@
 </style>
 
 <script>
+import Convertor from '@/scripts/valuteConvertor.js';
 
 export default {
     data: () => ({
         valuteForBuy: 'AED',
-        valuteForRent: 'AED'
+        valuteForRent: 'AED',
+        valuteSelector: 'AED',
+        valuteCount: 1
     }),
 
     props: {
@@ -89,17 +70,24 @@ export default {
     },
 
     methods: {
-        selectValuteForRent (key) {
-            this.valuteForRent = this.$refs[key].innerHTML;
+        changeValute(index) {
+            const select = document.querySelectorAll('.valute')[index];
+            this.valuteSelector = select.innerHTML;
+            this.valuteConvert();
         },
 
-        selectValuteForBuy (key) {
-            this.valuteForBuy = this.$refs[key].innerHTML;
+        async valuteConvert() {
+            const convertor = await new Convertor({
+                valuteFrom: 'aed',
+                valuteTo: this.valuteSelector.toLowerCase()
+            });
+
+            this.valuteCount = await convertor.convertValute();
         },
     },
 
     mounted () {
-        //console.log(dataContent.priceForBuy);
+        console.log(this.dataContent);
     }
 }
 

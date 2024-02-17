@@ -1,4 +1,84 @@
 .catalog {
+    &__warning {
+        font-size: 30px !important;
+        color: #000 !important;
+        font-family: Gotham Bold !important;
+
+
+        @include media ($xs) {
+            font-size: 16px !important;
+            margin-bottom: 30px !important;
+        }
+    }
+
+    &__filter {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 66px;
+        margin-bottom: 36px;
+
+        &-line {
+            cursor: pointer;
+
+            &::after {
+                content: '';
+                display: block;
+                background: #000;
+                width: 0px;
+                height: 1px;
+                transition: all 500ms;
+            }
+
+            &:hover {
+                &::after {
+                    width: 100%;
+                }
+            }
+        }
+
+        &-menu {
+            background: #fff;
+            width: 245px;
+            border-radius: 10px;
+            box-shadow: 0px 3px 13px 0px rgba(0, 0, 0, 0.15);
+            padding: 15px !important;
+            //display: flex;
+            flex-direction: column;
+            gap: 10px;
+            border: 0;
+            // max-height: 300px;
+            // overflow: scroll;
+
+            // &::-webkit-scrollbar {
+            //     background: #fff !important;
+            // }
+
+            @include media ($xs) {
+                width: 150px;
+            }
+        }
+
+        &-text {
+            color: #5C5C5C !important;
+            font-size: 16px;
+            font-style: normal;
+            line-height: normal;
+        }
+
+        &-buttons {
+            display: flex;
+            align-items: center;
+            gap: 36px;
+        }
+    }
+
+    &__item {
+        min-width: 310px;
+        border-radius: 10px;
+        box-shadow: 0px 7px 13px 0px rgba(0, 0, 0, 0.05);
+    }
+
     &__card {
         margin-top: 50px;
         
@@ -18,8 +98,27 @@
             font-style: normal;
             font-weight: 325;
             line-height: normal;
+            
+            &::after {
+                display: none;
+            }
+
+            &-text {
+                max-width: 70px;
+                overflow: hidden;
+            }
+            
+            @include media ($xs) {
+                display: flex;
+                gap: 5px;
+                max-width: 86px;
+                font-size: 12px;
+                height: 30px;
+                overflow: hidden;
+            }
         }
 
+        
         &-map {
             color: #000;
             font-family: Gotham Bold !important;
@@ -27,8 +126,13 @@
             font-style: normal;
             font-weight: 400;
             line-height: normal;
-        }
 
+            @include media ($xs) {
+                font-size: 14px;
+                border-bottom: 1px solid;
+            }
+        }
+        
         &-sort {
             display: flex;
             justify-content: space-between;
@@ -36,24 +140,50 @@
             margin-bottom: 50px !important;
             flex-wrap: wrap;
 
+            @include media ($md) {
+                background: #fff !important;
+            }
+            
             &-container {
                 align-items: center;
                 display: flex;
                 gap: 80px;
                 flex-wrap: wrap;
-            }
 
+                @include media ($xs) {
+                    gap: 10px;
+                    justify-content: space-between;
+                }
+            }
+            
             &-location {
                 display: flex;
                 gap: 30px;
                 align-items: center;
-            }
 
+                @include media ($xs) {
+                    gap: 10px;
+                }
+            }
+            
             &-price {
                 display: flex;
                 gap: 30px;
                 align-items: center;
+
+                @include media ($xs) {
+                    gap: 10px;
+                }
             }
+        }
+    }
+    
+    &__mobile {
+        background: #fff;
+        &-filter {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
         }
     }
 
@@ -65,5 +195,10 @@
         font-style: normal;
         font-weight: 350;
         line-height: normal;
+
+        @include media ($xs) {
+            display: none;
+        }
     }
 }
+

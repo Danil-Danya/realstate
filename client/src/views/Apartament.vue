@@ -3,9 +3,11 @@
        <apartamentFilter :dataInfo="dataInfo" />
         <mobileApartamentSlider :dataImages="dataImages" :dataContent="dataContent" v-if="windowWidth < 580" />
         <mobileApartamentInfo v-if="windowWidth < 580" />
-        <apartamentImagesList :dataImages="dataImages" v-if="windowWidth > 580" />
+        <apartamentSlider :dataImages="dataImages" :dataSlider="dataSlider" v-if="windowWidth > 580"/>
+        <apartamentImagesList :dataImages="dataImages" @activeSlide="setDataSlider" v-if="windowWidth > 580" />
         <apartamentContent :dataContent="dataContent" />
         <apartamentMap :dataMap="dataMap" />
+        <mobileApartamentContact v-if="windowWidth < 580"/>
     </section>
 </template>
 
@@ -17,6 +19,8 @@ import apartamentImagesList from '@/components/pages/apartament/apartamentImages
 import apartamentMap from '@/components/pages/apartament/apartamentMap.vue';
 import mobileApartamentSlider from '../components/pages/apartament/mobile/mobileApartament-slider.vue';
 import mobileApartamentInfo from '@/components/pages/apartament/mobile/mobileApartamentInfo.vue';
+import apartamentSlider from '@/components/pages/apartament/apartamentSlider.vue';
+import mobileApartamentContact from '@/components/pages/apartament/mobile/mobileApartamentContact.vue';
 
 import { mapActions, mapGetters } from 'vuex';
 
@@ -26,15 +30,19 @@ export default {
         dataImages: {},
         dataMap: {},
         dataInfo: {},
-        dataContent: {}
+        dataContent: {},
+        dataSlider: {}
     }),
+
     components: {
         apartamentContent,
         apartamentFilter,
         apartamentImagesList,
         apartamentMap,
         mobileApartamentSlider,
-        mobileApartamentInfo
+        mobileApartamentInfo,
+        apartamentSlider,
+        mobileApartamentContact
     },
 
     methods: {
@@ -65,10 +73,15 @@ export default {
             this.dataContent.combSelect = this.getOneAppartament.combSelect;
         },
 
+        setDataSlider (data) {
+            this.dataSlider = data;
+        },
+
         setDataMap () {
             this.dataMap.addres = this.getOneAppartament.addres;
             this.dataMap.lat = this.getOneAppartament.lat;
             this.dataMap.long = this.getOneAppartament.long;
+            this.dataMap.title = this.getOneAppartament.name;
         },
 
         setDataInfo () {

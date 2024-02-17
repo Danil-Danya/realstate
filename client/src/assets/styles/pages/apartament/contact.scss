@@ -13,21 +13,17 @@
         max-width: 400px;
         width: 100%;
         background: #F6F6F6;
-        margin-bottom: 30px;
 
         &-branching {
             max-width: 400px;
             width: 100%;
             background: #F6F6F6;
-            margin-bottom: 30px;
-            margin-bottom: 0 !important;
         }
     }
 
     &-button {
         width: 100%;
         height: 80px;
-        margin-top: 32px;
     }
 
     &-check {
@@ -44,8 +40,7 @@
         font-size: 22px;
         font-style: normal;
         font-weight: 325;
-        line-height: normal;
-        margin: 10px 0 !important;
+        line-height: 10px;
     }
     &__title {
         &-provocator {
@@ -68,4 +63,10 @@
             margin-bottom: 25px !important;
         }
     }
+}
+
+.apartament__form {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
 }

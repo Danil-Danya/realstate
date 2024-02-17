@@ -22,6 +22,9 @@
         @include media($md) {
             width: 100%;
         }
+        @include media ($xs) {
+            font-size: 16px !important;
+        }
     }
 
     &__logo {
@@ -36,6 +39,14 @@
 
     &__input {
         margin-bottom: 30px !important;
+
+        &-el {
+            background: #F6F6F6 !important;
+
+            &::selection {
+                background: #F6F6F6;
+            }
+        }
     }
 
     &__info {
@@ -82,20 +93,34 @@
     }
 
     &__policy {
+        margin-top: 12px !important;
         &-title {
             font-size: 18px;
             font-style: normal;
             font-weight: 325;
             line-height: normal;
             color: #373737;
-        }
 
+            @include media ($xs) {
+                display: flex;
+                font-size: 12px !important;
+            }
+        }
+        
         &-text {
             color: rgba(55, 55, 55, 0.50);
             font-size: 18px;
             font-style: normal;
             font-weight: 325;
-            margin-top: 12px !important;
+            @include media ($xs) {
+                display: flex;
+                font-size: 12px !important;
+            }
+        }
+        @include media ($xs) {
+            display: flex;
+            font-size: 12px !important;
+            gap: 10px;
         }
     }
 
@@ -185,6 +210,11 @@
             font-style: normal;
             font-family: Gotham Medium !important;
             line-height: normal;
+
+            @include media($md) {
+                font-size: 18px;
+                text-align: center;
+            }
         }
     }
 

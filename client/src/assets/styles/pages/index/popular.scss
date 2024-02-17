@@ -16,18 +16,36 @@ $gutter: 24px;
 .popular {
     margin-bottom: 200px !important;
 
+    @include media($md) {
+        margin-bottom: 80px !important;
+    }
+
     &__title {
+        @include media ($xs) {
+            font-size: 20px;
+            font-family: Gotham Medium !important;
+            margin-bottom: 50px !important;
+        }
+
         &-bottom {
             text-align: center;
             margin-top: 60px !important;
             display: flex;
             justify-content: center;
             gap: 10px;
+
+            @include media ($xs) {
+                width: 45%;
+            }
         }
 
         &-item {
             font-family: Gotham Bold !important;
             font-size: 24px;
+
+            @include media ($xs) {
+                font-size: 14px;
+            }
         }
     }
 
@@ -48,6 +66,13 @@ $gutter: 24px;
         font-weight: 400;
         line-height: normal;
 
+        @include media ($xs) {
+            font-size: 16px !important;
+            display: inline;
+            height: 18px;
+            border-bottom: 1px solid #000;
+        }
+
         &:hover {
             &::after {
                 width: 100% !important;
@@ -65,6 +90,12 @@ $gutter: 24px;
         }
     }
 
+    &__text {
+        @include media ($xs) {
+            font-size: 12px;
+        }
+    }
+
     &__img {
         width: 100%;
         height: 100%;
@@ -74,8 +105,16 @@ $gutter: 24px;
         z-index: -1;
         transition: 300ms;
     }
+
     &__row {
         @include grid(4, 185px);
+    }
+
+    &__flex {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 20px;
     }
 
     &__item {
@@ -87,6 +126,16 @@ $gutter: 24px;
         overflow: hidden;
         border-radius: 10px;
         transition: 300ms;
+
+        @include media ($xs) {
+            width: 45%;
+            height: 150px;
+            //margin-bottom: 20px;
+
+            &:nth-of-type(2n) {
+                margin-top: 30px;
+            }
+        }
 
         &:hover {
             & > img {
@@ -106,30 +155,62 @@ $gutter: 24px;
         &:nth-of-type(1) {
             grid-column: 1/3;
             grid-row: 1;
+
+            @include media ($md) {
+                grid-column: 1/4;
+            }
         }
         &:nth-of-type(2) {
             grid-column: 1/3;
             grid-row: 2;
+            @include media ($md) {
+                grid-column: 1/4;
+            }
         }
         &:nth-of-type(3) {
             grid-column: 3 / 5;
             grid-row: 1 / 3;
+
+            @include media ($md) {
+                grid-column: 4/8;
+                grid-row: 1/3;
+            }
         }
         &:nth-of-type(4) {
             grid-column: 5 / 8;
             grid-row: 1 / 3;
+
+            @include media ($md) {
+                grid-column: 1/4;
+                grid-row: 3 / 5;
+            }
         }
         &:nth-of-type(5) {
             grid-column: 1 / 3;
             grid-row: 3 / 5;
+
+            @include media ($md) {
+                grid-row: 4 / 4;
+                grid-column: 6 / 8;
+            }
         }
         &:nth-of-type(6) {
             grid-column: 3 / 6;
             grid-row: 3 / 5;
+
+            @include media ($md) {
+                grid-row: 4 / 4;
+                grid-column: 4/6;
+            }
         }
         &:nth-of-type(7) {
             grid-column: 6 / 8;
             grid-row: 3 / 5;
+
+            @include media ($md) {
+                grid-row: 3 / 4;
+                grid-column: 4 / 8;
+            }
         }
     }
 }

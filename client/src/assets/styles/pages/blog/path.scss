@@ -4,9 +4,15 @@
     justify-content: space-between;
     gap: 50px;
 
+    
     @include media ($xs) {
         gap: 10px;
         max-width: 190px;
+    }
+
+    &-text {
+        display: flex;
+        align-items: center;
     }
 
     &-content {

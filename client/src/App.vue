@@ -32,6 +32,7 @@ export default {
   },
   mounted () {
     removeToken();
+    //localStorage.setItem('likedTovars', []);
   }
 }
 

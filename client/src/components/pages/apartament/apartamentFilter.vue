@@ -44,18 +44,16 @@
                             <p class="apartament__location-text">{{ dataInfo.addres }}</p>
                         </div>
                         <div class="apartament__map">
-                            <p class="apartament__map-text">Show in map</p>
+                            <a href="#map" class="apartament__map-text">Show in map</a>
                         </div>
                     </div>
                     <div class="apartament__info-right">
                         <div class="apartament__icon-container">
-                            <span class="apartament__info-icon">
+                            <span class="apartament__info-icon-like" @click="setLikedTovar(dataInfo, index)">
                                 <i class="fa-regular fa-heart"></i>
                             </span>
-                            <span class="apartametnt__map">
-                                <span class="apartament__info-icon">
-                                    <i class="fa-solid fa-share-nodes"></i>
-                                </span>
+                            <span class="apartament__info-icon-like" @click="setLikedTovar(dataInfo, index)" v-if="dataInfo.liked">
+                                <i class="fa-solid fa-heart"></i>
                             </span>
                         </div>
                     </div>
@@ -81,7 +79,7 @@ export default {
             },
             {
                 name: 'Catalog',
-                link: '/catalog',
+                link: '/catalog/1',
                 isActive: false
 
             },
@@ -90,6 +88,30 @@ export default {
     
     props: {
         dataInfo: Object
+    },
+
+    methods: {
+        setLikedTovar(item) {
+            let tovars = localStorage.getItem('likedTovars');
+
+            !tovars ? tovars = [] : tovars = JSON.parse(tovars);
+
+            const index = tovars.indexOf(item.name);
+
+            if (index !== -1) {
+                tovars.splice(index, 1);
+                this.dataInfo.liked = false;
+            } else {
+                tovars.push(item.name);
+                this.dataInfo.liked = true;
+            }
+
+            localStorage.setItem('likedTovars', JSON.stringify(tovars));
+
+            if (this.$route.query.liked) {
+                this.$router.replace(this.createLikedLink());
+            }
+        },
     }
 }
 </script>

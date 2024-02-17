@@ -48,6 +48,20 @@ class Autorization {
         }
     }
 
+    async getUsers (req, res) {
+        const users = await User.findAll();
+        const emails = users.map(email => email.email);
+
+        return res.json(emails);
+    }
+
+    async deleteUsers (req, res) {
+        const { email } = req.body;
+        const user = await User.destroy({where: {email}});
+
+        return res.send({ message: 'this user has been deleted' });
+    }
+
     async autorizationUser (req, res) {
         try {
             const clientToken = req.body.token;
