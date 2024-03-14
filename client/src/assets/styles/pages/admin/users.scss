@@ -2,4 +2,22 @@
     &-title {
         border-right: 1px solid #0000;
     }
+
+    &-content {
+        overflow: scroll;
+
+        // @include media ($xs) {
+        //     max-width: 400px;
+        // }
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
+}
+
+.admin__item {
+    @include media ($xs) {
+        max-width: 510px;
+    }
 }

@@ -1,4 +1,13 @@
 .admin__post {
+    &-content {
+        overflow: scroll;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+        
+    }
+
     &-title {
         max-width: 680px;
         width: 100%;

@@ -49,7 +49,7 @@
             </div>
             <div class="catalog__card-container">
                 <h2 class="catalog__warning" v-if="apartaments.length < 1">{{ notFound }}</h2>
-                <div class="tovar__item catalog__item" v-for="(item, index) in apartaments" :key="item">
+                <div class="tovar__item catalog__item" v-for="(item, index) in apartaments" :key="item" v-if="apartaments">
                     <router-link :to="`/apartament/${item.name}`">
                         <img :src="`/${item.imgPaths.split(',')[0]}`" v-if="item.imgPaths.length != 0" alt="Card" class="tovar__item-img">
                         <img src="@/assets/images/static/tovarscard/Card.png" alt="Card" class="tovar__item-img" v-else>
@@ -57,7 +57,7 @@
                     <button class="tovar__company">{{ item.propertyType }}</button>
                     <span class="explore__like tovar__like" @click="setLikedTovar(item, index)"><i class="fa-regular fa-heart"></i></span>
                     <span class="explore__like tovar__like" @click="setLikedTovar(item, index)" v-if="item.liked"><i class="fa-solid fa-heart"></i></span>
-                    <p class="tovar__rate"><i class="fa-solid fa-star"></i> 4.7 (13)</p>
+                    <!-- <p class="tovar__rate"><i class="fa-solid fa-star"></i> 4.7 (13)</p> -->
                     <h3 class="tovar__name">{{ item.name }}</h3>
                     <ul class="tovar__container">
                         <li><span class="tovar__number">{{ item.beds }}</span><span class="tovar__text"> beds</span></li>
@@ -80,33 +80,33 @@
                 </div>
             </div>
             <div class="admin__pages" v-if="Math.ceil(getAppartaments.length / 15) > 1">
-                <router-link :to="`/catalog/${goToPrevPage()}`">
+                <router-link :to="`/catalog/${goToPrevPage()}?combSelect=${$route.query.combSelect}`">
                     <i class="fa-solid fa-angle-left"></i>
                 </router-link>
                 <div class="pages-links">
-                    <router-link :to="`/catalog/1/${queryParametrs}`" v-if="$route.params.index > 3" class="pages-item">
+                    <router-link :to="`/catalog/1/${queryParametrs}?combSelect=${$route.query.combSelect}`" v-if="$route.params.index > 3" class="pages-item">
                         1
                     </router-link>
                     <div v-if="$route.params.index > 3">...</div>
-                    <router-link :to="`/catalog/${$route.params.index - 2}/${queryParametrs}`" v-if="$route.params.index > 2" class="pages-item">
+                    <router-link :to="`/catalog/${$route.params.index - 2}/${queryParametrs}?combSelect=${$route.query.combSelect}`" v-if="$route.params.index > 2" class="pages-item">
                         {{$route.params.index - 2}}
                     </router-link>
-                    <router-link :to="`/catalog/${$route.params.index - 1}/${queryParametrs}`" v-if="$route.params.index > 1" class="pages-item">
+                    <router-link :to="`/catalog/${$route.params.index - 1}/${queryParametrs}?combSelect=${$route.query.combSelect}`" v-if="$route.params.index > 1" class="pages-item">
                         {{$route.params.index - 1}}
                     </router-link>
                     <div class="pages-select">{{ $route.params.index }}</div>
-                    <router-link :to="`/catalog/${+$route.params.index + 1}/${queryParametrs}`" v-if="$route.params.index < Math.ceil(getAppartaments.length / 15) - 1" class="pages-item">
+                    <router-link :to="`/catalog/${+$route.params.index + 1}/${queryParametrs}?combSelect=${$route.query.combSelect}`" v-if="$route.params.index < Math.ceil(getAppartaments.length / 15) - 1" class="pages-item">
                             {{ +$route.params.index + 1 }}
                     </router-link>
-                    <router-link :to="`/catalog/${+$route.params.index + 2}/${queryParametrs}`" v-if="$route.params.index < (Math.ceil(getAppartaments.length / 15) - 2)" class="pages-item">
+                    <router-link :to="`/catalog/${+$route.params.index + 2}/${queryParametrs}?combSelect=${$route.query.combSelect}`" v-if="$route.params.index < (Math.ceil(getAppartaments.length / 15) - 2)" class="pages-item">
                             {{ +$route.params.index + 2 }}
                     </router-link>
                     <div v-if="$route.params.index < Math.ceil(getAppartaments.length / 15) - 1">...</div>
-                    <router-link :to="`/catalog/${Math.ceil(getAppartaments.length / 15)}/${queryParametrs}`" v-if="$route.params.index < Math.ceil(getAppartaments.length / 15)" class="pages-item">
+                    <router-link :to="`/catalog/${Math.ceil(getAppartaments.length / 15)}/${queryParametrs}?combSelect=${$route.query.combSelect}`" v-if="$route.params.index < Math.ceil(getAppartaments.length / 15)" class="pages-item">
                         {{ Math.ceil(getAppartaments.length / 15) }}
                     </router-link>
                 </div>
-                <router-link :to="`/catalog/${goToNextPage()}`">
+                <router-link :to="`/catalog/${goToNextPage()}?combSelect=${$route.query.combSelect}`">
                     <i class="fa-solid fa-angle-right"></i>
                 </router-link>
             </div>
@@ -125,7 +125,6 @@ import { mapGetters, mapActions } from 'vuex';
 export default {
     data: () => ({
         apartamentsStart: 0,
-        combSelect: 'Rent',
         apartamentsEnd: 0,
         apartaments: [],
         valuteSelector: 'AED',
@@ -156,7 +155,6 @@ export default {
 
         async fetchData () {
             let data = {};
-            console.log(this.$route.query);
             
             if (this.$route.query) {
                 data = {
@@ -164,6 +162,10 @@ export default {
                     bathrooms: this.$route.query.bathrooms,
                     propertyType: this.$route.query.propertyType,
                     combSelect: this.$route.query.combSelect,
+                    // price: {
+                    //     min: this.$route.query.price ? this.$route.query.price.split(',')[0] : 'none',
+                    //     max: this.$route.query.price ? this.$route.query.price.split(',')[1] : 'none'
+                    // },
                     sort: {
                         price: this.sort === 'Price (cheaper)' ? 'Price (cheaper)' :
                             this.sort === 'Price (expensive)' ? 'Price (expensive)' : '',
@@ -182,8 +184,8 @@ export default {
 
                 if (this.$route.query.price) {
                     data.price = {
-                        min: this.$route.query.price.split(',')[0].split('=')[1],
-                        max: this.$route.query.price.split(',')[1].split('=')[1],
+                        min: this.$route.query.price.split(',')[0],
+                        max: this.$route.query.price.split(',')[1],
                     }
                 }
                 await this.fetchAppartaments(data);
@@ -246,9 +248,10 @@ export default {
         },
 
         goToNextPage() {
-            if (Math.round(this.getAppartaments.length / 15) !== +this.$route.params.index) {
+            if (Math.ceil(this.getAppartaments.length / 15) !== +this.$route.params.index) {
                 return +this.$route.params.index + 1;
             }
+            else return this.$route.params.index
         },
         
         goToPrevPage() {

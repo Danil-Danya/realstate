@@ -4,12 +4,11 @@ const User = require('../../models/userModel');
 const sendEmail = async (name, email, tel, qusetion) => {
     const users = await User.findAll(); 
 
-    console.log(users);
     const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-            user: 'danil.snip@gmail.com',
-            pass: 'idyg ullx ynnc hqxi'
+            user: 'alihuzefa2022@gmail.com',
+            pass: 'wybd axno bkks bxwt'
         }
     });
 

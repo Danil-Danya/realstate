@@ -2,6 +2,7 @@
     <div class="admin__post-create">
         <div class="admin__post-create-nav">
             <a @click="redirectInBack" href="#"><i class="fa-solid fa-angle-left"></i> Back</a>
+            <h2 class="admin__title">Edit house</h2>
             <a href="#" class="admin__delete"><i class="fa-solid fa-trash-can"></i> Delete Post</a>
         </div>
         <div class="admin__post-create-container">
@@ -21,8 +22,8 @@
                         </div>
                         <div class="admin__drop admin__drop-image" v-show="item.type === 'IMAGE'" draggable="true" @dragstart="onDragStart(index, $event)" @dragover="onDragOver"  @drop="onDroped($event, index)">
                             <span class="admin__drag-image"><i class="fa-solid fa-grip-lines"></i></span>
-                            <div class="admin__upload-images"  v-if="item.type === 'IMAGE'">
-                                <img :src="'/' + item.path" alt="Img" v-if="item.path" ref="img" class="admin__create-img">
+                            <div class="admin__upload-images"  v-if="item.type === 'IMAGE'" @click="deleteImg(index)">
+                                <img :src="!item.path.includes('blob') ? '/' + item.path : item.path" alt="Img" v-if="item.path" ref="img" class="admin__create-img">
                             </div>
                             <div class="admin__drag" ref="drop" @drop.prevent="uploadFile($event, index)">
                             <div class="admin__drag-filed">
@@ -95,8 +96,8 @@ export default {
         ...mapActions(['fetchOnePost']),
 
         deleteImg(index) {
-            this.imgPaths.splice(index, 1);
-            this.imgFiles.splice(index, 1);
+            this.content.splice(index, 1);
+            console.log(this.content);
         },
 
         validateFile(unvalited) {
@@ -114,13 +115,10 @@ export default {
 
         onDroped(e, index) {
             e.preventDefault();
+
             const draggedIndex = e.dataTransfer.getData('text/plain');
-
-            console.log('Dragged Index:', draggedIndex);
-            console.log('Target Index:', index);
-
-
             const temp = this.content[index];
+
             this.content[index] = this.content[draggedIndex];
             this.content[draggedIndex] = temp;
         },
@@ -131,9 +129,13 @@ export default {
             this.content.forEach((item, index) => {
                 if (item.type === 'IMAGE') {
                     const file = item.file;
+                    
+                    if (file && file.name) {
+                        const newName = file.name.replace(/[^a-zA-Z0-9.,-/\\]/g, '');
+                        const newFile = new File([file], newName, { type: file.type });
 
-                    file.name.replace(/[^a-zA-Z0-9.,-/\\]/g, '');
-                    formData.append(`${index}`, file);
+                        formData.append(`${index}`, newFile);
+                    }
                 }
             });
 
@@ -154,6 +156,7 @@ export default {
 
             const tags = `${this.tags}`;
             const imgPaths = `${this.imgPaths}`;
+            
             formData.append('tags', tags);
             formData.append('imgPaths', imgPaths);
 
@@ -233,7 +236,9 @@ export default {
                 const src = URL.createObjectURL(files[0]);
 
                 this.content[index] = { index, type: 'IMAGE', path: src, file: files[0] };
-                console.log(this.content[index]);
+            }
+            else {
+                this.content[index] = { index, type: 'IMAGE', path: this.getOnePost[index].content.path };
             }
         },
     },

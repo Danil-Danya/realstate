@@ -4,21 +4,23 @@
             <div class="blog__slider-content swiper" pagination="true">
                 <div class="blog__slider-wrapper swiper-wrapper">
                     <div class="blog__slider-item swiper-slide" v-for="(slide, index) in reversedLimitedArray" :key="slide">
-                        <div class="blog__slider-img-container">
-                            <div class="blog__slider-img-bg"></div>
-                            <img :src="`/${img[index]}`" alt="" class="blog__slider-img">
-                        </div>
-                        <div class="blog__slider-item-content">
-                            <h2 class="blog__slider-mark">Latest blog</h2>
-                            <p class="blog__slider-text">{{ slide.date }}, {{ slide.time }}</p>
-                            <h2 class="blog__slider-title">{{ slide.title }}</h2>
-                            <div class="blog__slider-views">
-                                <span class="blog__slider-icon blog__slider-text">
-                                    <i class="fa-solid fa-eye"></i>
-                                </span>
-                                <p class="blog__slider-text">{{ slide.views }}</p>
+                        <router-link :to="`/post/${slide.title}`">
+                            <div class="blog__slider-img-container">
+                                <div class="blog__slider-img-bg"></div>
+                                <img :src="`/${img[index]}`" alt="" class="blog__slider-img">
                             </div>
-                        </div>
+                            <div class="blog__slider-item-content">
+                                <h2 class="blog__slider-mark">Latest blog</h2>
+                                <p class="blog__slider-text">{{ slide.date }}, {{ slide.time }}</p>
+                                <h2 class="blog__slider-title">{{ slide.title }}</h2>
+                                <div class="blog__slider-views">
+                                    <span class="blog__slider-icon blog__slider-text">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </span>
+                                    <p class="blog__slider-text">{{ slide.views }}</p>
+                                </div>
+                            </div>
+                        </router-link>
                     </div>
                 </div>
                 <div class="post-pagination"></div>

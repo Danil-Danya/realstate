@@ -7,7 +7,7 @@ export default {
 
     actions: {
         async fetchReviews(context) {
-            const url = `/server-api/reviews-get-all`
+            const url = `http://localhost:5000/server-api/reviews-get-all`
             const response = await axios.get(url, {
                 headers: {
                     "Content-Type": "application/json",

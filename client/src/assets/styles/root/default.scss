@@ -535,14 +535,27 @@ input[type=range]:focus::-ms-fill-upper {
     &__input {
             max-width: 470px !important;
             display: block;
-            width: 470px !important;
+            width: 100% !important;
             background: #FFFFFF !important;
         }
 }
 
 .admin {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+    @include media ($md) {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
     &__container {
         margin-top: 50px;
+    }
+
+    &__mobile {
+
     }
 
     &__add {
@@ -623,7 +636,7 @@ input[type=range]:focus::-ms-fill-upper {
 
     &__item {
         display: flex;
-        width: 100%;
+        width: 1410px;
         border: 1px solid rgba(0, 0, 0, 0.04);
         border-right: none;
         align-items: center;
@@ -681,6 +694,7 @@ input[type=range]:focus::-ms-fill-upper {
     }
 
     &__signature {
+        width: 1410px;
         display: flex;
         background: rgba(0, 0, 0, 0.04);
     }
@@ -716,6 +730,10 @@ input[type=range]:focus::-ms-fill-upper {
         width: 100%;
         border-radius: 30px;
         margin: 52px 0 200px 0;
+        
+        @include media ($md) {
+            padding: 30px;
+        }
     }
     
     &__create {
@@ -880,8 +898,8 @@ input[type=range]:focus::-ms-fill-upper {
     }
 
     &__drag {
-        width: 756px;
-        height: 288px;
+        max-width: 756px;
+        width: 100%;
         border-radius: 20px;
         background: rgba(55, 55, 55, 0.05);
         position: relative;
@@ -912,6 +930,10 @@ input[type=range]:focus::-ms-fill-upper {
             
             & > .input__container {
                 width: 48% !important;
+
+                @include media ($xs) {
+                    width: 100% !important;
+                }
             }
         }
     }
@@ -944,12 +966,17 @@ input[type=range]:focus::-ms-fill-upper {
 
             &>.input__container {
                 width: 30% !important;
+
+                @include media ($xs) {
+                    width: 100% !important;
+                }
             }
         }
     }
     
     &__upload {
-        width: 756px;
+        max-width: 756px;
+        width: 100%;
         height: 288px;
         opacity: 0;
         position: relative;
@@ -962,16 +989,25 @@ input[type=range]:focus::-ms-fill-upper {
             font-weight: 325;
             line-height: normal;
             position: absolute;
-            top: 190px;
-            left: 265px;
+            top: 70%;
+            left: 30%;
+            @include media ($xs) {
+                font-size: 16px !important;
+                width: 150px;
+                text-align: center;
+            }
         }
 
         &-icon {
             position: absolute;
             font-size: 100px;
-            top: 50px;
-            left: 320px;
+            top: 20%;
+            left: 40%;
             color: #3737374D;
+
+            @include media ($xs) {
+                font-size: 70px;
+            }
         }
 
         &-images {
@@ -980,6 +1016,7 @@ input[type=range]:focus::-ms-fill-upper {
             flex-wrap: wrap;
             transition: 500ms;
             margin-bottom: 30px;
+
         }
     }
 }

@@ -1,10 +1,7 @@
 .admin-navbar {
     margin-bottom: 30px;
-    &__content {
 
-    }
-
-    &-inpout, input[type="text"] {
+    &-input, input[type="text"] {
         border: none !important;
         max-width: 465px !important;
         width: 100% !important;
@@ -22,6 +19,7 @@
         border-bottom: 1px solid #0000001A;
         margin-top: 25px;
         padding-bottom: 15px !important;
+        flex-wrap: wrap;
     }
 
     &-input{
@@ -52,6 +50,16 @@
         font-style: normal;
         font-weight: 400;
         line-height: normal;
+
+        @include media ($xs) {
+            font-size: 16px;
+            width: 100px;
+            height: 100%;
+            display: flex;
+            align-items: flex-end;
+            justify-content: flex-end;
+            margin-left: 10px !important;
+        }
     }
 
     &-bottom {
@@ -64,5 +72,10 @@
         color: #fff !important;
         font-size: 20px !important;
         padding: 10px 45px !important;
+
+        @include media ($xs) {
+            font-size: 16px !important;
+            padding: 5px 20px !important;
+        }
     }
 }

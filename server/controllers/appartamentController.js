@@ -39,7 +39,6 @@ class Appartament {
         res.status(200).json(allAppartaments);
     }
 
-    
     async getOneAppartament(req, res) {
         const { id, name } = req.query;
 

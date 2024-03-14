@@ -9,50 +9,52 @@
             />
         </transition>
         <h2 class="admin__counter">{{ getAppartaments.length }} properties</h2>
-        <appartamentSignature />
-        <div class="admin__item" :style="index % 2 === 1 ? { background: 'rgba(55, 55, 55, 0.02)' } : {}"
-            v-for="(item, index) in apartaments" :key="item">
-            <div class="admin__index">
-                <h2 class="admin__text-bold">{{ index + 1 }}</h2>
-            </div>
-            <div class="admin__img">
-                <img v-if="item.imgPaths" :src="`/${item.imgPaths.split(',')[0]}`" alt="Img"
-                    class="admin__img">
-                <img v-else src="@/assets/images/static/admin/default.png" alt="Img" class="admin__img">
-            </div>
-            <div class="admin__appartaments-names">
-                <p class="admin__text-bold">{{ item.name }}</p>
-            </div>
-            <div class="admin__appartaments-location">
-                <p class="admin__text-bold">{{ item.addres }}</p>
-            </div>
-            <div class="admin__appartaments-beds">
-                <p class="admin__text">{{ item.beds }} beds</p>
-            </div>
-            <div class="admin__appartaments-baths">
-                <p class="admin__text">{{ item.baths }} baths</p>
-            </div>
-            <div class="admin__appartaments-square">
-                <p class="admin__text">{{ item.square }} square (ft)</p>
-            </div>
-            <div class="admin__appartaments-type">
-                <p class="admin__text">{{ item.propertyType }}</p>
-            </div>
-            <div class="admin__appartaments-rent">
-                <p class="admin__text" v-if="item.priceForRent">{{ item.priceForRent }} AED (month)</p>
-                <p class="admin__text" v-else>Only buy</p>
-            </div>
-            <div class="admin__appartaments-buy">
-                <p class="admin__text" v-if="item.priceForBuy">{{ item.priceForBuy }} AED (month)</p>
-                <p class="admin__text" v-else>Only rent</p>
-            </div>
-            <div class="admin__icon-container">
-                <router-link :to="`/${routerLink}/admin/appartament-edit/${item.name}/${item.id}`" class="admin__icon">
-                    <i class="fa-regular fa-pen-to-square"></i>
-                </router-link>
-                <router-link to="" class="admin__icon" @click="showModal(item.id, item.name, item.imgPaths)">
-                    <i class="fa-regular fa-trash-can"></i>
-                </router-link>
+        <div class="admin__appartaments-content">
+            <appartamentSignature />
+            <div class="admin__item" :style="index % 2 === 1 ? { background: 'rgba(55, 55, 55, 0.02)' } : {}"
+                v-for="(item, index) in apartaments" :key="item">
+                <div class="admin__index">
+                    <h2 class="admin__text-bold">{{ index + 1 }}</h2>
+                </div>
+                <div class="admin__img">
+                    <img v-if="item.imgPaths" :src="`/${item.imgPaths.split(',')[0]}`" alt="Img"
+                        class="admin__img">
+                    <img v-else src="@/assets/images/static/admin/default.png" alt="Img" class="admin__img">
+                </div>
+                <div class="admin__appartaments-names">
+                    <p class="admin__text-bold">{{ item.name }}</p>
+                </div>
+                <div class="admin__appartaments-location">
+                    <p class="admin__text-bold">{{ item.addres }}</p>
+                </div>
+                <div class="admin__appartaments-beds">
+                    <p class="admin__text">{{ item.beds }} beds</p>
+                </div>
+                <div class="admin__appartaments-baths">
+                    <p class="admin__text">{{ item.baths }} baths</p>
+                </div>
+                <div class="admin__appartaments-square">
+                    <p class="admin__text">{{ item.square }} square (ft)</p>
+                </div>
+                <div class="admin__appartaments-type">
+                    <p class="admin__text">{{ item.propertyType }}</p>
+                </div>
+                <div class="admin__appartaments-rent">
+                    <p class="admin__text" v-if="item.priceForRent">{{ item.priceForRent }} AED (month)</p>
+                    <p class="admin__text" v-else>Only buy</p>
+                </div>
+                <div class="admin__appartaments-buy">
+                    <p class="admin__text" v-if="item.priceForBuy">{{ item.priceForBuy }} AED (month)</p>
+                    <p class="admin__text" v-else>Only rent</p>
+                </div>
+                <div class="admin__icon-container">
+                    <router-link :to="`/${routerLink}/admin/appartament-edit/${item.name}/${item.id}`" class="admin__icon">
+                        <i class="fa-regular fa-pen-to-square"></i>
+                    </router-link>
+                    <router-link to="" class="admin__icon" @click="showModal(item.id, item.name, item.imgPaths)">
+                        <i class="fa-regular fa-trash-can"></i>
+                    </router-link>
+                </div>
             </div>
         </div>
         <div class="admin__pages" v-if="Math.ceil(getAppartaments.length / 15) > 1">

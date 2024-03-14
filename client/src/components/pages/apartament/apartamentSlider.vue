@@ -1,10 +1,10 @@
 <template>
     <transition name="apartament-slider">
-        <div class="apartament__slider" v-if="dataSlider.slider">
+        <div class="apartament__slider" v-if="dataSlider.slider" @click="changeSlider">
             <div class="apartament__slider-chrest" @click="changeSlider">
                 <span><i class="fa-solid fa-xmark" ></i></span>
             </div>
-            <div class="apartament__slider-content" ref="slider" v-show="!tale">
+            <div class="apartament__slider-content" ref="slider" v-show="!tale" @click.stop>
                 <div class="apartament__slider-container swiper">
                     <div class="apartament__slider-wrapper swiper-wrapper">
                         <div class="apartament__slider-slide swiper-slide" v-if="dataImages.imgPaths" v-for="img in dataImages.imgPaths.split(',')" :key="img">
@@ -13,12 +13,12 @@
                     </div>
                 </div>
             </div>
-            <div class="apartament__slider-tale" v-show="tale">
+            <div class="apartament__slider-tale" v-show="tale" @click.stop>
                 <div class="apartament__slider-slide" v-if="dataImages.imgPaths" v-for="img in dataImages.imgPaths.split(',')" :key="img">
                     <img :src="`/${img}`" alt="Slide" class="apartament__slider-img-tale" >
                 </div>
             </div>
-            <div class="apartament__slider-navigation">
+            <div class="apartament__slider-navigation" @click.stop>
                 <div class="apartament__slider-buttons">
                     <div class="apartament__button-prev apartament__slider-button">
                         <i class="fa-solid fa-angle-left"></i>

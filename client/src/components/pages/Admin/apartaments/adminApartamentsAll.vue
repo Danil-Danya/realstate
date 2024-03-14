@@ -9,76 +9,79 @@
             />
         </transition>
         <h2 class="admin__counter">{{ getAppartaments.length }} properties</h2>
-        <appartamentSignature/>
-        <div class="admin__item"
-        :style="index % 2 === 1 ? { background: 'rgba(55, 55, 55, 0.02)' } : {}"
-        v-for="(item, index) in apartaments" :key="item">
-            <div class="admin__index">
-                <h2 class="admin__text-bold">{{ index + 1 }}</h2>
+        <div class="admin__appartaments-content">
+            <appartamentSignature/>
+            <div class="admin__item"
+            :style="index % 2 === 1 ? { background: 'rgba(55, 55, 55, 0.02)' } : {}"
+            v-for="(item, index) in apartaments" :key="item">
+                <div class="admin__index">
+                    <h2 class="admin__text-bold">{{ index + 1 }}</h2>
+                </div>
+                <div class="admin__img">
+                    <img v-if="item.imgPaths" :src="`/${item.imgPaths.split(',')[0]}`" alt="Img" class="admin__img">
+                    <img v-else src="@/assets/images/static/admin/default.png" alt="Img" class="admin__img">
+                </div>
+                <div class="admin__appartaments-names">
+                    <p class="admin__text-bold">{{ item.name }}</p>
+                </div>
+                <div class="admin__appartaments-location">
+                    <p class="admin__text-bold">{{ item.addres }}</p>
+                </div>
+                <div class="admin__appartaments-beds">
+                    <p class="admin__text">{{ item.beds }} beds</p>
+                </div>
+                <div class="admin__appartaments-baths">
+                    <p class="admin__text">{{ item.baths }} baths</p>
+                </div>
+                <div class="admin__appartaments-square">
+                    <p class="admin__text">{{ item.square }} square (ft)</p>
+                </div>
+                <div class="admin__appartaments-type">
+                    <p class="admin__text">{{ item.propertyType }}</p>
+                </div>
+                <div class="admin__appartaments-rent">
+                    <p class="admin__text" v-if="item.priceForRent">{{ item.priceForRent }} AED (month)</p>
+                    <p class="admin__text" v-else>Only buy</p>
+                </div>
+                <div class="admin__appartaments-buy">
+                    <p class="admin__text" v-if="item.priceForBuy">{{ item.priceForBuy }} AED  (month)</p>
+                    <p class="admin__text" v-else>Only rent</p>
+                </div>
+                <div class="admin__icon-container">
+                    <router-link :to="`/${routerLink}/admin/appartament-edit/${item.name}/${item.id}`" class="admin__icon"><i class="fa-regular fa-pen-to-square"></i></router-link>
+                    <router-link to="" class="admin__icon" @click="showModal(item.id, item.name, item.imgPaths)"><i class="fa-regular fa-trash-can"></i></router-link>
+                </div>
             </div>
-            <div class="admin__img">
-                <img v-if="item.imgPaths" :src="`/${item.imgPaths.split(',')[0]}`" alt="Img" class="admin__img">
-                <img v-else src="@/assets/images/static/admin/default.png" alt="Img" class="admin__img">
-            </div>
-            <div class="admin__appartaments-names">
-                <p class="admin__text-bold">{{ item.name }}</p>
-            </div>
-            <div class="admin__appartaments-location">
-                <p class="admin__text-bold">{{ item.addres }}</p>
-            </div>
-            <div class="admin__appartaments-beds">
-                <p class="admin__text">{{ item.beds }} beds</p>
-            </div>
-            <div class="admin__appartaments-baths">
-                <p class="admin__text">{{ item.baths }} baths</p>
-            </div>
-            <div class="admin__appartaments-square">
-                <p class="admin__text">{{ item.square }} square (ft)</p>
-            </div>
-            <div class="admin__appartaments-type">
-                <p class="admin__text">{{ item.propertyType }}</p>
-            </div>
-            <div class="admin__appartaments-rent">
-                <p class="admin__text" v-if="item.priceForRent">{{ item.priceForRent }} AED (month)</p>
-                <p class="admin__text" v-else>Only buy</p>
-            </div>
-            <div class="admin__appartaments-buy">
-                <p class="admin__text" v-if="item.priceForBuy">{{ item.priceForBuy }} AED  (month)</p>
-                <p class="admin__text" v-else>Only rent</p>
-            </div>
-            <div class="admin__icon-container">
-                <router-link :to="`/${routerLink}/admin/appartament-edit/${item.name}/${item.id}`" class="admin__icon"><i class="fa-regular fa-pen-to-square"></i></router-link>
-                <router-link to="" class="admin__icon" @click="showModal(item.id, item.name, item.imgPaths)"><i class="fa-regular fa-trash-can"></i></router-link>
-            </div>
+            <h2 class="admin__title" v-if="apartaments.length === 0">No entries found</h2>
         </div>
         <div class="admin__pages" v-if="Math.ceil(getAppartaments.length / 15) > 1">
-            <router-link :to="`/${routerLink}/admin/appartament-disactive/${goToPrevPage()}`">
+            <router-link :to="`/${routerLink}/admin/appartament-all/${goToPrevPage()}`">
                 <i class="fa-solid fa-angle-left"></i>
             </router-link>
             <div class="pages-links">
-                <router-link :to="`/${routerLink}/admin/appartament-disactive/1`" v-if="$route.params.index > 3" class="pages-item">
+                <router-link :to="`/${routerLink}/admin/appartament-all/1`" v-if="$route.params.index > 3" class="pages-item">
                     1
                 </router-link>
                 <div v-if="$route.params.index > 3">...</div>
-                <router-link :to="`/${routerLink}/admin/appartament-disactive/${$route.params.index - 2}`" v-if="$route.params.index > 2" class="pages-item">
+                <router-link :to="`/${routerLink}/admin/appartament-all/${$route.params.index - 2}`" v-if="$route.params.index > 2" class="pages-item">
                     {{ $route.params.index - 2 }}
                 </router-link>
-                <router-link :to="`/${routerLink}/admin/appartament-disactive/${$route.params.index - 1}`" v-if="$route.params.index > 1" class="pages-item">
+                <router-link :to="`/${routerLink}/admin/appartament-all/${$route.params.index - 1}`" v-if="$route.params.index > 1" class="pages-item">
                     {{ $route.params.index - 1 }}
                 </router-link>
                 <div class="pages-select">{{ $route.params.index }}</div>
-                <router-link :to="`/${routerLink}/admin/appartament-disactive/${+$route.params.index + 1}`" v-if="$route.params.index < Math.ceil(getAppartaments.length / 15) - 1" class="pages-item">
+                <router-link :to="`/${routerLink}/admin/appartament-all/${+$route.params.index + 1}`" v-if="$route.params.index < Math.ceil(getAppartaments.length / 15) - 1" class="pages-item">
                         {{ +$route.params.index + 1 }}
                 </router-link>
-                <router-link :to="`/${routerLink}/admin/appartament-disactive/${+$route.params.index + 2}`" v-if="$route.params.index < (Math.ceil(getAppartaments.length / 15) - 2)" class="pages-item">
+                <router-link :to="`/${routerLink}/admin/appartament-all/${+$route.params.index + 2}`" v-if="$route.params.index < (Math.ceil(getAppartaments.length / 15) - 2)" class="pages-item">
                         {{ +$route.params.index + 2 }}
                 </router-link>
                 <div v-if="$route.params.index < Math.ceil(getAppartaments.length / 15) - 2">...</div>
-                <router-link :to="`/${routerLink}/admin/appartament-disactive${Math.ceil(getAppartaments.length / 15)}`" v-if="$route.params.index < Math.ceil(getAppartaments.length / 15)" class="pages-item">
+                <router-link :to="`/${routerLink}/admin/appartament-all/${Math.ceil(getAppartaments.length / 15)}`" v-if="$route.params.index < Math.ceil(getAppartaments.length / 15)" class="pages-item">
                     {{ Math.ceil(getAppartaments.length / 15) }}
                 </router-link>
             </div>
-            <router-link :to="`/${routerLink}/admin/appartament-disactive${goToNextPage()}`">
+            <router-link :to="`/${routerLink}/admin/appartament-all/${goToNextPage()}`">
                 <i class="fa-solid fa-angle-right"></i>
             </router-link>
         </div>
@@ -218,7 +221,6 @@ export default {
 
     async mounted() {
         await this.fetchAppartaments();
-        console.log(this.apartaments);
 
         this.apartamentsStart = (+this.$route.params.index - 1) * 15;
         this.apartamentsEnd = +this.$route.params.index * 15;

@@ -30,17 +30,20 @@
                     </div>
                 </div>
                 <div class="navbar__modal-container">
-                    <div class="navbar__modal" ref="modal" v-if="modal">
-                        <ul>
-                            <li v-for="link in links" :key="link" @click="closeNavbarModal">
-                                <router-link :to="link.link" class="navbar__modal-link">{{ link.name }}</router-link>
-                            </li>
-                        </ul>
-                    </div>
+                    <transition name="navbarModal">
+                        <div class="navbar__modal" ref="modal" v-if="modal">
+                            <ul>
+                                <li v-for="link in links" :key="link" @click="closeNavbarModal($event)">
+                                    <a :href="link.link" class="navbar__modal-link">{{ link.name }}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </transition>
+
                 </div>
             </div>
         </nav>
-        <transition name="filter">
+        <transition name="filter" @click="closeFilter">
             <navbarFilters v-if="showFilter" @closeFilter="closeFilter"/>
         </transition>
     </div>
@@ -101,8 +104,16 @@ export default {
             this.showFilter = ! this.showFilter;
         },
 
-        closeFilter () {
-            this.showFilter = false;
+        closeFilter (e) {
+            const clickedElement = e.target;
+            const classAray = ['filter','fa-xmark','filter__close', 'filter__chrest'];
+
+            classAray.forEach(item => {
+                if (clickedElement.classList.contains(item)) {
+                    this.showFilter = false;
+                }
+            })
+
         },
 
         createLikedLink () {
@@ -126,6 +137,7 @@ export default {
         closeNavbarModal () {
             if (this.modal) {
                 this.modal = false;
+                
                 let icon = document.querySelectorAll('.icon');
                 icon[2].classList.remove('fa-xmark')
                 icon[2].classList.add('fa-bars-staggered')
@@ -152,6 +164,7 @@ export default {
 
     mounted () {
         this.createLikedLink();
+        this.$refs.link[1].setAttribute('href', '/map/');
 
         document.querySelector('body').addEventListener('click', (e) => this.closeNavbarModal());
     }

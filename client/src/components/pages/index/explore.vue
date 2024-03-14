@@ -135,6 +135,10 @@ export default {
                 name: "Property type",
                 count: 'any'
             },
+            status: {
+                name: 'Status',
+                count: 'any'
+            },
             areas: {
                 name: "Areas",
                 count: 'any',
@@ -254,7 +258,11 @@ export default {
                 this.activeButtons['propertyType'].count = this.buttons['propertyType'].list[index];
             }
             
-            console.log(this.activeButtons.price.max);
+            for (let key in this.activeButtons) {
+                if (this.activeButtons[key].count === 'default') {
+                    this.activeButtons[key].count = 'any';
+                }
+            }
             
             await this.fetchData();
         },
@@ -291,7 +299,6 @@ export default {
             const buttonWidth = this.$refs.exploreButtons.clientWidth;
 
             const classActive = 'explore__filter-menu-active';
-            console.log(event.currentTarget);
 
             let dropdownWindow = this.$refs.dropdownWindow;
             let objectIndex = -1;
@@ -396,12 +403,21 @@ export default {
                     await this.initMap(this.getAppartaments);
                 })
             }
+        },
+        'activeButtons': {
+            deep: true,
+            async handler() {
+                for (let key in this.activeButtons) {
+                    if (this.activeButtons[key].count === 'default') {
+                        this.activeButtons[key].count = 'any';
+                    }
+                }
+            }
         }
     },
 
     async mounted () {
         await this.fetchData();
-        
 
         let tovars = localStorage.getItem('likedTovars');
         !tovars ? tovars = [] : tovars = JSON.parse(tovars);
@@ -410,7 +426,6 @@ export default {
             tovars.forEach(tovar => {
                 if (appartamet.name === tovar) {
                     this.getAppartaments[index].liked = true;
-                    console.log('getAppartaments',this.getAppartaments);
                 }
             })
         })
@@ -429,12 +444,9 @@ export default {
             },
         })
 
-        if (width < 1000) {
-            swiper.params.slidesPerView = 3;
-        }
-        if (width < 800) {
-            swiper.params.slidesPerView = 2;
-        }
+        if (width < 1000) swiper.params.slidesPerView = 3;
+        if (width < 800) swiper.params.slidesPerView = 2;
+
         await this.$nextTick(async () => await this.initMap(this.getAppartaments))
     } 
 }

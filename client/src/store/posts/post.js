@@ -9,7 +9,6 @@ export default {
     actions: {
         async fetchPost(context, filters) {
             const url = `/${process.env.VUE_APP_API_PATH}/post-get-all`;
-            console.log(filters);
             try {
                 const response = await axios.get(url, {
                     headers: {

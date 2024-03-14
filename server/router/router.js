@@ -13,6 +13,7 @@ router.post('/registration', autorization.registrationUser);
 router.post('/indentification', autorization.indentificationUser);
 router.post('/authification', autorization.autorizationUser);
 router.get('/get-users', autorization.getUsers);
+router.put('/edit-user-role', autorization.editRoleUser);
 router.delete('/delete-users', autorization.deleteUsers);
 
 router.post('/appartament-create', appartaments.createAppartament);

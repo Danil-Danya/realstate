@@ -9,6 +9,12 @@
 
     &__logo {
         margin-bottom: 80px;
+        max-width: 612px;
+        width: 100%;
+
+        @include media ($xs) {
+            max-width: 250px;
+        }
     }
 
     &__window {
@@ -24,14 +30,22 @@
     }
 
     &__form {
-        width: 470px !important;
+        max-width: 470px !important;
+        width: 100% !important;
         display: flex;
         flex-direction: column;
         align-items: center;
+        padding: 15px;
     }
 
     &__input {
         margin-bottom: 36px;
+        max-width: 470px !important;
+        width: 100% !important;
+
+        @include media ($xs) {
+            height: 30px;
+        }
     }
 
     &__title {
@@ -50,12 +64,20 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+
+        @include media ($xs) {
+            width: auto;
+        }
     }
 
     &__button {
         padding: 12px 65px !important;
         border-radius: 10px !important;
         font-size: 20px !important;
+
+        @include media ($xs) {
+            transform: scale(0.75);
+        }
     }
 
     &__text {
@@ -74,6 +96,13 @@
         font-style: normal;
         font-weight: 400;
         line-height: normal;
+    }
+
+    &__center {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
     }
 
     &__label {

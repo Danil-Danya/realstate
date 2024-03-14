@@ -1,4 +1,12 @@
 .admin__request {
+    &-content {
+        overflow: scroll;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
+
     &-name {
         max-width: 300px;
         width: 100%;

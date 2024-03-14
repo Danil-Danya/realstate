@@ -35,6 +35,13 @@
             "Townhouse"
         ]
     },
+    "status": {
+        "name": "status",
+        "list": [
+            "Completed",
+            "Not finished"
+        ]
+    },
     "areas": {
         "name": "Areas",
         "list": [

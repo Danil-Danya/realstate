@@ -139,7 +139,7 @@
 
     &-range {
         @include media ($xs) {
-            width: 100%;
+            width: 100% !important;
         }
     }
     
@@ -166,6 +166,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+        width: 100% !important;
 
         @include media ($xs) {
             max-width: 100%;
@@ -241,7 +242,7 @@
                     <p class="filter__link" @click="clearAll">Clear all</p>
                 </div>
                 <div class="filter__close">
-                    <span class="filter__chrest" @click="closeFilter">
+                    <span class="filter__chrest">
                         <i class="fa-solid fa-xmark"></i>
                     </span>
                 </div>
@@ -268,18 +269,14 @@
                                     <input type="range" min="0" v-model="filter.price.max" max="10000000" step="1" class="filter__dropdown-range-input" @change="setMaxPrice">
                                 </div>
                                 <div class="filter__range-container">
-                                    <div class="filter-range">
-                                        <label for="" class="input__label filter__label" ref="labels"></label>
-                                        <button class="btn btn-secondary dropdown-toggle filter__button filter__range" type="button"  ref="buttons"> 
-                                        <p class="filter__price"> Min: {{ filter.price.min }} AED</p>
-                                        </button>
+                                    <div class="filter-range input__container">
+                                        <label for="" class="input__label filter__label" ref="labels">Min</label>
+                                        <input type="text" class="btn btn-secondary dropdown-toggle filter__button filter__range" :value="`${filter.price.min}`" ref="buttons"> 
                                     </div>
                                     <span class="filter__line"></span>
-                                    <div class="filter-range">
-                                        <label for="" class="input__label filter__label" ref="labels"></label>
-                                        <button class="btn btn-secondary dropdown-toggle filter__button filter__range" type="button"  ref="buttons"> 
-                                        <p class="filter__price">Max: {{ filter.price.max }} AED</p>
-                                        </button>
+                                    <div class="filter-range input__container">
+                                        <label for="" class="input__label filter__label" ref="labels">Max</label>
+                                        <input type="text" class="btn btn-secondary dropdown-toggle filter__button filter__range" :value="`${filter.price.max}`" ref="buttons"> 
                                     </div>
                                 </div>
                                 <div class="filter__range-link">
@@ -308,6 +305,7 @@ import config from '@/configs/config.filter.navbar.json';
 export default {
     data: () => ({
         windowWidth: window.innerWidth,
+        combSelect: 'Rent',
         buttons: config,
         buttonIndex: 0,
         activeButtons: {
@@ -359,23 +357,25 @@ export default {
             }
         },
 
-        selectComb() {
-            if (this.filter.combSelect === 'Rent') {
-                this.filter.combSelect = 'Buy';
-
+        async selectComb() {
+            if (this.combSelect === 'Rent') {
                 this.$refs.buy.classList.add('btn-dark');
                 this.$refs.buy.classList.remove('btn-light');
 
                 this.$refs.rent.classList.add('btn-light');
-                this.$refs.rent.classList.remove('btn-dark')
-            } else {
-                this.filter.combSelect = 'Rent';
+                this.$refs.rent.classList.remove('btn-dark');
 
+                this.combSelect = 'Buy';
+                this.filter.combSelect = 'Buy';
+            } else {
                 this.$refs.buy.classList.add('btn-light');
                 this.$refs.buy.classList.remove('btn-dark');
 
                 this.$refs.rent.classList.add('btn-dark');
-                this.$refs.rent.classList.remove('btn-light')
+                this.$refs.rent.classList.remove('btn-light');
+
+                this.combSelect = 'Rent';
+                this.filter.combSelect = 'Rent';
             }
         },
 
@@ -414,9 +414,7 @@ export default {
                     let value = this.filter[key];
 
                     if (typeof value === 'object') {
-                        value = Object.entries(value)
-                            .map(([subKey, subValue]) => `${subKey}=${subValue}`)
-                            .join(',');
+                        value = `${this.filter[key].min},${this.filter[key].max}&`;
                     }
                     queryParametrs += `${key}=${value}&`;
                 }
@@ -449,7 +447,6 @@ export default {
         },
 
         changeMinMaxFilter(minMax, typeFilter, prefix) {
-            console.log(this.filter[typeFilter]);
             if (prefix === 'under') {
                 this.filter[typeFilter].min = 0;
                 this.filter[typeFilter].max = minMax[0]
@@ -481,7 +478,7 @@ export default {
 
             if (typeFilter === 'bedrooms' || typeFilter === 'bathrooms') {
                 this.activeButtons[name] = filterLine;
-                this.filter[name] = index + 1;
+                this.filter[name] = index;
             }
 
             if (typeFilter === 'property type') {
@@ -495,6 +492,17 @@ export default {
                 const getPrefix = this.getPrefix(minMaxArray);
 
                 this.changeMinMaxFilter(getMinMax, typeFilter, getPrefix);
+            }
+
+            if (typeFilter === 'areas') {
+                const areasRange = this.buttons[typeFilter].list[index].split('to');
+                this.activeButtons.areas = this.buttons[typeFilter].list[index];
+
+                const minAreas = !isNaN(parseInt(areasRange[0])) ? parseInt(areasRange[0]) : 500;
+                const maxAreas = !isNaN(parseInt(areasRange[1])) ? parseInt(areasRange[1]) : 5000;
+
+                this.filter.areas.min = minAreas;
+                this.filter.areas.max = maxAreas;
             }
         },
     },

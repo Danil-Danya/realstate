@@ -29,7 +29,7 @@ class Post {
 
             postRequest.content = `${JSON.stringify(content)}`;
             const createPost = await Posts.create(postRequest);
-            return createPost;
+            return res.status(200).json(createPost);
         }
         catch (error) {
             console.log(error);
@@ -92,19 +92,7 @@ class Post {
             const { id, imgPaths } = postRequest;
             const imagesRequest = req.files;
             const getItem = await Posts.findOne({ where: { id } });
-
-            console.log(postRequest);
-
             const imgArray = imgPaths.split(',');
-
-            // Определение, какие изображения нужно удалить
-            // const deleteImages = getItem.dataValues.imgPaths.filter(imgPath => !imgArray.includes(imgPath));
-
-            // Удаление изображений, если есть что удалять
-            // if (deleteImages.length > 0) {
-            //     await postDelete(deleteImages);
-            // }
-
             const postId = uid.uid();
             const title = postRequest.title;
             const imagesData = postUpload(imagesRequest, postId, title);
@@ -114,10 +102,13 @@ class Post {
             if (postRequest.content) {
                 const content = JSON.parse(postRequest.content);
                 let index = 0;
+
                 content.forEach((item, i) => {
                     if (item.type === 'IMAGE') {
-                        content[i].path = imagesData.imgPaths[index];
-                        index++;
+                        if (imagesData && imagesRequest) {
+                            content[i].path = imagesData.imgPaths[index];
+                            index++;
+                        }
                     }
                 });
                 postRequest.content = JSON.stringify(content);
@@ -143,7 +134,6 @@ class Post {
         try {
             const filters = req.query;
             const allPosts = await postFilter(filters);
-            //console.log(filters);
             return res.status(200).json(allPosts);
         }
         catch (error) {

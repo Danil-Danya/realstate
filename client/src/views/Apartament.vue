@@ -1,5 +1,5 @@
 <template>
-    <section class="apartament">
+    <section class="apartament" v-if="getOneAppartament">
        <apartamentFilter :dataInfo="dataInfo" />
         <mobileApartamentSlider :dataImages="dataImages" :dataContent="dataContent" v-if="windowWidth < 580" />
         <mobileApartamentInfo v-if="windowWidth < 580" />

@@ -296,3 +296,13 @@
 .filter-leave-to {
     opacity: 0;
 }
+
+.navbarModal-enter-active,
+.navbarModal-leave-active {
+    transition: opacity 0.5s ease;
+}
+
+.navbarModal-enter-from,
+.navbarModal-leave-to {
+    opacity: 0 !important;
+}

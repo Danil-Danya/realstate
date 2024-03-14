@@ -118,8 +118,8 @@
                             {{ +$route.params.index + 2 }}
                     </router-link>
                     <div v-if="$route.params.index < Math.ceil(getAppartaments.length / 15) - 1">...</div>
-                    <router-link :to="`/catalog/${Math.ceil(getAppartaments.length / 15)}`" v-if="$route.params.index < Math.round(getAppartaments.length / 15)" class="pages-item">
-                        {{ Math.round(getAppartaments.length / 15) }}
+                    <router-link :to="`/catalog/${Math.ceil(getAppartaments.length / 15)}/${queryParametrs}`" v-if="$route.params.index < Math.ceil(getAppartaments.length / 15)" class="pages-item">
+                        {{ Math.ceil(getAppartaments.length / 15) }}
                     </router-link>
                 </div>
                 <router-link :to="`/catalog/${goToNextPage()}`">
@@ -261,9 +261,10 @@ export default {
         },
 
         goToNextPage() {
-            if (Math.round(this.getAppartaments.length / 15) !== +this.$route.params.index) {
+            if (Math.ceil(this.getAppartaments.length / 15) !== +this.$route.params.index) {
                 return +this.$route.params.index + 1;
             }
+            else return this.$route.params.index
         },
 
         goToPrevPage() {

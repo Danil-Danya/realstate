@@ -3,22 +3,35 @@
         <div class="admin__user-create">
             <div class="admin__user-create-nav">
                 <a @click="redirectInBack" href="#"><i class="fa-solid fa-angle-left"></i> Back</a>
-                <a href="#" class="admin__delete"><i class="fa-solid fa-trash-can"></i> Delete Post</a>
+                <a href="#" class="admin__delete"><i class="fa-solid fa-trash-can"></i> Delete user</a>
             </div>
             <div class="admin__user-create-container">
                 <div class="admin__content">
-                    <form>
+                    <form autocomplete="disabled"> 
                         <div class="admin__user-input-container">
                             <div class="input__container admin__create-input-container">
                                 <label class="input__label admin__label admin__create-label" ref="emailLabel">Email</label>
-                                <input type="wmail" v-model="email" class="form-control admin__create-input" ref="email">
+                                <input type="wmail" v-model="email" class="form-control admin__create-input" readonly onfocus="this.removeAttribute('readonly')" ref="email">
                                 <p class="admin__user-message">{{ emailMessage }}</p>
                             </div>
                         </div>
                         <div class="admin__user-input-container">
                             <div class="input__container admin__create-input-container">
+                                <label class="input__label admin__label admin__create-label" ref="passwordLabel">Role</label>
+                                <select class="form-control admin__create-input" style="cursor: pointer;" v-model="role">
+                                    <option value="CREATOR" selected>Creator</option>
+                                    <option value="SPECTATOR">For view </option>
+                                </select>
+                                <span class="password-icon" ref="passwordIcon" @click="showPassword">
+                                    <i class="fa-solid fa-chevron-down"></i>
+                                </span>
+                                <p class="admin__user-message">{{ passwordMessage }}</p>
+                            </div>
+                        </div>
+                        <div class="admin__user-input-container">
+                            <div class="input__container admin__create-input-container">
                                 <label class="input__label admin__label admin__create-label" ref="passwordLabel">Password</label>
-                                <input :type="viewPassword ? 'text' : 'password'" v-model="password" class="form-control admin__create-input" ref="password">
+                                <input :type="viewPassword ? 'text' : 'password'" v-model="password" readonly onfocus="this.removeAttribute('readonly')" utocomplete="new-password" class="form-control admin__create-input" ref="password">
                                 <span class="password-icon" ref="passwordIcon" @click="showPassword">
                                     <i class="fa-solid fa-eye"></i>
                                 </span>
@@ -46,6 +59,7 @@ export default {
     data: () => ({
         email: '',
         password: '',
+        role: 'CREATOR',
         emailMessage: '',
         passwordMessage: '',
         viewPassword: false
@@ -129,13 +143,14 @@ export default {
         },
 
         async registrNewUser () {
-            const url = `/${process.env.VUE_APP_API_PATH}/registration`;
+            const url = `http://localhost:5000/${process.env.VUE_APP_API_PATH}/registration`;
             const isValid = this.validator(this.email, this.password);
             
             if (isValid) {
                 const data = {
                     email: this.email,
-                    password: this.password
+                    password: this.password,
+                    role: this.role
                 }
     
                 try {
@@ -149,10 +164,6 @@ export default {
             }
         },
     },
-
-    async mounted () {
-
-    }
 }
 
 

@@ -2,46 +2,48 @@
     <div class="admin__container">
         <transition>
             <deletePost v-if="modal" :idToDelete="selectedPostId" :nameToDelete="selectedPostName"
-                :imgPathsToDelete="selectedPostImgPaths" @closeModal="closeModal" />
+            :imgPathsToDelete="selectedPostImgPaths" @closeModal="closeModal" />
         </transition>
         <post-filter/>
         <h2 class="admin__counter">{{ getPosts.length }} properties</h2>
-        <postSignature />
-        <div class="admin__item" v-for="(item, index) in post" :key="item" v-if="post.length > 1"
-            :style="index % 2 === 1 ? { background: 'rgba(55, 55, 55, 0.02)' } : {}">
-            <div class="admin__index">
-                <h2 class="admin__text-bold">{{ index + 1 }}</h2>
+        <div class="admin__post-content">
+            <postSignature />
+            <div class="admin__item" v-for="(item, index) in post" :key="item" v-if="post.length > 1"
+                :style="index % 2 === 1 ? { background: 'rgba(55, 55, 55, 0.02)' } : {}">
+                <div class="admin__index">
+                    <h2 class="admin__text-bold">{{ index + 1 }}</h2>
+                </div>
+                <div class="admin__img">
+                    <img :src="`/${firstImages[index]}`" alt="Img" class="admin__img">
+                </div>
+                <div class="admin__post-title">
+                    <h2 class="admin__text-bold">
+                        {{ item.title }}
+                    </h2>
+                </div>
+                <div class="admin__post-views">
+                    <p class="admin__text"> {{ item.views }} </p>
+                </div>
+                <div class="admin__post-date">
+                    <p class="admin__text">{{ updateDate(index) }}</p>
+                </div>
+                <div class="admin__post-time">
+                    <p class="admin__text">19:20</p>
+                </div>
+                <div class="admin__post-tags">
+                    <p class="admin__text">{{ item.tags.split(',').length }}</p>
+                </div>
+                <div class="admin__icon-container">
+                    <router-link :to="`/${routerLink}/admin/post-edit/${item.title}/${item.id}`" class="admin__icon"><i
+                            class="fa-regular fa-pen-to-square"></i></router-link>
+                    <router-link to="" @click="showModal(item.id, item.title, item.imgPaths)" class="admin__icon">
+                        <i class="fa-regular fa-trash-can"></i>
+                    </router-link>
+                </div>
             </div>
-            <div class="admin__img">
-                <img :src="`/${firstImages[index]}`" alt="Img" class="admin__img">
+            <div class="admin__post-message" v-else>
+                <h2 class="admin__post-title">No entries found</h2>
             </div>
-            <div class="admin__post-title">
-                <h2 class="admin__text-bold">
-                    {{ item.title }}
-                </h2>
-            </div>
-            <div class="admin__post-views">
-                <p class="admin__text"> {{ item.views }} </p>
-            </div>
-            <div class="admin__post-date">
-                <p class="admin__text">{{ updateDate(index) }}</p>
-            </div>
-            <div class="admin__post-time">
-                <p class="admin__text">19:20</p>
-            </div>
-            <div class="admin__post-tags">
-                <p class="admin__text">{{ item.tags.split(',').length }}</p>
-            </div>
-            <div class="admin__icon-container">
-                <router-link :to="`/${routerLink}/admin/post-edit/${item.title}/${item.id}`" class="admin__icon"><i
-                        class="fa-regular fa-pen-to-square"></i></router-link>
-                <router-link to="" @click="showModal(item.id, item.title, item.imgPaths)" class="admin__icon">
-                    <i class="fa-regular fa-trash-can"></i>
-                </router-link>
-            </div>
-        </div>
-        <div class="admin__post-message" v-else>
-            <h2 class="admin__post-title">No entries found</h2>
         </div>
         <div class="admin__pages" v-if="Math.ceil(getPosts.length / 15) > 1">
             <router-link :to="`/${routerLink}/admin/post-draft/${goToPrevPage()}`">

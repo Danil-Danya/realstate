@@ -2,6 +2,7 @@
     "bedrooms": {
         "name": "Bedrooms",
         "list": [
+            "default",
             "1 bedroom",
             "2 bedrooms",
             "3 bedrooms",
@@ -16,6 +17,7 @@
     "bathrooms": {
         "name": "Bathrooms",
         "list": [
+            "default",
             "1 bathroom",
             "2 bathrooms",
             "3 bathrooms",
@@ -30,14 +32,23 @@
     "propertyType": {
         "name": "Property type",
         "list": [
+            "default",
             "Apartament",
             "Villa",
             "Townhouse"
         ]
     },
+    "status": {
+        "name": "status",
+        "list": [
+            "Completed",
+            "Not finished"
+        ]
+    },
     "areas": {
         "name": "Areas",
         "list": [
+            "default",
             "Under 500 (ft)",
             "500 to 1000 (ft)",
             "1000 to 2000 (ft)",
@@ -48,6 +59,7 @@
     "price": {
         "name": "Price",
         "list": [
+            "default",
             "Under 50000 (AED)",
             "50000 to 100000 (AED)",
             "100000 to 150000 (AED)",
@@ -64,18 +76,23 @@
     "locations": {
         "name": "Locations",
         "list": [
-            "Arabian Ranches",
-            "Downtown Dubai",
-            "Mina rashid",
-            "Dubai Marina",
-            "Palm Jumeirah",
-            "Business Bay",
-            "Jebel Ali",
-            "Dubai Media City",
-            "Sheikh Zayed Road",
-            "Deira",
+            "any",
             "Al Barsha",
-            "Dubai City"
+            "Arabian Ranches III",
+            "Business Bay",
+            "Downtown Dubai",
+            "Dubai City",
+            "Dubai Marina",
+            "Dubai Media City",
+            "Deira",
+            "Jebel Ali",
+            "JBR",
+            "Mina Rashid",
+            "Mohammad Bin Rashid City",
+            "Mudon",
+            "Palm Jumeirah",
+            "Sheikh Zayed Road",
+            "Sobha Hartland"
         ]
     }
 }

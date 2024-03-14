@@ -5,23 +5,6 @@
                 <div class="catalog__card-sort">
                     <h2 class="catalog__title">{{ getAppartaments.length }} properties found</h2>
                     <div class="catalog__card-sort-container">
-                        <div class="catalog__card-sort-price">
-                            <p class="catalog__card-sort-text">show price in</p>
-                            <div class="dropdown">
-                                <button class="btn btn-secondary dropdown-toggle catalog__card-dropdown" 
-                                 type="button" id="dropdownMenuButton1" 
-                                 data-bs-toggle="dropdown" 
-                                 aria-expanded="false"
-                                >
-                                    {{ valuteSelector }}
-                                </button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                    <li><a class="dropdown-item valute" href="#" @click="changeValute(0)">AED</a></li>
-                                    <li><a class="dropdown-item valute" href="#" @click="changeValute(1)">USD</a></li>
-                                    <li><a class="dropdown-item valute" href="#" @click="changeValute(2)">RUB</a></li>
-                                </ul>
-                            </div>
-                        </div>
                         <div class="catalog__card-sort-location">
                             <p class="catalog__card-sort-text">sort by</p>
                             <div class="dropdown">

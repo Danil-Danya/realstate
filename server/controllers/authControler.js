@@ -4,23 +4,23 @@ const jwt = require('jsonwebtoken');
 
 const User = require('../models/userModel.js');
 
-const generateJWT = (email, password) => {
-    return jwt.sign({ email, password }, process.env.SECRET_KEY, {expiresIn: '24h'});
+const generateJWT = (email, password, role) => {
+    return jwt.sign({ email, password, role }, process.env.SECRET_KEY, {expiresIn: '24h'});
 }
 
 class Autorization {
     async registrationUser (req, res) {
         try {
-            const { email, password } = req.body;
-            if (!email || !password) return res.status(400).json({ message: 'Incorrect email or password' });
+            const { email, password, role } = req.body;
+            if (!email || !password || !role) return res.status(400).json({ message: 'Incorrect email or password' });
 
             const candidate = await User.findOne({ where: { email }});
             if (candidate) return res.status(400).json({ message: 'This user has been created' });
 
             const hashPassword = bycrypt.hashSync(password, 10);
-            await User.create({ email, password: hashPassword });
+            await User.create({ email, password: hashPassword, role });
 
-            const token = generateJWT(email, hashPassword);
+            const token = generateJWT(email, hashPassword, role);
             return res.send({ token });
         }
         catch (error) {
@@ -39,7 +39,7 @@ class Autorization {
             const decodeHashPassword = bycrypt.compareSync(password, user.password);
             if (!decodeHashPassword) return res.status(401).json({ message: 'User is not found' });
 
-            const token = generateJWT(user.emal, user.password);
+            const token = generateJWT(user.email, user.password, user.role);
             return res.json({token});
         }
         catch (error) {
@@ -50,36 +50,59 @@ class Autorization {
 
     async getUsers (req, res) {
         const users = await User.findAll();
-        const emails = users.map(email => email.email);
-
-        return res.json(emails);
+        return res.json(users);
     }
 
     async deleteUsers (req, res) {
-        const { email } = req.body;
-        const user = await User.destroy({where: {email}});
+        try {
+            const { email } = req.body;
+    
+            if (!email) return res.status(400).json({ message: 'You send a empty email' });
 
-        return res.send({ message: 'this user has been deleted' });
+            console.log(email);
+    
+            const user = await User.destroy({ where: { email } });
+    
+            return res.send({ message: 'this user has been deleted' });
+        }
+        catch (err) {
+            console.log(err);
+            return res.status(501).json('error');
+        }
     }
 
-    async autorizationUser (req, res) {
+    async editRoleUser (req, res) {
+        try {
+            const { email, role } = req.body;
+    
+            if (!email || !role) return res.status(400).json({ message: 'You send a empty email or role' });
+    
+            const editedUser = await User.update({ role }, { where: { email } });
+    
+            return res.send({ message: 'this user has been updated' });
+        }
+        catch {
+            console.log(err);
+            return res.status(501).json('error');
+        }
+    }
+
+    async autorizationUser(req, res) {
         try {
             const clientToken = req.body.token;
 
-            jwt.verify(clientToken, process.env.SECRET_KEY, (error, decoded) => {
-                if (!error) {
-                    console.log(decoded);
-                }
-                else {
-                    console.log(error);
-                }
-            })
+            const decoded = await new Promise((resolve, reject) => {
+                jwt.verify(clientToken, process.env.SECRET_KEY, (error, decoded) => {
+                    error ? reject(error) : resolve(decoded);
+                });
+            });
 
-            return res.send({ auth: true });
-        }
+            const role = decoded.role;
+            res.send({ auth: true, role });
+        } 
         catch (error) {
             console.log(error);
-            res.status(400).json({ message: 'Auth error' })
+            res.send({ auth: false });
         }
     }
 }

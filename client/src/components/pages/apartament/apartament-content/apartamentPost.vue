@@ -25,10 +25,10 @@
                     >
                         {{ valuteSelector }}
                     </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><p class="dropdown-item valute" @click="changeValute(0)" ref="aed">AED</p></li>
-                        <li><p class="dropdown-item valute" @click="changeValute(1)" ref="usd">USD</p></li>
-                        <li><p class="dropdown-item valute" @click="changeValute(2)" ref="rub">RUB</p></li>
+                    <ul class="dropdown-menu apartament__price-dropdown" aria-labelledby="dropdownMenuButton1">
+                        <li><p class="dropdown-item valute apartament__price-select" @click="changeValute(0)" ref="aed">AED</p></li>
+                        <li><p class="dropdown-item valute apartament__price-select" @click="changeValute(1)" ref="usd">USD</p></li>
+                        <li><p class="dropdown-item valute apartament__price-select" @click="changeValute(2)" ref="rub">RUB</p></li>
                     </ul>
                 </div>
             </div>

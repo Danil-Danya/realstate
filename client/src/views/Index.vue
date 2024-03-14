@@ -9,7 +9,7 @@
         <mobileOffer v-else/>
         <popular v-if="windowWidth > 580"/>
         <mobilePopular v-else/>
-        <lineVue/>
+        <!-- <lineVue/> -->
         <!-- <accordione/> -->
         <message v-if="windowWidth > 580"/>
         <mobileMessage v-else/>

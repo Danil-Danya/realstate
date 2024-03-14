@@ -26,6 +26,10 @@
         display: flex;
         gap: 15px;
 
+        @include media(1370px) {
+            max-width: 1050px;
+        }
+
         @include media($xs) {
             background: #fff;
                 border-bottom: 1px solid rgba(204, 204, 204, 0.4);
@@ -208,7 +212,7 @@ import 'swiper/css';
 
 export default {
     data: () => ({
-        combSelect: '',
+        combSelect: 'Rent',
         buttonIndex: 0,
         sort: 'Default',
         isPrevButtonVisible: true,
@@ -234,6 +238,10 @@ export default {
             },
             propertyType: {
                 name: "Property type",
+                count: 'any'
+            },
+            status: {
+                name: 'Status',
                 count: 'any'
             },
             areas: {
@@ -318,9 +326,12 @@ export default {
                 bathrooms: this.activeButtons.bathrooms.count != 'any' ? +this.activeButtons.bathrooms.count : undefined,
                 locations: this.activeButtons.locations.count != 'any' ? this.activeButtons.locations.count : undefined,
                 propertyType: this.activeButtons.propertyType.count != 'any' ? this.activeButtons.propertyType.count : undefined,
-                price: {
+                price: this.activeButtons.price.count != 'any' ? {
                     min: this.activeButtons.price.min,
                     max: this.activeButtons.price.max
+                } : {
+                    min: 0,
+                    max: 100000000
                 },
                 areas: {
                     min: this.activeButtons.areas.min,
@@ -378,6 +389,12 @@ export default {
 
             if (type === 'property type') {
                 this.activeButtons['propertyType'].count = this.buttons['propertyType'].list[index];
+            }
+
+            for (let key in this.activeButtons) {
+                if (this.activeButtons[key].count === 'default') {
+                    this.activeButtons[key].count = 'any';
+                }
             }
 
             this.createQueryData();
@@ -449,9 +466,9 @@ export default {
 
         swiperInit() {
             const width = window.innerWidth;
+            let sliderWidth =  this.$refs.sliderContainer.clientWidth;
             
             if (width > 580) {
-                let sliderWidth =  this.$refs.sliderContainer.clientWidth;
                 this.$refs.slider.style = `max-width: ${sliderWidth - 130}px;
                                                width: 100%;`;
             }
@@ -491,6 +508,7 @@ export default {
         
         document.querySelector('body').addEventListener('click', (e) => this.closeSelectButton());
         window.addEventListener('resize', this.swiperInit);
+        this.createQueryData();
     }
 }
 

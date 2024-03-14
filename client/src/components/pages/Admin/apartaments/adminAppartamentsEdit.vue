@@ -3,7 +3,7 @@
         <div class="admin__appartaments-create-nav">
             <a @click="redirectInBack" href="#"><i class="fa-solid fa-angle-left"></i> Back</a>
             <h2 class="admin__title">Edit house</h2>
-            <a href="#" class="admin__delete" @click.prevent="showAlert"><i class="fa-solid fa-trash-can"></i> Delete house</a>
+            <router-link to="/" class="admin__delete" @click.prevent="showAlert">Home page</router-link>
         </div>
         <div class="admin__appartaments-create-container">
             <div class="admin__content">
@@ -167,11 +167,11 @@
                     <span class="admin__line"></span>
                     <div class="admin__check-content">
                         <div class="admin__check-container">
-                            <input v-model="isSlide" class="form-check-input" id="best" type="checkbox" value="">
+                            <input v-model="firstSlide" class="form-check-input" id="best" type="checkbox" value="">
                             <label for="#best">Add in «Best offers»</label>
                         </div>
                         <div class="admin__check-container">
-                            <input v-model="firstSlide" class="form-check-input" id="best" type="checkbox" value="">
+                            <input v-model="isSlide" class="form-check-input" id="best" type="checkbox" value="">
                             <label for="#best">Add in Slider on home page</label>
                         </div>
                     </div>
@@ -180,8 +180,7 @@
                             <div class="admin__radio-container">
                                 <div class="form-check form-switch">
                                     <label class="form-check-label" for="flexSwitchCheckChecked">Active</label>
-                                    <input v-model="isActive" class="form-check-input" type="checkbox"
-                                        id="flexSwitchCheckChecked" checked>
+                                    <input v-model="isActive" class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
                                 </div>
                             </div>
                             <button type="button" class="btn admin__create-buttons-btn btn-dark"
@@ -271,9 +270,6 @@ export default {
 
             const imgPaths = `${this.imgPaths}`;
             formData.append('imgPaths', imgPaths);
-
-            console.log('imgPaths'+imgPaths);
-            console.log();
 
             if (!this.validator()) {
                 return;

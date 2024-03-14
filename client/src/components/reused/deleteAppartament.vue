@@ -34,7 +34,7 @@ export default {
         },
         async deleteRequest() {
             try {
-                const url = `http://localhost:5000/${process.env.VUE_APP_API_PATH}/appartament-delete`;
+                const url = `/${process.env.VUE_APP_API_PATH}/appartament-delete`;
                 console.log(this.idToDelete, this.nameToDelete, this.imgPathsToDelete);
 
                 const response = await axios.delete(url, {

@@ -137,6 +137,10 @@ export default {
                 name: "Property type",
                 count: 'any'
             },
+            status: {
+                name: 'Status',
+                count: 'any'
+            },
             areas: {
                 name: "Areas",
                 count: 'any',

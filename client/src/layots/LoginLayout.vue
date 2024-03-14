@@ -12,7 +12,7 @@
                 </div>
             </div>
         </div>
-        </section>
+    </section>
 </template>
 
 <style lang="scss">

@@ -169,7 +169,7 @@ export default {
 
         async sendMessage () {
             if (this.validator()) {
-                const url = 'http://localhost:5000/server-api/request-create';
+                const url = '/server-api/request-create';
 
                 const data = {
                     name: this.name,

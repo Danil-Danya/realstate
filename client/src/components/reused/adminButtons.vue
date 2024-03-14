@@ -42,6 +42,7 @@
             max-width: 1260px;
             display: flex;
             gap: 15px;
+            flex-wrap: wrap;
         }
 
         &-active {
@@ -49,6 +50,7 @@
           margin-top: 30px;
           max-width: 1260px;
           gap: 15px;
+          flex-wrap: wrap;
 
           &-button {
 

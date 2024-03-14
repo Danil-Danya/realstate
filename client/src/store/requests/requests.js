@@ -28,7 +28,7 @@ export default {
         },
 
         async fetchOneRequest (context, data) {
-            const url = `/${process.env.VUE_APP_API_PATH}/request-get-one`;
+            const url = `http://localhost:5000/${process.env.VUE_APP_API_PATH}/request-get-one`;
 
             try {
                 const response = await axios.get(url, {

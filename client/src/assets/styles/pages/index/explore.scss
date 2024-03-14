@@ -191,7 +191,7 @@
         &-menu {
             position: absolute;
             background: #fff;
-            z-index: 999;
+            z-index: 9;
             width: 245px;
             border-radius: 10px;
             box-shadow: 0px 3px 13px 0px rgba(0, 0, 0, 0.15);
@@ -201,6 +201,12 @@
             gap: 10px;
             display: none;
             border: 0;
+            max-height: 300px;
+            overflow: scroll;
+
+            &::-webkit-scrollbar-track {
+                background: #fff;
+            }
 
             @include media($xs) {
                 width: 150px;

@@ -3,7 +3,7 @@
         <div class="admin__appartaments-create-nav">
             <a @click="redirectInBack" href="#"><i class="fa-solid fa-angle-left"></i> Back</a>
             <h2 class="admin__title">Add house</h2>
-            <a href="#" class="admin__delete" @click.prevent="showAlert"><i class="fa-solid fa-trash-can"></i> Delete house</a>
+            <router-link to="/" class="admin__delete" @click.prevent="showAlert">Home page</router-link>
         </div>
         <div class="admin__appartaments-create-container">
             <div class="admin__content">
@@ -164,11 +164,11 @@
                     <span class="admin__line"></span>
                     <div class="admin__check-content">
                         <div class="admin__check-container">
-                            <input v-model="isSlide" class="form-check-input" id="best" type="checkbox" value="">
+                            <input v-model="firstSlide" class="form-check-input" id="best" type="checkbox" value="">
                             <label for="#best">Add in «Best offers»</label>
                         </div>
                         <div class="admin__check-container">
-                            <input v-model="firstSlide" class="form-check-input" id="best" type="checkbox" value="">
+                            <input v-model="isSlide" class="form-check-input" id="best" type="checkbox" value="">
                             <label for="#best">Add in Slider on home page</label>
                         </div>
                     </div>
@@ -252,6 +252,7 @@ export default {
                 'combSelect', 'description', 'unitReferense', 'propertyName', 'emirate', 'status', 'priceForRent',
                 'priceForBuy', 'purpose', 'indoor', 'outdoor', 'lot', 'isSlide', 'firstSlide', 'isActive', 'dateOfCreate'
             ];
+            
             formDataFields.forEach((field, index) => {
                 formData.append(field, this[field]);
             });
@@ -302,7 +303,8 @@ export default {
                 for (let i = 0; i < vueModelKeys.length; i++) {
                     validatorState = validateField(i, this[vueModelKeys[i]] && this[vueModelKeys[i]] !== '') && validatorState;
                 }
-            } else {
+            } 
+            else {
                 for (let i = 0; i < vueModelKeys.length - 1; i++) {
                     validatorState = validateField(i, this[vueModelKeys[i]] && this[vueModelKeys[i]] !== '') && validatorState;
                 }

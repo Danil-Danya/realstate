@@ -1,5 +1,5 @@
 <template>
-    <div class="center">
+    <div class="login__center">
         <form class="login__form">
             <h2 class="login__title">Admin panel</h2>
             <div class="mb-3 input__container">
@@ -63,7 +63,8 @@ export default {
         },
 
         async autorization () {
-            const url = '/server-api/indentification';
+            const urlIndentification = '/server-api/indentification';
+            const urlAutorization = '/server-api/authification';
 
             const data = {
                 email: this.email,
@@ -74,19 +75,40 @@ export default {
 
             try {
                 if (this.isValid) {
-                    const response = await axios.post(url, data);
+                    const response = await axios.post(urlIndentification, data);
                     const token = response.data.token;
     
                     localStorage.setItem('token', token);
                     localStorage.setItem('month', this.date.getMonth());
                     localStorage.setItem('day', this.date.getDate());
-                    
-                    if (token) router.replace(`${process.env.VUE_APP_ADMIN_ROUTER}/admin/appartament-all/1`);
+
+                    if (token) {
+                        const serverToken = { token };
+                        const response = await axios.post(urlAutorization, serverToken);
+                        
+                        const auth = response.data.auth;
+                        const role = response.data.role;
+                        
+                        localStorage.setItem('auth', auth);
+                        localStorage.setItem('role', role);
+
+                        if (localStorage.getItem('auth')) {
+                            switch (localStorage.getItem('role')) {
+                                case 'SUPER_ADMIN':
+                                    router.replace(`${process.env.VUE_APP_ADMIN_ROUTER}/admin/appartament-all/1`);
+                                    break;
+                                case 'CREATOR': 
+                                    router.replace(`${process.env.VUE_APP_ADMIN_ROUTER}/admin/appartament-all/1`);
+                                    break;
+                                case 'SPECTATOR': 
+                                    router.replace(`${process.env.VUE_APP_ADMIN_ROUTER}/admin/email-all/1`);
+                                    break;
+                            }
+                        }
+                    }
                 }
             }
             catch (error) {
-                console.log(error);
-
                 if (error.message === 'Request failed with status code 401') {
                     this.isTrue = false;
                     this.email = '';

@@ -7,7 +7,7 @@ export default {
 
     actions: {
         async fetchUsers (context) {
-            const url = `/${process.env.VUE_APP_API_PATH}/get-users`;
+            const url = `http://localhost:5000/${process.env.VUE_APP_API_PATH}/get-users`;
 
             const response = await axios.get(url, {
                 headers: {

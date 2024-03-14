@@ -2,7 +2,8 @@
     <div class="admin__post-create">
         <div class="admin__post-create-nav">
             <a @click="redirectInBack" href="#"><i class="fa-solid fa-angle-left"></i> Back</a>
-            <a href="#" class="admin__delete"><i class="fa-solid fa-trash-can"></i> Delete Post</a>
+            <h2 class="admin__title">Add Post</h2>
+            <router-link to="/" class="admin__delete" @click.prevent="showAlert">Home page</router-link>
         </div>
         <div class="admin__post-create-container">
             <div class="admin__content">
@@ -21,7 +22,7 @@
                         </div>
                         <div class="admin__drop admin__drop-image" v-show="item.type === 'IMAGE'" draggable="true" @dragstart="onDragStart(index, $event)" @dragover="onDragOver"  @drop="onDroped($event, index)">
                             <span class="admin__drag-image"><i class="fa-solid fa-grip-lines"></i></span>
-                            <div class="admin__upload-images"  v-if="item.type === 'IMAGE'">
+                            <div class="admin__upload-images" v-if="item.type === 'IMAGE'" @click="deleteImg(index)">
                                 <img :src="item.path" alt="Img" v-if="item.path" ref="img" class="admin__create-img">
                             </div>
                             <div class="admin__drag" ref="drop" @drop.prevent="uploadFile($event, index)">
@@ -93,8 +94,9 @@ export  default {
     
     methods: {
         deleteImg(index) {
-            this.imgPaths.splice(index, 1);
-            this.imgFiles.splice(index, 1);
+            this.content.splice(index, 1)
+
+            console.log(this.imgFiles, this.imgPaths);
         },
 
         validateFile(unvalited) {
@@ -124,8 +126,12 @@ export  default {
                 if (item.type === 'IMAGE') {
                     const file = item.file;
                     
-                    file.name.replace(/[^a-zA-Z0-9.,-/\\]/g, '');
-                    formData.append(`${index}`, file);
+                    if (file && file.name) {
+                        const newName = file.name.replace(/[^a-zA-Z0-9.,-/\\]/g, '');
+                        const newFile = new File([file], newName, { type: file.type });
+
+                        formData.append(`${index}`, newFile);
+                    }
                 }
             });
 
@@ -175,13 +181,10 @@ export  default {
 
         onDroped(e, index) {
             e.preventDefault();
+
             const draggedIndex = e.dataTransfer.getData('text/plain');
-            
-            console.log('Dragged Index:', draggedIndex);
-            console.log('Target Index:', index);
-
-
             const temp = this.content[index];
+
             this.content[index] = this.content[draggedIndex];
             this.content[draggedIndex] = temp;
         },
@@ -242,11 +245,10 @@ export  default {
 
             if (files && files.length > 0) {
                 const src = URL.createObjectURL(files[0]);
-
                 this.content[index] = { index, type: 'IMAGE', path: src, file: files[0] };
             }
         },
-    }
+    },
 }
 
 </script>

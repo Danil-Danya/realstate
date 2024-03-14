@@ -2,6 +2,7 @@
     "bedrooms": {
         "name": "Bedrooms",
         "list": [
+            "any",
             "1 bedroom",
             "2 bedrooms",
             "3 bedrooms",
@@ -16,6 +17,7 @@
     "bathrooms": {
         "name": "Bathrooms",
         "list": [
+            "any",
             "1 bathroom",
             "2 bathrooms",
             "3 bathrooms",
@@ -30,14 +32,17 @@
     "propertyType": {
         "name": "Property type",
         "list": [
+            "any",
             "Apartament",
             "Villa",
             "Townhouse"
         ]
     },
+    
     "areas": {
         "name": "Areas",
         "list": [
+            "any",
             "Under 500 (ft)",
             "500 to 1000 (ft)",
             "1000 to 2000 (ft)",

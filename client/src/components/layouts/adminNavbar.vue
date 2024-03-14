@@ -86,10 +86,7 @@ export default {
         },
 
         async searchData (e) {
-            let data = {
-                nameFilter:  e.target.value
-            };
-            console.log(e);
+            let data = { nameFilter: e.target.value };
 
             if (this.$route.meta.adminType === 'APPARTAMENT') {
                 await this.fetchAppartaments(data);

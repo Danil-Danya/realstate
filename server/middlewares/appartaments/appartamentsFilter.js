@@ -17,8 +17,6 @@ const filterAppartaments = async (filters) => {
         whereClause.isSlide = filters.isSlide === 'true' ? true : false;
     }
 
-    
-
     if (filters.locations) {
         whereClause.addres = filters.locations;
     }
@@ -46,19 +44,17 @@ const filterAppartaments = async (filters) => {
             [Op.in]: filters.liked
         }
     }
+    console.log(filters.price);
 
-    if (filters.combSelect === 'Rent') {
-        if (filters.price != undefined) {
-            whereClause.priceForRent = {
-                [Op.between]: [filters.price.min, filters.price.max]
-            }
-        }
+    if (filters.price && filters.price.min !== undefined && filters.price.max !== undefined) {
+        whereClause.priceForRent = {
+            [Op.between]: [filters.price.min, filters.price.max]
+        };
     }
 
     if (filters.areas) {
         whereClause.square = {
-            [Op.gte]: filters.areas.min,
-            [Op.lte]: filters.areas.max,
+            [Op.between]: [filters.areas.min, filters.areas.max]
         }
     }
 
